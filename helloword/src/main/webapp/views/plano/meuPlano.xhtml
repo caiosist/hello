@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/template.xhtml">
+	<ui:define name="pageTitle">Home</ui:define>
+	<ui:define name="body">
+		<p:panel style="border: none;">
+			<div class="page-header" style="color: gray">
+				<h1 align="center">
+					Bem Vindo
+					<h:outputText value="#{beanEmpresa.empresa.nomeFantasia}" />
+				</h1>
+			</div>
+
+			<p:separator />
+
+			<p:dataTable id="gridPlanilha"
+				value="#{beanPlanilhaDownload.planilhas}" scrollable="true"
+				scrollHeight="330" var="planilha"
+				emptyMessage="Nenhum registro encontrado!">
+
+				<f:facet name="header">
+           			Histórico de Planilhas Geradas
+       		 	</f:facet>
+
+				<p:column headerText="Data">
+					<h:outputText value="#{planilha.data}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Donwload" width="20">
+					<h:outputLink value="#{planilha.path}">
+						<p:graphicImage value="/resource/img/excel.png" />
+					</h:outputLink>
+				</p:column>
+			</p:dataTable>
+			<p:separator />
+		</p:panel>
+
+	</ui:define>
+</ui:composition>
+</html>

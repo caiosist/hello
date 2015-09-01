@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<link type="text/css" rel="stylesheet"
+		href="#{request.contextPath}/resource/css/bootstrap/theme.css" />
+	<script type="text/javascript" src="resource/js/validateDialog.js"></script>
+	<script type="text/javascript" src="resource/js/validateKeys.js"></script>
+	<style>
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 11px !important;
+}
+</style>
+
+	<meta charset="utf-8" />
+	<title>Login</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+
+	<title>Home</title>
+
+</h:head>
+<h:body>
+	<p:messages showDetail="true" autoUpdate="true" closable="true" />
+
+	<h:form autocomplete="off" id="form">
+		<div>
+			<br></br> <br></br> <br></br> <br></br> <br></br>
+			<div id="login_wrapper" align="center">
+				<div id="login_box">
+					<div id="login_box_desc">
+						<b>Login:</b>
+					</div>
+					<div id="login_box_user" style="padding-top: 15px;">
+						<p:inputText id="loginUsername"
+							value="#{beanEmpresa.empresa.login}" style="width: 200px;" />
+					</div>
+
+
+					<div id="login_box_pass" style="padding-top: 5px;">
+						<p:password id="loginPassword"
+							value="#{beanEmpresa.empresa.senha}" style="width: 200px;" />
+					</div>
+
+
+					<div id="login_box_sbmt" style="padding-top: 15px;">
+						<p:commandButton value="Entrar"
+							actionListener="#{beanEmpresa.fazerLogin}" action="login"
+							style="width: 200px;" />
+					</div>
+					<br></br>
+					<div id="login_box_desc">
+						<p:commandButton value="Esqueceu a Senha?" action="recuperarSenha" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</h:form>
+</h:body>
+</html>

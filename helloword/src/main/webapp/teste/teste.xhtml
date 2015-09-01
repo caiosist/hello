@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+
+	<title><ui:insert name="pageTitle">Extrato Facil</ui:insert></title>
+
+	<link type="text/css" rel="stylesheet"
+		href="#{request.contextPath}/resource/css/bootstrap/theme.css" />
+
+	<style>
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 13px !important;
+}
+
+.ui-state-disabled {
+	opacity: .78 !important;
+}
+</style>
+</h:head>
+<h:body>
+	<h:form id="form">
+		<p:messages id="mensagens" showDetail="true" autoUpdate="true"
+			closable="true" />
+		<h1>Faça Um Teste Gratuito!</h1>
+		<p:panel style="border: none">
+
+			<h:panelGrid columns="4">
+				<h:outputText value="Modelo" />
+				<h:outputText value="Placa" />
+				<h:outputText value="Categoria " />
+				<h:outputText value="Maximo de Eixos" />
+
+				<p:inputText value="#{beanTeste.veiculo.modeloVeiculo}">
+					<p:ajax />
+				</p:inputText>
+				<p:inputText value="#{beanTeste.veiculo.placaVeiculo}">
+					<p:ajax />
+				</p:inputText>
+				<p:selectOneMenu value="#{beanTeste.veiculo.categoria}">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{beanVeiculo.categorias}" />
+					<p:ajax />
+				</p:selectOneMenu>
+				<p:inputText value="#{beanTeste.veiculo.maximoEixo}">
+					<p:ajax />
+				</p:inputText>
+
+			</h:panelGrid>
+
+		</p:panel>
+
+
+		<p:panel style="border: none;">
+			<p:fileUpload fileUploadListener="#{beanTeste.fileUploadAction}"
+				mode="advanced" dragDropSupport="false" auto="true"
+				allowTypes="/(\.|\/)(xlsx)$/"
+				invalidFileMessage="Tipo de Arquivo Invalido!" update=":form"
+				label="Selecionar" />
+		</p:panel>
+
+		<br />
+		<p:separator />
+
+		<h:outputText id="text"
+			value="O veiculo citado possui #{beanTeste.erros} passagens incorretas" />
+
+		<br />
+
+		<h:outputText value="Abaixo um Exemplo"
+			rendered="#{not empty beanTeste.itens}" />
+
+		<br />
+		<p:separator />
+
+		<p:dataTable id="gridPlanilha" value="#{beanTeste.itens}"
+			scrollable="true" scrollHeight="330" var="planilha"
+			emptyMessage="Nenhuma passagem incorreta encontrada!">
+
+			<f:facet name="header">
+           			Dados incorretos no extrato
+       		 	</f:facet>
+
+			<p:column headerText="Placa">
+				<h:outputText value="#{planilha.placa}" />
+			</p:column>
+			<p:column headerText="Data">
+				<h:outputText value="#{planilha.data}">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00" />
+				</h:outputText>
+			</p:column>
+			<p:column headerText="Hora">
+				<h:outputText value="#{planilha.hora}">
+					<f:convertDateTime pattern="HH:mm:ss" timeZone="GMT-03:00" />
+				</h:outputText>
+			</p:column>
+			<p:column headerText="Concessionária">
+				<h:outputText value="#{planilha.concessionaria}" />
+			</p:column>
+			<p:column headerText="Praça">
+				<h:outputText value="#{planilha.praca}" />
+			</p:column>
+			<p:column headerText="Categoria Cobrada">
+				<h:outputText value="#{planilha.categoria}" />
+			</p:column>
+			<p:column headerText="Categoria Correta">
+				<h:outputText value="#{planilha.categoriaCorreta}" />
+			</p:column>
+		</p:dataTable>
+		<br></br>
+		<p:separator />
+	</h:form>
+
+</h:body>
+</html>

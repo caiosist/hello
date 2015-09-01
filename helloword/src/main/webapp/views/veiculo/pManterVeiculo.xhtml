@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:panel id="pnVeiculo" style="border: none;">
+
+	<h:panelGrid columns="2" cellpadding="1">
+
+		<h:outputText value="Modelo " />
+		<p:inputText value="#{beanVeiculo.veiculo.modeloVeiculo}"
+			onkeyup="up(this)" maxlength="30" />
+
+		<h:outputText value="Placa " />
+		<p:inputMask mask="aaa9999"
+			value="#{beanVeiculo.veiculo.placaVeiculo}" maxlength="7" />
+
+		<h:outputText value="Categoria " />
+		<p:selectOneMenu value="#{beanVeiculo.veiculo.categoria}">
+			<f:selectItem itemLabel="Selecione" itemValue="" />
+			<f:selectItems value="#{beanVeiculo.categorias}" />
+		</p:selectOneMenu>
+
+		<h:outputText value="Nº Máximo de Eixos " />
+		<p:inputText value="#{beanVeiculo.veiculo.maximoEixo}" maxlength="2" />
+
+	</h:panelGrid>
+
+	<p:separator />
+
+	<h:panelGrid columns="3" style="float: right;">
+		<p:commandButton id="pmVeiculoSalvar" value="Salvar"
+			actionListener="#{beanVeiculo.save}"
+			oncomplete="validaVeiculo(xhr, status, args);"
+			update=":form:mensagens, :form:cVeiculoPanel" />
+		<p:commandButton id="pmVeiculoLimpar" value="Limpar" type="botton"
+			action="#{beanVeiculo.reinit}" update=":form:pnVeiculo" />
+		<p:commandButton id="pmVeiculoVoltar" value="Voltar"
+			onclick="PF('dManterVeiculo').hide()" />
+	</h:panelGrid>
+
+</p:panel>
+
+</html>

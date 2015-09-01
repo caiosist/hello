@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:panel id="panelEmpresa" style="border: none">
+	<h:panelGrid columns="2" cellpadding="1">
+
+		<h:outputText value="Razão Social" />
+		<p:inputText value="#{beanEmpresa.empresa.razaoSocial}"
+			onkeyup="up(this)" maxlength="100" style="width: 350px" />
+
+		<h:outputText value="Nome Fantasia" />
+		<p:inputText value="#{beanEmpresa.empresa.nomeFantasia}"
+			onkeyup="up(this)" maxlength="100" style="width: 350px" />
+
+		<h:outputText value="CNPJ" />
+		<p:inputMask mask="99.999.999/9999-99"
+			value="#{beanEmpresa.empresa.cnpj}" maxlength="18" />
+
+		<h:outputText value="Estado" />
+		<p:selectOneMenu id="estado" converter="estadoConverter"
+			value="#{beanEmpresa.empresa.cidade.estado}">
+			<f:selectItem itemLabel="Selecione" itemValue="" />
+			<f:selectItems value="#{beanEmpresa.estados}" />
+			<p:ajax listener="#{beanEmpresa.carregaCidades}" update="cidade"
+				event="change" />
+		</p:selectOneMenu>
+
+		<h:outputText value="Cidade" />
+		<p:selectOneMenu id="cidade" value="#{beanEmpresa.empresa.cidade}"
+			converter="cidadeConverter">
+			<f:selectItem itemLabel="Selecione" itemValue="" />
+			<f:selectItems value="#{beanEmpresa.cidades}" />
+		</p:selectOneMenu>
+
+		<h:outputText value="E-mail" />
+		<p:inputText value="#{beanEmpresa.empresa.email}" maxlength="100"
+			style="width: 350px" />
+
+		<h:outputText value="Login" />
+		<p:inputText value="#{beanEmpresa.empresa.login}" maxlength="20" />
+
+		<h:outputText value="Senha" />
+		<p:password value="#{beanEmpresa.empresa.senha}" maxlength="20" />
+
+		<h:outputText value="Confirmar Senha" />
+		<p:password maxlength="20" />
+
+		<h:outputText value="Plano" />
+		<p:selectOneMenu id="plano" value="#{beanEmpresa.empresa.plano}"
+			converter="planoConverter">
+			<f:selectItem itemLabel="Selecione" itemValue="" />
+			<f:selectItems value="#{beanEmpresa.planos}" />
+		</p:selectOneMenu>
+	</h:panelGrid>
+	<p:separator />
+
+	<h:panelGrid columns="2" style="float: right;">
+		<p:commandButton id="bt-save-empresa" value="Cadastrar"
+			actionListener="#{beanEmpresa.save}"
+			oncomplete="PF('dialogManterEmpresa').hide()" />
+		<p:commandButton id="panelVeiculoVoltar" value="Cancelar"
+			onclick="PF('dialogManterVeiculo').hide()" />
+	</h:panelGrid>
+</p:panel>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+
+	<title><ui:insert name="pageTitle">Extrato Facil</ui:insert></title>
+
+	<link type="text/css" rel="stylesheet"
+		href="#{request.contextPath}/resource/css/bootstrap/theme.css" />
+
+	<style>
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 13px !important;
+}
+
+.ui-state-disabled {
+	opacity: .78 !important;
+}
+</style>
+</h:head>
+<h:body>
+	<h:form>
+		<p:messages id="mensagens" showDetail="true" autoUpdate="true"
+			closable="true" />
+		<p:panel style="border: none">
+			<div>
+				<br></br> <br></br> <br></br> <br></br> <br></br>
+				<div id="login_wrapper" align="center">
+					<div id="login_box">
+						<div id="login_box_desc">
+							<b>E-mail</b>
+						</div>
+						<div id="login_box_pass" style="padding-top: 5px;">
+							<p:inputText value="#{beanEmpresa.empresa.email}" />
+						</div>
+
+						<div id="login_box_sbmt" style="padding-top: 15px;">
+							<p:commandButton value="Alterar Senha" ajax="false"
+								action="#{beanEmpresa.enviarEmailRecuperarSenha}"
+								style="width: 200px;" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/template.xhtml">
+	<ui:define name="pageTitle">Home</ui:define>
+	<ui:define name="body">
+		<p:panel style="border: none;">
+
+
+			<h:panelGrid columns="3">
+
+				<h:panelGrid columns="3">
+
+					<p:outputLabel for="inicio" value="Inicio" />
+					<p:outputLabel for="fim" value="Fim" />
+					<p:outputLabel value="" />
+
+
+					<p:calendar id="inicio" value="#{beanPlanilhaDownload.inicio}"
+						mode="inline" />
+					<p:calendar id="fim" value="#{beanPlanilhaDownload.fim}"
+						mode="inline" />
+					<p:commandButton action="#{beanPlanilhaDownload.findByDate}"
+						icon="ui-icon-search" value="Buscar" update=":form" />
+
+
+				</h:panelGrid>
+
+				<p:spacer />
+
+				<h:panelGrid>
+					<p:dataTable id="gridPlanilha" dir="center"
+						value="#{beanPlanilhaDownload.planilhas}" scrollable="true"
+						var="planilha" emptyMessage="Nenhum registro encontrado!">
+
+						<f:facet name="header">
+           			Histórico de Planilhas Geradas
+       		 	</f:facet>
+
+						<p:column headerText="Data">
+							<center>
+								<h:outputText value="#{planilha.data}">
+									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00" />
+								</h:outputText>
+							</center>
+						</p:column>
+						<p:column headerText="Donwload">
+							<center>
+								<p:commandButton ajax="false"
+									icon="ui-icon-arrowreturnthick-1-s">
+									<f:setPropertyActionListener value="#{planilha}"
+										target="#{beanPlanilhaDownload.selected}" />
+									<p:fileDownload value="#{beanPlanilhaDownload.file}" />
+								</p:commandButton>
+							</center>
+						</p:column>
+					</p:dataTable>
+				</h:panelGrid>
+			</h:panelGrid>
+			<p:separator />
+		</p:panel>
+
+
+	</ui:define>
+</ui:composition>
+</html>

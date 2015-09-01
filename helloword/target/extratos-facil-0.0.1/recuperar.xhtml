@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+
+	<title><ui:insert name="pageTitle">Extrato Facil</ui:insert></title>
+
+	<link type="text/css" rel="stylesheet"
+		href="#{request.contextPath}/resource/css/bootstrap/theme.css" />
+
+	<style>
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 13px !important;
+}
+
+.ui-state-disabled {
+	opacity: .78 !important;
+}
+</style>
+</h:head>
+<h:body>
+	<h:inputHidden value="#{beanEmpresa.recuperar}" />
+	<h:form>
+		<p:messages id="mensagens" showDetail="true" autoUpdate="true"
+			closable="true" />
+		<p:panel style="border: none">
+			<center>
+				<h:panelGrid>
+					<h:outputText value="Nova Senha:" />
+					<p:password value="#{beanEmpresa.senha}" />
+
+					<h:outputText value="Confirmar Senha:" />
+					<p:password value="#{beanEmpresa.confSenha}" />
+
+					<p:commandButton value="Alterar Senha"
+						oncomplete="validaSenha(xhr, status, args)"
+						actionListener="#{beanEmpresa.alterarSenha}" />
+				</h:panelGrid>
+			</center>
+		</p:panel>
+	</h:form>
+
+	<p:dialog widgetVar="dAlteraSenha" modal="true" dynamic="true"
+		resizable="false">
+		<center>
+			<H1>Senha Alterada com Sucesso!</H1>
+			<p:commandButton value="OK" action="login"
+				oncomplete="PF('dAlteraSenha').hide()" />
+		</center>
+	</p:dialog>
+
+</h:body>
+</html>

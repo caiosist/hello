@@ -1,0 +1,20 @@
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 13px !important;
+}
+
+.ui-state-disabled {
+	opacity: .78 !important;
+}
+
+html, body,form { margin:0; height: 100%;}
+
+#frameCenter{
+	border: 0; 
+	position:absolute; 
+	top:70px; 
+	left:0; 
+	right:0; 
+	bottom:70px; 
+	width:100%; 
+	height:87%;
+}

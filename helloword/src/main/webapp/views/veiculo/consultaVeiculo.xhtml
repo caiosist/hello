@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/template/template.xhtml">
+	<ui:define name="pageTitle">Consulta de Veículos</ui:define>
+	<ui:define name="body">
+		<p:panel id="cVeiculoPanel" style="border: none;">
+			<h2>Veículos cadastrados</h2>
+			<h:panelGrid columns="7" cellpadding="2" style="border: 2px;">
+				<h:outputText value="Código" />
+				<h:outputText value="Modelo" />
+				<h:outputText value="Placa" />
+				<h:outputText value="Categoria" />
+				<h:outputText value="Máximo de Eixos" />
+				<h:outputText value="" />
+				<h:outputText value="" />
+
+				<p:inputText id="cVeiculoCodigo" value="#{beanVeiculo.filtro.id}"
+					maxlength="4" onkeypress="return onlyNumbers(event)" size="7">
+					<p:ajax />
+				</p:inputText>
+
+				<p:inputText maxlength="30"
+					value="#{beanVeiculo.filtro.modeloVeiculo}" onkeyup="up(this)"
+					onkeypress="return onlyLetters(event)" size="78">
+					<p:ajax />
+				</p:inputText>
+
+				<p:inputMask onkeyup="up(this)"
+					value="#{beanVeiculo.filtro.placaVeiculo}" maxlength="7">
+					<p:ajax />
+				</p:inputMask>
+
+				<p:inputText value="#{beanVeiculo.filtro.categoria}" maxlength="30"
+					onkeyup="up(this)">
+					<p:ajax />
+				</p:inputText>
+
+				<p:inputText value="#{beanVeiculo.filtro.maximoEixo}" maxlength="2">
+					<p:ajax />
+				</p:inputText>
+
+				<p:commandButton value="Buscar" icon="ui-icon-search"
+					action="#{beanVeiculo.find}" update="cVeiculoTabelaVeiculo"
+					process="@this" />
+
+				<p:commandButton value="Limpar" action="#{beanVeiculo.limpar}"
+					update="cVeiculoPanel" process="@this" />
+			</h:panelGrid>
+
+			<br></br>
+			<p:separator />
+
+			<p:dataTable id="cVeiculoTabelaVeiculo"
+				value="#{beanVeiculo.listaVeiculos}" var="veiculo"
+				emptyMessage="Nenhum veículo encontrado!">
+				<p:column headerText="Código">
+					<h:outputText value="#{veiculo.id}" />
+				</p:column>
+				<p:column headerText="Modelo">
+					<h:outputText value="#{veiculo.modeloVeiculo}" />
+				</p:column>
+				<p:column headerText="Placa">
+					<h:outputText value="#{veiculo.placaVeiculo}" />
+				</p:column>
+				<p:column headerText="Categoria">
+					<h:outputText value="#{veiculo.categoria}" />
+				</p:column>
+				<p:column headerText="Max. Eixos">
+					<h:outputText value="#{veiculo.maximoEixo}" />
+				</p:column>
+				<p:column headerText="Editar">
+					<p:commandButton id="selectVeiculo" icon="ui-icon-pencil"
+						update=":form:pnVeiculo" title="Detalhes"
+						onclick="PF('dManterVeiculo').show()">
+						<f:setPropertyActionListener value="#{veiculo}"
+							target="#{beanVeiculo.veiculo}" />
+					</p:commandButton>
+				</p:column>
+
+				<p:column headerText="Excluir">
+					<p:commandButton onclick="PF('confirmation').show()"
+						icon="ui-icon-trash" title="Excluir Veículo">
+						<f:setPropertyActionListener value="#{veiculo}"
+							target="#{beanVeiculo.veiculo}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+
+			<br></br>
+			<p:separator />
+
+			<h:panelGrid columns="3" style="float: right;">
+				<p:commandButton id="cVeiculoNovo" value="Novo"
+					binding="#{beanVeiculo.botaoNovo}" update=":form:pnVeiculo"
+					actionListener="#{beanVeiculo.novo}" title="Criar Veiculo"
+					disabled="#{beanVeiculo.statusBotaoNovo}" icon="ui-icon-plus"
+					onclick="PF('dManterVeiculo').show()" />
+			</h:panelGrid>
+
+			<h:panelGrid rendered="#{beanVeiculo.botaoNovo.disabled}">
+				<h:outputText
+					value="Você Atingiu o Numero maximo de veiculos, para adicionar novos veiculos faca o upgrade do seu plano!" />
+			</h:panelGrid>
+
+		</p:panel>
+
+		<p:confirmDialog id="cVeiculoConfirmaExcluir"
+			message="Deseja excluir o veículo selecionado?"
+			header="Excluir Veículo" severity="alert" widgetVar="confirmation">
+
+			<p:commandButton id="cVeiculoConfirm" value="Sim"
+				oncomplete="PF('confirmation').hide()"
+				actionListener="#{beanVeiculo.remove}"
+				update=":form:mensagens, :form:cVeiculoPanel" />
+			<p:commandButton id="cVeiculoDecline" value="Não"
+				onclick="PF('confirmation').hide()" type="button" />
+
+		</p:confirmDialog>
+
+		<!-- 
+*******************************************************************************
+							DIALOG MANTER CLIENTE
+*******************************************************************************
+-->
+		<p:dialog header="Cadastrar novo veículo" widgetVar="dManterVeiculo"
+			modal="true" dynamic="true" id="dmVeiculo" resizable="false">
+			<ui:include src="/views/veiculo/pManterVeiculo.xhtml"></ui:include>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+
+</html>

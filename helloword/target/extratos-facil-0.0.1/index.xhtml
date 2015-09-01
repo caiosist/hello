@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="author" content="Caio Cesar Correia" />
+
+	<title><ui:insert name="pageTitle">Extratos Fácil</ui:insert></title>
+
+	<link type="text/css" rel="stylesheet"
+		href="#{request.contextPath}/resource/css/bootstrap/theme.css" />
+
+	<link href="resource/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="resource/css/bootstrap-responsive.min.css" rel="stylesheet" />
+	<link href="resource/css/style.css" rel="stylesheet" />
+
+	<style>
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 13px !important;
+}
+
+.ui-state-disabled {
+	opacity: .78 !important;
+}
+</style>
+	<script type="text/javascript" src="resource/js/validateDialog.js"></script>
+	<script type="text/javascript" src="resource/js/validateKeys.js"></script>
+
+</h:head>
+
+<h:body>
+	<h:inputHidden value="#{beanEmpresa.usuarioLogado}" />
+	<h:form prependId="false">
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="navbar">
+						<div class="navbar-inner">
+							<div class="container-fluid">
+								<a data-target=".navbar-responsive-collapse"
+									data-toggle="collapse" class="btn btn-navbar"> <span
+									class="icon-bar"></span> <span class="icon-bar"></span> <span
+									class="icon-bar"></span>
+								</a> <a href="index.jsf" class="brand">Extratos Fácil</a>
+
+								<div class="nav-collapse collapse navbar-responsive-collapse">
+									<ul class="nav">
+										<li><h:commandLink value="Início" action="index" /></li>
+									</ul>
+									<ul class="nav">
+
+										<li><h:commandLink value="Gerar Planilha"
+												action="views/planilha/gerarPlanilha" target="frameCenter" /></li>
+
+										<li><h:commandLink value="Meu Plano"
+												action="views/plano/meuPlano" target="frameCenter" /></li>
+
+
+										<li><h:commandLink value="Veículos"
+												action="views/veiculo/consultaVeiculo" target="frameCenter" /></li>
+
+										<li><h:commandLink value="Historico"
+												action="views/historico/historico" target="frameCenter" /></li>
+									</ul>
+
+									<ul class="nav pull-right">
+										<li><h:commandLink value="Sair"
+												action="#{beanEmpresa.logout}" /></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div>
+			<iframe name="frameCenter" id="frameCenter" width="100%" height="686"
+				style="border: none;" src="home.xhtml"> </iframe>
+		</div>
+	</h:form>
+</h:body>
+</html>
