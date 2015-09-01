@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:composition>
+		<div id="header" align="center">
+			<label style="float: left; font-size: 46px; font-family: monospace; color: #D0D0D0; font-weight: bold; margin: 10px 0 0 40px"> EXTRATOS FÁCIL </label>
+		</div>
+		
+		<div style="float: right; position: relative; margin: 20px 115px 0 0">
+			<p:inputText placeholder="Login" id="autenticacao_login" value="" style="width: 150px; margin-right: 10px; height: 16px; font-size: 16px"/>
+			<p:password placeholder="Senha" id="autenticacao_senha" value="" style="width: 150px; margin-right: 10px; height: 16px; font-size: 16px"/>
+			<p:commandButton id="submit_empresa" value="Entrar" style="width: 90px; height: 25px; font-size: 13px" />
+		</div>
+	</ui:composition>
+</html>

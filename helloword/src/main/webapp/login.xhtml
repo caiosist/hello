@@ -1,70 +1,56 @@
-<!DOCTYPE html>
-<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/template/templateLogin.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+>
 
-<h:head>
-	<link type="text/css" rel="stylesheet"
-		href="#{request.contextPath}/resource/css/bootstrap/theme.css" />
-	<script type="text/javascript" src="resource/js/validateDialog.js"></script>
-	<script type="text/javascript" src="resource/js/validateKeys.js"></script>
-	<style>
-.ui-widget, .ui-widget .ui-widget {
-	font-size: 11px !important;
-}
-</style>
+	<ui:define name="title">Extratos Fácil</ui:define>
 
-	<meta charset="utf-8" />
-	<title>Login</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta name="description" content="" />
-	<meta name="author" content="" />
-
-	<title>Home</title>
-
-</h:head>
-<h:body>
-	<p:messages showDetail="true" autoUpdate="true" closable="true" />
-
-	<h:form autocomplete="off" id="form">
-		<div>
-			<br></br> <br></br> <br></br> <br></br> <br></br>
-			<div id="login_wrapper" align="center">
-				<div id="login_box">
-					<div id="login_box_desc">
-						<b>Login:</b>
-					</div>
-					<div id="login_box_user" style="padding-top: 15px;">
-						<p:inputText id="loginUsername"
-							value="#{beanEmpresa.empresa.login}" style="width: 200px;" />
-					</div>
-
-
-					<div id="login_box_pass" style="padding-top: 5px;">
-						<p:password id="loginPassword"
-							value="#{beanEmpresa.empresa.senha}" style="width: 200px;" />
-					</div>
-
-
-					<div id="login_box_sbmt" style="padding-top: 15px;">
-						<p:commandButton value="Entrar"
-							actionListener="#{beanEmpresa.fazerLogin}" action="login"
-							style="width: 200px;" />
-					</div>
-					<br></br>
-					<div id="login_box_desc">
-						<p:commandButton value="Esqueceu a Senha?" action="recuperarSenha" />
-					</div>
-				</div>
-				<br></br>
-				<div id="login_box_desc">
-					<p:commandButton value="Faça um teste" action="teste/teste" />
-				</div>
+	<ui:define name="content">
+		<div id="layoutMax">
+			<div style="float: right; width: 400px; height: 480px; margin: 55px 50px 0 0">
+				<label style="font-family: sans-serif; font-size: 36px; color: #787878">Cadastre-se</label>
+				<h:panelGrid columns="1" cellpadding="1">
+					
+					<p:inputText id="empresa_razaoSocial" placeholder="Razão Social (conforme está no via fácil)" styleClass="inputsCadastro"/>
+					
+					<p:inputText id="empresa_nomeFantasia" placeholder="Nome Fantasia" styleClass="inputsCadastro"/>
+					
+					<p:inputMask id="empresa_cnpj" mask="99.999.999/9999-99" placeholder="CNPJ (conforme está no via fácil)" styleClass="inputsCadastro" />
+					
+					<p:selectOneMenu id="estado" converter="estadoConverter" value="#{beanEmpresa.empresa.cidade.estado}" style="margin-top: 10px">
+						<f:selectItem itemLabel="Selecione Estado" itemValue="" />
+						<f:selectItems value="#{beanEmpresa.estados}" />
+						<p:ajax listener="#{beanEmpresa.carregaCidades}" update="cidade" event="change" />
+					</p:selectOneMenu>
+					
+					<p:selectOneMenu id="cidade" converter="cidadeConverter" value="#{beanEmpresa.empresa.cidade}" style="margin-top: 10px">
+						<f:selectItem itemLabel="Selecione Cidade" itemValue="" />
+						<f:selectItems value="#{beanEmpresa.cidades}" />
+					</p:selectOneMenu>
+					
+					<p:inputText id="empresa_email" placeholder="E-mail" styleClass="inputsCadastro" />
+					
+					<p:inputText id="empresa_login" placeholder="Login" styleClass="inputsCadastro" />
+					
+					<p:password id="empresa_senha" placeholder="Senha" styleClass="inputsCadastro" />
+					
+					<p:password id="empresa_confirmaSenha" placeholder="Confirmar Senha" styleClass="inputsCadastro" />
+					
+					<p:selectOneMenu id="plano" value="#{beanEmpresa.empresa.plano}" converter="planoConverter" style="margin-top: 10px">
+						<f:selectItem itemLabel="Selecione Plano" itemValue="" />
+						<f:selectItems value="#{beanEmpresa.planos}" />
+					</p:selectOneMenu>
+					
+					<p:commandButton id="bt_empresa_cadastrar" style="width: 90px; height: 25px; font-size: 13px; float: right; margin-top: -35px" 
+									 value="Cadastrar" actionListener="#{beanEmpresa.save}" />	
+				</h:panelGrid>
 			</div>
-		</div>
-
-	</h:form>
-</h:body>
-</html>
+			<div style="width: 800px; height: 480px; margin: 55px 0 0 40px">
+				<label style="font-family: sans-serif; font-size: 36px; color: #787878">Consulte seu extrato do via fácil</label>
+			</div>
+		</div>	
+	</ui:define>
+</ui:composition>
