@@ -16,7 +16,8 @@
 				<p:fileUpload
 					fileUploadListener="#{beanPlanilhaUpload.fileUploadAction}"
 					mode="advanced" dragDropSupport="false" auto="true"
-					allowTypes="/(\.|\/)(xlsx)$/" invalidFileMessage="Tipo de Arquivo Invalido!"
+					allowTypes="/(\.|\/)(xlsx|xls)$/"
+					invalidFileMessage="Tipo de Arquivo Invalido!"
 					update="mensagens, gridPlanilha" label="Selecionar" />
 			</p:panel>
 
@@ -49,6 +50,11 @@
 				</p:column>
 				<p:column headerText="Praça">
 					<h:outputText value="#{planilha.praca}" />
+				</p:column>
+				<p:column headerText="Valor Cobrado">
+					<h:outputText value="R$ #{planilha.valor}">
+						<f:convertNumber pattern="#0.00" currencySymbol="R$" currencyCode="BRL" />
+					</h:outputText>
 				</p:column>
 				<p:column headerText="Categoria Cobrada">
 					<h:outputText value="#{planilha.categoria}" />

@@ -171,8 +171,20 @@ public class SessionEmpresa {
 				data = c.getTime();
 				empresa.setVencimento(data);
 			}
-			// criptografia da senha
-			empresa.setSenha(this.crip(empresa.getSenha()));
+			// verifica se a senha foi alterada
+			try {
+				Empresa temp = new Empresa();
+				temp.setId(empresa.getId());
+				temp = this.controller.find(temp);
+				if (!temp.getSenha().equals(empresa.getSenha())) {
+					// criptografia da senha
+					empresa.setSenha(this.crip(empresa.getSenha()));
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 
 		return true;
@@ -409,5 +421,25 @@ public class SessionEmpresa {
 		}
 		Mensagem.msgEmailInvalido();
 		return new Empresa();
+	}
+
+	public Empresa validaConfirmar() {
+		// Parametros necessarios para recuperar: ID, RAZAO SOCIAL EMPRESA,
+		try {
+			Map<String, String> rec = FacesContext.getCurrentInstance()
+					.getExternalContext().getRequestParameterMap();
+			String id = rec.get(this.crip("id"));
+			Empresa temp = new Empresa();
+			if (id != null) {
+				temp.setId(Long.valueOf(id));
+				temp = this.controller.find(temp);
+				return temp;
+			}
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
 	}
 }

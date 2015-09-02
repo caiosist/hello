@@ -6,15 +6,24 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
 
-	<ui:composition>
-		<div id="header" align="center">
-			<label style="float: left; font-size: 46px; font-family: monospace; color: #D0D0D0; font-weight: bold; margin: 10px 0 0 40px"> EXTRATOS FÁCIL </label>
-		</div>
-		
-		<div style="float: right; position: relative; margin: 20px 115px 0 0">
-			<p:inputText placeholder="Login" id="autenticacao_login" value="" style="width: 150px; margin-right: 10px; height: 16px; font-size: 16px"/>
-			<p:password placeholder="Senha" id="autenticacao_senha" value="" style="width: 150px; margin-right: 10px; height: 16px; font-size: 16px"/>
-			<p:commandButton id="submit_empresa" value="Entrar" style="width: 90px; height: 25px; font-size: 13px" />
-		</div>
-	</ui:composition>
+<ui:composition>
+	<div id="header" align="center">
+		<label
+			style="float: left; font-size: 46px; font-family: monospace; color: #D0D0D0; font-weight: bold; margin: 10px 0 0 40px">
+			EXTRATOS FÁCIL </label>
+	</div>
+
+	<div style="float: right; position: relative; margin: 20px 115px 0 0">
+	
+		<p:inputText placeholder="Login" id="autenticacao_login"
+			value="#{beanEmpresa.empresa.login}"
+			style="width: 150px; margin-right: 10px; height: 16px; font-size: 16px" />
+		<p:password placeholder="Senha" id="autenticacao_senha"
+			value="#{beanEmpresa.empresa.senha}"
+			style="width: 150px; margin-right: 10px; height: 16px; font-size: 16px" />
+		<p:commandButton id="submit_empresa" value="Entrar"
+			actionListener="#{beanEmpresa.fazerLogin}"
+			style="width: 90px; height: 25px; font-size: 13px" />
+	</div>
+</ui:composition>
 </html>

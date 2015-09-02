@@ -5,12 +5,12 @@ import org.apache.commons.mail.SimpleEmail;
 
 public class Email {
 
-	private static String smtpServer = "mail.todentro.net";
+	private static String smtpServer = "mail.extratosfacil.com.br";
 	private static Integer smtpPort = 587;
-	private static String fromEmail = "contato@todentro.net";
-	private static String fromName = "teste";
-	private static String login = "contato@todentro.net";
-	private static String password = "adc360!!";
+	private static String fromEmail = "contato@extratosfacil.com.br";
+	private static String fromName = "Extratos Facil";
+	private static String login = "contato@extratosfacil.com.br";
+	private static String password = "Extratos*facil";
 
 	public static void sendEmail(String destinatario, String nomeDestinatario,
 			String assunto, String mensagem) throws EmailException {

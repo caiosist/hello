@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+
+	<title><ui:insert name="pageTitle">Extrato Facil</ui:insert></title>
+
+	<link type="text/css" rel="stylesheet"
+		href="#{request.contextPath}/resource/css/bootstrap/theme.css" />
+
+	<style>
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 13px !important;
+}
+
+.ui-state-disabled {
+	opacity: .78 !important;
+}
+</style>
+	<script type="text/javascript" src="resource/js/validateDialog.js"></script>
+</h:head>
+<h:body>
+	<h:inputHidden value="#{beanEmpresa.confirmar}" />
+	<h:form>
+		<p:panel style="border: none">
+			<h:panelGrid columns="2">
+				<h:outputText value="Cadastro confirmado!" />
+				<p:commandButton action="#{beanEmpresa.redirecionarLogin}"
+					value="Ir Para a pagina de Login" />
+			</h:panelGrid>
+		</p:panel>
+	</h:form>
+
+</h:body>
+</html>
