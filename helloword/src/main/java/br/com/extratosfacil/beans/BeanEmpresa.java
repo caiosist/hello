@@ -3,14 +3,15 @@ package br.com.extratosfacil.beans;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.apache.commons.mail.EmailException;
 import org.primefaces.context.RequestContext;
 
+import br.com.extratosfacil.entities.Email;
 import br.com.extratosfacil.entities.Empresa;
 import br.com.extratosfacil.entities.Plano;
 import br.com.extratosfacil.entities.location.Cidade;
@@ -54,6 +55,8 @@ public class BeanEmpresa {
 	private Boolean usuarioLogado = false;
 
 	private boolean recuperar = false;
+
+	private boolean confirmar = false;
 
 	private String confSenha = new String();
 
@@ -101,6 +104,15 @@ public class BeanEmpresa {
 	public boolean isRecuperar() {
 		recuperar = this.validaRecovery();
 		return recuperar;
+	}
+
+	public boolean isConfirmar() {
+		this.confirmar = this.confirmaCadastro();
+		return confirmar;
+	}
+
+	public void setConfirmar(boolean confirmar) {
+		this.confirmar = confirmar;
 	}
 
 	public void setRecuperar(boolean recuperar) {
@@ -197,7 +209,7 @@ public class BeanEmpresa {
 		this.empresas = new ArrayList<Empresa>();
 	}
 
-	public String save() throws Exception {
+	public String save() {
 		RequestContext context = RequestContext.getCurrentInstance();
 		boolean sucesso = false;
 
@@ -206,15 +218,30 @@ public class BeanEmpresa {
 		}
 
 		if (this.session.save(empresa)) {
+			this.sendEmailConfirmacao();
 			this.reinit();
 			Mensagem.msgSave();
 			sucesso = true;
 			context.addCallbackParam("sucesso", sucesso);
-			return "../../login";
+			return "";
 		}
 
 		context.addCallbackParam("sucesso", sucesso);
 		return "";
+	}
+
+	private void sendEmailConfirmacao() {
+		String link = "www.extratosfacil.com.br/confirmar.html?je="
+				+ empresa.getId();
+		String mensagem = "Cadastro realizado com Sucesso, Clique no link para confirmar: "
+				+ link;
+		String assunto = "Cadastro Extratos Facil";
+		try {
+			Email.sendEmail(empresa.getEmail(), empresa.getNomeFantasia(),
+					assunto, mensagem);
+		} catch (EmailException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public String update() {
@@ -338,6 +365,18 @@ public class BeanEmpresa {
 			this.redirecionarLogin();
 			this.empresa = new Empresa();
 		}
+	}
+
+	public boolean confirmaCadastro() {
+		this.empresa = this.session.validaConfirmar();
+		if (this.empresa == null) {
+			this.empresa = new Empresa();
+			this.redirecionarLogin();
+			return false;
+		}
+		this.empresa.setStatus("Aguardando Pagamento");
+		this.save();
+		return true;
 	}
 
 }

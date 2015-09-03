@@ -2,10 +2,9 @@ package br.com.extratosfacil.beans;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -15,6 +14,9 @@ import javax.servlet.ServletContext;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 
@@ -107,9 +109,10 @@ public class BeanPlanilhaUpload {
 			file.mkdirs();
 
 			byte[] arquivo = event.getFile().getContents();
+			boolean xlsx = event.getFile().getFileName().indexOf("xlsx") >= 0;
 
 			// Renomeia o arquivo upado
-			String caminho = diretorio + "Extrato-" + this.getData() + ".xlsx";
+			String caminho = diretorio + "Extrato-" + this.getData() + ".xls";
 
 			// esse trecho grava o arquivo no diretorio
 			FileOutputStream fos = new FileOutputStream(caminho);
@@ -120,8 +123,9 @@ public class BeanPlanilhaUpload {
 			this.planilhaUpload.setPath(caminho);
 			this.planilhaUpload.setData(new Date());
 
-			if (this.session.validaPlanilha(planilhaUpload.getPath())) {
-				itens = this.session.carregaPlanilha(planilhaUpload.getPath());
+			if (this.session.validaPlanilha(planilhaUpload.getPath(), xlsx)) {
+				itens = this.session.carregaPlanilha(planilhaUpload.getPath(),
+						xlsx);
 				this.save();
 			}
 
@@ -204,7 +208,21 @@ public class BeanPlanilhaUpload {
 		sheet.setColumnWidth(4, width);
 		sheet.setColumnWidth(5, width);
 		sheet.setColumnWidth(6, width);
-		// Iterator<Row> rowIterator = sheet.iterator();
+		sheet.setColumnWidth(7, width);
+		Iterator<Row> rowIterator = sheet.iterator();
+		Row row = rowIterator.next();
+
+		if (row.getRowNum() == 0) {
+			CellStyle style = wb.createCellStyle();// Create style
+			Font font = wb.createFont();// Create font
+			font.setBoldweight(Font.BOLDWEIGHT_BOLD);// Make font bold
+			style.setFont(font);// set it to bold
+
+			for (int i = 0; i < row.getLastCellNum(); i++) {// For each cell in
+															// the row
+				row.getCell(i).setCellStyle(style);// Set the style
+			}
+		}
 
 		SessionPlanilhaDownload sessionPD = new SessionPlanilhaDownload();
 		sessionPD.criaPlanilhaDownload(wb);

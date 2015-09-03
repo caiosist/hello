@@ -75,6 +75,12 @@ public class ItemPlanilhaUpload implements Serializable {
 	@Column(length = 100, nullable = false)
 	private String praca;
 
+	/**
+	 * 
+	 */
+	@Column
+	private Double valor;
+
 	/*-------------------------------------------------------------------
 	 *				 		     CONSTRUCTORS
 	 *-------------------------------------------------------------------*/
@@ -92,6 +98,14 @@ public class ItemPlanilhaUpload implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Double getValor() {
+		return valor;
+	}
+
+	public void setValor(Double valor) {
+		this.valor = valor;
 	}
 
 	public String getPlaca() {
