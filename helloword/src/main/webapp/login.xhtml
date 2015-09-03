@@ -31,11 +31,11 @@
 						<f:selectItems value="#{beanEmpresa.cidades}" />
 					</p:selectOneMenu>
 					
-					<p:inputText id="empresa_email" placeholder="E-mail" styleClass="inputsCadastro" />
+					<p:inputText id="empresa_email" placeholder="E-mail" styleClass="inputsCadastro"  />
 					
-					<p:inputText id="empresa_login" placeholder="Login" styleClass="inputsCadastro" />
+					<p:inputText id="empresa_login" placeholder="Login" styleClass="inputsCadastro" value="#{beanEmpresa.empresa.login}"/>
 					
-					<p:password id="empresa_senha" placeholder="Senha" styleClass="inputsCadastro" />
+					<p:password id="empresa_senha" placeholder="Senha" styleClass="inputsCadastro" value="#{beanEmpresa.empresa.senha}" />
 					
 					<p:password id="empresa_confirmaSenha" placeholder="Confirmar Senha" styleClass="inputsCadastro" />
 					
