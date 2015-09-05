@@ -15,10 +15,16 @@
 	
 		<p:inputText placeholder="Login" id="autenticacao_login"
 			value="#{beanEmpresa.empresa.login}"
-			style="width: 150px; margin-right: 10px; height: 16px; font-size: 16px" />
+			style="width: 150px; margin-right: 10px; height: 16px; font-size: 16px">
+			<p:ajax/>
+		</p:inputText>
+		
 		<p:password placeholder="Senha" id="autenticacao_senha"
 			value="#{beanEmpresa.empresa.senha}"
-			style="width: 150px; margin-right: 10px; height: 16px; font-size: 16px" />
+			style="width: 150px; margin-right: 10px; height: 16px; font-size: 16px">
+			<p:ajax/>
+		</p:password>
+		
 		<p:commandButton id="submit_empresa" value="Entrar"
 			actionListener="#{beanEmpresa.fazerLogin}"
 			style="width: 90px; height: 25px; font-size: 13px" />

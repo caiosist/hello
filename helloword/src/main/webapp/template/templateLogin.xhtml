@@ -2,7 +2,9 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
 <h:head>
 	<title><ui:insert name="title">Extratos Fácil</ui:insert></title>
 
@@ -50,6 +52,7 @@ body {
 </style>
 </h:head>
 <h:form>
+	<p:growl id="mensagens" showDetail="true" autoUpdate="true" closable="true" />
 	<ui:include src="../header.xhtml" />
 </h:form>
 <h:body>

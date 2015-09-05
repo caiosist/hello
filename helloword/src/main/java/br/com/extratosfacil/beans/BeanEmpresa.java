@@ -233,9 +233,9 @@ public class BeanEmpresa {
 	private void sendEmailConfirmacao() {
 		String link = "www.extratosfacil.com.br/confirmar.html?je="
 				+ empresa.getId();
-		String mensagem = "Cadastro realizado com Sucesso, Clique no link para confirmar: "
+		String mensagem = "Cadastro realizado com sucesso. Clique no link para confirmar: "
 				+ link;
-		String assunto = "Cadastro Extratos Facil";
+		String assunto = "Cadastro Extratos Fácil";
 		try {
 			Email.sendEmail(empresa.getEmail(), empresa.getNomeFantasia(),
 					assunto, mensagem);

@@ -14,11 +14,25 @@
 				<label style="font-family: sans-serif; font-size: 36px; color: #787878">Cadastre-se</label>
 				<h:panelGrid columns="1" cellpadding="1">
 					
-					<p:inputText id="empresa_razaoSocial" placeholder="Razão Social (conforme está no via fácil)" styleClass="inputsCadastro"/>
+					<p:inputText id="empresa_razaoSocial" placeholder="Razão Social (conforme está no via fácil)" 
+								 value="#{beanEmpresa.empresa.razaoSocial}" styleClass="inputsCadastro">
+								 <p:ajax />
+					</p:inputText>
 					
-					<p:inputText id="empresa_nomeFantasia" placeholder="Nome Fantasia" styleClass="inputsCadastro"/>
+					<p:inputText id="empresa_nomeFantasia" placeholder="Nome Fantasia" 
+								 value="#{beanEmpresa.empresa.nomeFantasia}" styleClass="inputsCadastro">
+								<p:ajax />
+					</p:inputText>
 					
-					<p:inputMask id="empresa_cnpj" mask="99.999.999/9999-99" placeholder="CNPJ (conforme está no via fácil)" styleClass="inputsCadastro" />
+<!-- 					<p:inputMask id="empresa_cnpj" mask="99.999.999/9999-99" placeholder="CNPJ (conforme está no via fácil)"  -->
+<!-- 								 value="#{beanEmpresa.empresa.cnpj}" styleClass="inputsCadastro"> -->
+<!-- 						<p:ajax/> -->
+<!-- 					</p:inputMask> -->
+
+					<p:inputText id="empresa_cnpj" placeholder="CNPJ (conforme está no via fácil)" 
+								 value="#{beanEmpresa.empresa.cnpj}" styleClass="inputsCadastro">
+						<p:ajax/>
+					</p:inputText>
 					
 					<p:selectOneMenu id="estado" converter="estadoConverter" value="#{beanEmpresa.empresa.cidade.estado}" style="margin-top: 10px">
 						<f:selectItem itemLabel="Selecione Estado" itemValue="" />
@@ -31,13 +45,21 @@
 						<f:selectItems value="#{beanEmpresa.cidades}" />
 					</p:selectOneMenu>
 					
-					<p:inputText id="empresa_email" placeholder="E-mail" styleClass="inputsCadastro"  />
+					<p:inputText id="empresa_email" placeholder="E-mail" styleClass="inputsCadastro" value="#{beanEmpresa.empresa.email}">
+							<p:ajax/>
+					</p:inputText>	
 					
-					<p:inputText id="empresa_login" placeholder="Login" styleClass="inputsCadastro" value="#{beanEmpresa.empresa.login}"/>
+					<p:inputText id="empresa_login" placeholder="Login" styleClass="inputsCadastro" value="#{beanEmpresa.empresa.login}">
+							<p:ajax/>
+					</p:inputText>
 					
-					<p:password id="empresa_senha" placeholder="Senha" styleClass="inputsCadastro" value="#{beanEmpresa.empresa.senha}" />
+					<p:password id="empresa_senha" placeholder="Senha" styleClass="inputsCadastro" value="#{beanEmpresa.empresa.senha}">
+							<p:ajax/>
+					</p:password>
 					
-					<p:password id="empresa_confirmaSenha" placeholder="Confirmar Senha" styleClass="inputsCadastro" />
+					<p:password id="empresa_confirmaSenha" placeholder="Confirmar Senha" styleClass="inputsCadastro">
+							<p:ajax/>
+					</p:password>
 					
 					<p:selectOneMenu id="plano" value="#{beanEmpresa.empresa.plano}" converter="planoConverter" style="margin-top: 10px">
 						<f:selectItem itemLabel="Selecione Plano" itemValue="" />
@@ -50,7 +72,8 @@
 			</div>
 			<div style="width: 800px; height: 480px; margin: 65px 0 0 55px">
 				<label style="font-family: sans-serif; font-size: 22px; color: #787878">
-					Extratos Fácil facilita sua consulta aos extratos gerados pelo via fácil.</label>
+					Simplificando seu processo de consulta dos extratos do via fácil! <br></br>
+					Veja como é simples e útil usar o Extratos Fácil: </label>
 					
 				<img src="./resource/images/banner.jpg" style="width: 750px; height: 450px" />	
 			</div>

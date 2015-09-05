@@ -170,23 +170,25 @@ public class SessionEmpresa {
 				// Obtemos a data alterada
 				data = c.getTime();
 				empresa.setVencimento(data);
-			}
-			// verifica se a senha foi alterada
-			try {
-				Empresa temp = new Empresa();
-				temp.setId(empresa.getId());
-				temp = this.controller.find(temp);
-				if (!temp.getSenha().equals(empresa.getSenha())) {
-					// criptografia da senha
-					empresa.setSenha(this.crip(empresa.getSenha()));
+			
+			} else {
+				// verifica se a senha foi alterada
+				try {
+					Empresa temp = new Empresa();
+					temp.setId(empresa.getId());
+					temp = this.controller.find(temp);
+					if (!temp.getSenha().equals(empresa.getSenha())) {
+						// criptografia da senha
+						empresa.setSenha(this.crip(empresa.getSenha()));
+					}
+					return true;
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-
 		}
-
+		empresa.setSenha(this.crip(empresa.getSenha()));
 		return true;
 	}
 
@@ -194,44 +196,38 @@ public class SessionEmpresa {
 	private boolean validaUnique(Empresa empresa) {
 		Empresa temp = new Empresa();
 		try {
-			temp = this.controller
-					.getObjectByHQLCondition("from Empresa where razaoSocial = '"
-							+ empresa.getRazaoSocial() + "'");
+			temp = this.controller.getObjectByHQLCondition("from Empresa where razaoSocial = '"	+ empresa.getRazaoSocial() + "'");
 		} catch (Exception e) {
 			temp = null;
 			e.printStackTrace();
 		}
-		if (temp == null) {
+		if (temp != null) {
 			Mensagem.msgRasaoSocial();
 			return false;
 		}
 
 		try {
-			temp = this.controller
-					.getObjectByHQLCondition("from Empresa where cnpj = '"
-							+ empresa.getCnpj() + "'");
+			temp = this.controller.getObjectByHQLCondition("from Empresa where cnpj = '" + empresa.getCnpj() + "'");
 		} catch (Exception e) {
 			temp = null;
 			e.printStackTrace();
 		}
-		if (temp == null) {
+		if (temp != null) {
 			Mensagem.msgCNPJ();
 			return false;
 		}
 
 		try {
-			temp = this.controller
-					.getObjectByHQLCondition("from Empresa where login = '"
-							+ empresa.getLogin() + "'");
+			temp = this.controller.getObjectByHQLCondition("from Empresa where login = '" + empresa.getLogin() + "'");
 		} catch (Exception e) {
 			temp = null;
 			e.printStackTrace();
 		}
-		if (temp == null) {
+		if (temp != null) {
 			Mensagem.msgLogin();
 			return false;
 		}
-		return false;
+		return true;
 	}
 
 	private String crip(String senha) {
@@ -269,7 +265,7 @@ public class SessionEmpresa {
 			// System.out.println("O email " + email + " e valido");
 			return true;
 		} else {
-			// System.out.println("O E-mail " + email + " é inválido");
+			// System.out.println("O E-mail " + email + " ï¿½ invï¿½lido");
 			return false;
 		}
 	}
@@ -371,8 +367,7 @@ public class SessionEmpresa {
 			// tente buscar o usuario
 			try {
 				empresa.setSenha(this.crip(empresa.getSenha()));
-				empresa = this.controller.find(empresa,
-						Controller.SEARCH_EQUALS_STRING);
+				empresa = this.controller.find(empresa, Controller.SEARCH_EQUALS_STRING);
 			} catch (Exception e) {
 				empresa = null;
 				e.printStackTrace();
