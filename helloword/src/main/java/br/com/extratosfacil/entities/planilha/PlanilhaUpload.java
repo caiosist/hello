@@ -8,9 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import br.com.extratosfacil.entities.Empresa;
 
 /**
  * Classe que representa a planilha de que o usu�rio far� upload
@@ -54,6 +57,11 @@ public class PlanilhaUpload implements Serializable {
 	 */
 	@Column(nullable = false)
 	private String path;
+	/**
+	 * 
+	 */
+	@ManyToOne
+	private Empresa empresa;
 
 	/*-------------------------------------------------------------------
 	 *				 		     CONSTRUCTORS
@@ -76,6 +84,18 @@ public class PlanilhaUpload implements Serializable {
 
 	public Date getData() {
 		return data;
+	}
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public void setData(Date data) {

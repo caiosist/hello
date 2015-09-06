@@ -91,6 +91,8 @@ public class SessionPlanilhaDownload {
 		PlanilhaDownload planilha = new PlanilhaDownload();
 		planilha.setData(new Date());
 		planilha.setPath(arquivo);
+		planilha.setEmpresa((Empresa) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("empresa"));
 		try {
 			this.controller.insert(planilha);
 		} catch (Exception e) {

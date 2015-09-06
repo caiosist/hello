@@ -20,6 +20,14 @@ public class Mensagem {
 						"Excluido com sucesso", ""));
 		return "";
 	}
+	
+	public static void msgUsuarioNaoConfirmado() {
+		FacesContext.getCurrentInstance().addMessage(
+				null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO,
+						"Conta aguardando confirmação!", "Por Favor verifique seu e-mail."));
+		
+	}
 
 	public static String msgNotRemove() {
 		FacesContext.getCurrentInstance().addMessage(
@@ -65,7 +73,7 @@ public class Mensagem {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"E-mail Invalido!", ""));
+						"E-mail Invalido ou já cadastrado!", ""));
 	}
 
 	public static void msgUsuarioNaoEncontrado() {
@@ -150,4 +158,6 @@ public class Mensagem {
 						"O E-mail informado não esta cadastrado em nossa base de dados!",
 						""));
 	}
+
+
 }

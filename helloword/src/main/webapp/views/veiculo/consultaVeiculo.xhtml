@@ -57,8 +57,8 @@
 			<p:separator />
 
 			<p:dataTable id="cVeiculoTabelaVeiculo"
-				value="#{beanVeiculo.listaVeiculos}" var="veiculo"
-				emptyMessage="Nenhum veículo encontrado!">
+				value="#{beanVeiculo.listaVeiculos}" var="veiculo" scrollable="true"
+				scrollHeight="330" emptyMessage="Nenhum veículo encontrado!">
 				<p:column headerText="Código">
 					<h:outputText value="#{veiculo.id}" />
 				</p:column>
@@ -78,14 +78,6 @@
 					<p:commandButton id="selectVeiculo" icon="ui-icon-pencil"
 						update=":form:pnVeiculo" title="Detalhes"
 						onclick="PF('dManterVeiculo').show()">
-						<f:setPropertyActionListener value="#{veiculo}"
-							target="#{beanVeiculo.veiculo}" />
-					</p:commandButton>
-				</p:column>
-
-				<p:column headerText="Excluir">
-					<p:commandButton onclick="PF('confirmation').show()"
-						icon="ui-icon-trash" title="Excluir Veículo">
 						<f:setPropertyActionListener value="#{veiculo}"
 							target="#{beanVeiculo.veiculo}" />
 					</p:commandButton>

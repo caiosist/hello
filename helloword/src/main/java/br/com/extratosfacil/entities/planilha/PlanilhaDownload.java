@@ -8,9 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import br.com.extratosfacil.entities.Empresa;
 
 /**
 * Classe que representa a planilha que ser� dispon�vel para download
@@ -55,6 +58,12 @@ public class PlanilhaDownload implements Serializable {
 	@Column(nullable = false)
 	private String path;
 	
+	/**
+	 * 
+	 */
+	@ManyToOne
+	private Empresa empresa;
+	
 	/*-------------------------------------------------------------------
 	 *				 		     CONSTRUCTORS
 	 *-------------------------------------------------------------------*/
@@ -72,6 +81,14 @@ public class PlanilhaDownload implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 
 	public Date getData() {

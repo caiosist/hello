@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
+import br.com.extratosfacil.entities.Empresa;
 import br.com.extratosfacil.entities.planilha.PlanilhaDownload;
 import br.com.extratosfacil.sessions.SessionPlanilhaDownload;
 
@@ -125,6 +126,8 @@ public class BeanPlanilhaDownload {
 	public void reinit() {
 		this.planilhaDownload = new PlanilhaDownload();
 		this.selected = new PlanilhaDownload();
+		this.planilhas = new ArrayList<PlanilhaDownload>();
+		this.find();
 	}
 
 	public List<PlanilhaDownload> getPlanilhas() {
@@ -136,6 +139,10 @@ public class BeanPlanilhaDownload {
 	}
 
 	public void find() {
+		this.planilhaDownload = new PlanilhaDownload();
+		this.planilhaDownload.setEmpresa((Empresa) FacesContext
+				.getCurrentInstance().getExternalContext().getSessionMap()
+				.get("empresa"));
 		this.planilhas = this.session.find(this.planilhaDownload);
 	}
 
@@ -148,5 +155,10 @@ public class BeanPlanilhaDownload {
 		String d = String.valueOf(data.getDate());
 		d = d + "-" + String.valueOf(data.getMonth() + 1);
 		return d;
+	}
+
+	public String goToHistorico() {
+		this.reinit();
+		return "views/historico/historico";
 	}
 }

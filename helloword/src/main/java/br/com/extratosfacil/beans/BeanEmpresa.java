@@ -231,11 +231,11 @@ public class BeanEmpresa {
 	}
 
 	private void sendEmailConfirmacao() {
-		String link = "www.extratosfacil.com.br/confirmar.html?je="
-				+ empresa.getId();
+		String link = "www.extratosfacil.com.br/confirmar.html?sb{bpTpdjbm="
+				+ this.session.crip(empresa.getRazaoSocial());
 		String mensagem = "Cadastro realizado com sucesso. Clique no link para confirmar: "
 				+ link;
-		String assunto = "Cadastro Extratos FÃ¡cil";
+		String assunto = "Cadastro Extratos Fácil";
 		try {
 			Email.sendEmail(empresa.getEmail(), empresa.getNomeFantasia(),
 					assunto, mensagem);
@@ -305,6 +305,10 @@ public class BeanEmpresa {
 			if (u == null) {
 				Mensagem.msgUsuarioNaoEncontrado();
 			} else {
+				if (u.getStatus().equals("New")) {
+					Mensagem.msgUsuarioNaoConfirmado();
+					return;
+				}
 				usuarioLogado = true;
 				this.empresa = u;
 				FacesContext.getCurrentInstance().getExternalContext()
@@ -374,7 +378,7 @@ public class BeanEmpresa {
 			this.redirecionarLogin();
 			return false;
 		}
-		this.empresa.setStatus("Aguardando Pagamento");
+		this.empresa.setStatus("Pendente");
 		this.save();
 		return true;
 	}

@@ -53,8 +53,6 @@ public class BeanVeiculo {
 
 	private CommandButton botaoNovo;
 
-	private boolean statusBotaoNovo;
-
 	/*-------------------------------------------------------------------
 	 * 		 					CONSTRUCTOR
 	 *-------------------------------------------------------------------*/
@@ -83,10 +81,6 @@ public class BeanVeiculo {
 
 	public boolean isStatusBotaoNovo() {
 		return this.verificaPlano();
-	}
-
-	public void setStatusBotaoNovo(boolean statusBotaoNovo) {
-		this.statusBotaoNovo = statusBotaoNovo;
 	}
 
 	public List<String> getCategorias() {
@@ -142,6 +136,7 @@ public class BeanVeiculo {
 		this.filtro = new Veiculo();
 		this.selected = new Veiculo();
 		this.listaVeiculos = new ArrayList<Veiculo>();
+		this.carregaVeiculo();
 	}
 
 	public void limpar() {
@@ -202,6 +197,8 @@ public class BeanVeiculo {
 	}
 
 	public void carregaVeiculo() {
+		this.veiculo.setEmpresa((Empresa) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("empresa"));
 		this.listaVeiculos = this.session.findList(new Veiculo());
 	}
 
@@ -244,6 +241,11 @@ public class BeanVeiculo {
 		}
 		return false;
 
+	}
+
+	public String goToVeiculo() {
+		this.reinit();
+		return "views/veiculo/consultaVeiculo";
 	}
 
 }

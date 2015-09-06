@@ -400,7 +400,8 @@ public class SessionPlanilhaUpload {
 	}
 
 	public boolean validaPlanilha(PlanilhaUpload planilhaUpload) {
-		// TODO Auto-generated method stub
+		planilhaUpload.setEmpresa((Empresa) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("empresa"));
 		return true;
 	}
 

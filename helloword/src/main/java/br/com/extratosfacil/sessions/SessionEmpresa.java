@@ -170,7 +170,7 @@ public class SessionEmpresa {
 				// Obtemos a data alterada
 				data = c.getTime();
 				empresa.setVencimento(data);
-			
+
 			} else {
 				// verifica se a senha foi alterada
 				try {
@@ -196,7 +196,9 @@ public class SessionEmpresa {
 	private boolean validaUnique(Empresa empresa) {
 		Empresa temp = new Empresa();
 		try {
-			temp = this.controller.getObjectByHQLCondition("from Empresa where razaoSocial = '"	+ empresa.getRazaoSocial() + "'");
+			temp = this.controller
+					.getObjectByHQLCondition("from Empresa where razaoSocial = '"
+							+ empresa.getRazaoSocial() + "'");
 		} catch (Exception e) {
 			temp = null;
 			e.printStackTrace();
@@ -207,7 +209,9 @@ public class SessionEmpresa {
 		}
 
 		try {
-			temp = this.controller.getObjectByHQLCondition("from Empresa where cnpj = '" + empresa.getCnpj() + "'");
+			temp = this.controller
+					.getObjectByHQLCondition("from Empresa where cnpj = '"
+							+ empresa.getCnpj() + "'");
 		} catch (Exception e) {
 			temp = null;
 			e.printStackTrace();
@@ -218,7 +222,9 @@ public class SessionEmpresa {
 		}
 
 		try {
-			temp = this.controller.getObjectByHQLCondition("from Empresa where login = '" + empresa.getLogin() + "'");
+			temp = this.controller
+					.getObjectByHQLCondition("from Empresa where login = '"
+							+ empresa.getLogin() + "'");
 		} catch (Exception e) {
 			temp = null;
 			e.printStackTrace();
@@ -227,10 +233,23 @@ public class SessionEmpresa {
 			Mensagem.msgLogin();
 			return false;
 		}
+
+		try {
+			temp = this.controller
+					.getObjectByHQLCondition("from Empresa where email = '"
+							+ empresa.getEmail() + "'");
+		} catch (Exception e) {
+			temp = null;
+			e.printStackTrace();
+		}
+		if (temp != null) {
+			Mensagem.msgEmail();
+			return false;
+		}
 		return true;
 	}
 
-	private String crip(String senha) {
+	public String crip(String senha) {
 		char[] crip = new char[senha.length()];
 		char c;
 		int charVal = 0;
@@ -367,7 +386,8 @@ public class SessionEmpresa {
 			// tente buscar o usuario
 			try {
 				empresa.setSenha(this.crip(empresa.getSenha()));
-				empresa = this.controller.find(empresa, Controller.SEARCH_EQUALS_STRING);
+				empresa = this.controller.find(empresa,
+						Controller.SEARCH_EQUALS_STRING);
 			} catch (Exception e) {
 				empresa = null;
 				e.printStackTrace();
@@ -406,7 +426,10 @@ public class SessionEmpresa {
 			empresa = this.controller.find(empresa);
 			if (empresa != null) {
 				String assunto = "Recuperar Senha";
-				String mensagem = "Clique no Link para alterar sua Senha \n \n extratosfacil.com.br/recuperar.html?je=1&sb{bp=uftuf";
+				String mensagem = "Clique no Link para alterar sua Senha \n \n extratosfacil.com.br/recuperar.html?je="
+						+ empresa.getId()
+						+ "&sb{bp="
+						+ this.crip(empresa.getRazaoSocial());
 				Email.sendEmail(empresa.getEmail(), empresa.getNomeFantasia(),
 						assunto, mensagem);
 				return empresa;
@@ -423,10 +446,10 @@ public class SessionEmpresa {
 		try {
 			Map<String, String> rec = FacesContext.getCurrentInstance()
 					.getExternalContext().getRequestParameterMap();
-			String id = rec.get(this.crip("id"));
+			String razao = rec.get(this.crip("razaoSocial"));
 			Empresa temp = new Empresa();
-			if (id != null) {
-				temp.setId(Long.valueOf(id));
+			if (razao != null) {
+				temp.setRazaoSocial(this.desfazCrip(razao));
 				temp = this.controller.find(temp);
 				return temp;
 			}

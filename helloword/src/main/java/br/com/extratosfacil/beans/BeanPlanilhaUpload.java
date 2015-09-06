@@ -158,6 +158,7 @@ public class BeanPlanilhaUpload {
 
 	public void reinit() {
 		this.planilhaUpload = new PlanilhaUpload();
+		this.itens = new ArrayList<ItemPlanilhaDownload>();
 	}
 
 	public String save() throws Exception {
@@ -167,15 +168,15 @@ public class BeanPlanilhaUpload {
 		if (this.planilhaUpload.getId() != null) {
 			return this.update();
 		}
-		if (this.session.validaPlanilha(this.planilhaUpload)) {
-			if (this.session.save(planilhaUpload)) {
-				this.reinit();
-				Mensagem.msgUpload();
-				sucesso = true;
-				context.addCallbackParam("sucesso", sucesso);
-				return "";
-			}
+
+		if (this.session.save(planilhaUpload)) {
+			this.planilhaUpload = new PlanilhaUpload();
+			Mensagem.msgUpload();
+			sucesso = true;
+			context.addCallbackParam("sucesso", sucesso);
+			return "";
 		}
+
 		context.addCallbackParam("sucesso", sucesso);
 		return "";
 	}
@@ -186,8 +187,7 @@ public class BeanPlanilhaUpload {
 
 		if (this.session.validaPlanilha(this.planilhaUpload)) {
 			if (this.session.update(this.planilhaUpload)) {
-				this.reinit();
-				// this.carregaEmpresa();
+				this.planilhaUpload = new PlanilhaUpload();
 				sucesso = true;
 				context.addCallbackParam("sucesso", sucesso);
 				return Mensagem.msgUpdate();
@@ -227,5 +227,10 @@ public class BeanPlanilhaUpload {
 		SessionPlanilhaDownload sessionPD = new SessionPlanilhaDownload();
 		sessionPD.criaPlanilhaDownload(wb);
 
+	}
+
+	public String goToGerarPlanilha() {
+		this.reinit();
+		return "views/planilha/gerarPlanilha";
 	}
 }

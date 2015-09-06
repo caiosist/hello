@@ -101,7 +101,6 @@ public class BeanPlano {
 	 *-------------------------------------------------------------------*/
 
 	public void reinit() {
-
 		this.plano = new Plano();
 		this.filtro = new Plano();
 		this.selected = new Plano();
@@ -167,5 +166,10 @@ public class BeanPlano {
 
 	public void novo() {
 		this.setPlano(new Plano());
+	}
+
+	public String goToMeuPlano() {
+		this.reinit();
+		return "views/plano/meuPlano";
 	}
 }
