@@ -108,7 +108,7 @@ public class SessionPlanilhaUpload {
 
 			XSSFWorkbook workbook = new XSSFWorkbook(fisPlanilha);
 
-			XSSFSheet sheet = workbook.getSheet("Passagens de Ped·gio");
+			XSSFSheet sheet = workbook.getSheet("Passagens de Ped√°gio");
 
 			// retorna todas as linhas da planilha 0 (aba 1)
 			Iterator<Row> rowIterator = sheet.iterator();
@@ -209,7 +209,7 @@ public class SessionPlanilhaUpload {
 			HSSFWorkbook workbook = new HSSFWorkbook(fisPlanilha);
 			;
 			// recuperamos apenas a primeira aba ou primeira planilha
-			HSSFSheet sheet = workbook.getSheet("Passagens de Ped·gio");
+			HSSFSheet sheet = workbook.getSheet("Passagens de Ped√°gio");
 
 			// retorna todas as linhas da planilha 0 (aba 1)
 			Iterator<Row> rowIterator = sheet.iterator();
@@ -430,7 +430,7 @@ public class SessionPlanilhaUpload {
 	}
 
 	// verifica se o nome da primeira e quarta abas da planilha estao corretos
-	// para validar se È a planilha verdadeira
+	// para validar se ÔøΩ a planilha verdadeira
 	@SuppressWarnings("resource")
 	public boolean validaPlanilha(String path, boolean xlsx) {
 
@@ -445,7 +445,7 @@ public class SessionPlanilhaUpload {
 			fisPlanilha = new FileInputStream(file);
 
 			HSSFWorkbook workbook = new HSSFWorkbook(fisPlanilha);
-			HSSFSheet sheet = workbook.getSheet("Passagens de Ped·gio");
+			HSSFSheet sheet = workbook.getSheet("Passagens de Ped√°gio");
 
 			if (sheet == null) {
 				Mensagem.msgPlanilhaErrada();
@@ -476,7 +476,7 @@ public class SessionPlanilhaUpload {
 			fisPlanilha = new FileInputStream(file);
 
 			XSSFWorkbook workbook = new XSSFWorkbook(fisPlanilha);
-			XSSFSheet sheet = workbook.getSheet("Passagens de Ped·gio");
+			XSSFSheet sheet = workbook.getSheet("Passagens de Ped√°gio");
 
 			if (sheet == null) {
 				Mensagem.msgPlanilhaErrada();

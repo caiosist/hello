@@ -147,10 +147,6 @@ public class SessionEmpresa {
 				|| (empresa.getRazaoSocial().trim().equals(""))) {
 			Mensagem.msgIncompleto();
 			return false;
-		} else if ((empresa.getPlano() == null)
-				|| (empresa.getPlano().getId() == null)) {
-			Mensagem.msgIncompleto();
-			return false;
 		} else if ((empresa.getSenha() == null)
 				|| (empresa.getSenha().trim().equals(""))) {
 			Mensagem.msgIncompleto();
@@ -426,7 +422,7 @@ public class SessionEmpresa {
 			empresa = this.controller.find(empresa);
 			if (empresa != null) {
 				String assunto = "Recuperar Senha";
-				String mensagem = "Clique no Link para alterar sua Senha \n \n extratosfacil.com.br/recuperar.html?je="
+				String mensagem = "Clique no link para alterar sua senha: \n \n extratosfacil.com.br/recuperar.html?je="
 						+ empresa.getId()
 						+ "&sb{bp="
 						+ this.crip(empresa.getRazaoSocial());

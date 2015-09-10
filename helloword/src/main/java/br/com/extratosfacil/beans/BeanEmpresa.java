@@ -235,7 +235,7 @@ public class BeanEmpresa {
 				+ this.session.crip(empresa.getRazaoSocial());
 		String mensagem = "Cadastro realizado com sucesso. Clique no link para confirmar: "
 				+ link;
-		String assunto = "Cadastro Extratos Fácil";
+		String assunto = "Cadastro Extratos FÃ¡cil";
 		try {
 			Email.sendEmail(empresa.getEmail(), empresa.getNomeFantasia(),
 					assunto, mensagem);

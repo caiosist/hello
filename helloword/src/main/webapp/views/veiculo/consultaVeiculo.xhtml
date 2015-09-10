@@ -10,7 +10,8 @@
 	<ui:define name="pageTitle">Consulta de Veículos</ui:define>
 	<ui:define name="body">
 		<p:panel id="cVeiculoPanel" style="border: none;">
-			<h2>Veículos cadastrados</h2>
+			<h:outputLabel styleClass="subtitlePages">Veículos</h:outputLabel>
+			
 			<h:panelGrid columns="7" cellpadding="2" style="border: 2px;">
 				<h:outputText value="Código" />
 				<h:outputText value="Modelo" />
@@ -25,7 +26,7 @@
 					<p:ajax />
 				</p:inputText>
 
-				<p:inputText maxlength="30"
+				<p:inputText maxlength="30" style="width: 450px"
 					value="#{beanVeiculo.filtro.modeloVeiculo}" onkeyup="up(this)"
 					onkeypress="return onlyLetters(event)" size="78">
 					<p:ajax />
@@ -98,7 +99,7 @@
 
 			<h:panelGrid rendered="#{beanVeiculo.botaoNovo.disabled}">
 				<h:outputText
-					value="Você Atingiu o Numero maximo de veiculos, para adicionar novos veiculos faca o upgrade do seu plano!" />
+					value="Você atingiu o número máximo de veículos, para adicionar novos veículos atualize seu plano!"/>
 			</h:panelGrid>
 
 		</p:panel>

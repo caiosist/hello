@@ -9,13 +9,8 @@
 	<ui:define name="pageTitle">Home</ui:define>
 	<ui:define name="body">
 		<p:panel style="border: none;">
-			<div class="page-header" style="color: gray">
-				<h1 align="center">
-					Bem Vindo
-					<h:outputText value="#{beanEmpresa.empresa.nomeFantasia}" />
-				</h1>
-			</div>
-
+			<h:outputLabel styleClass="subtitlePages">Meu Plano </h:outputLabel>
+		
 			<p:separator />
 
 			<p:dataTable id="gridPlanilha"
@@ -24,7 +19,7 @@
 				emptyMessage="Nenhum registro encontrado!">
 
 				<f:facet name="header">
-           			Histórico de Planilhas Geradas
+           			Histórico de planilhas geradas
        		 	</f:facet>
 
 				<p:column headerText="Data">

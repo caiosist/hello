@@ -9,7 +9,7 @@ public class Mensagem {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Salvo com sucesso", ""));
+						"Os dados foram salvos com sucesso", ""));
 		return "";
 	}
 
@@ -17,7 +17,7 @@ public class Mensagem {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Excluido com sucesso", ""));
+						"Os dados foram exclu√≠dos com sucesso", ""));
 		return "";
 	}
 	
@@ -25,7 +25,7 @@ public class Mensagem {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Conta aguardando confirmaÁ„o!", "Por Favor verifique seu e-mail."));
+						"Conta aguardando confirma√ß√£o!", "Por favor, verifique o seu e-mail."));
 		
 	}
 
@@ -33,7 +33,7 @@ public class Mensagem {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"N„o È possivel excluir!", ""));
+						"N√£o foi poss√≠vel excluir!", ""));
 		return "";
 	}
 
@@ -41,7 +41,7 @@ public class Mensagem {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Atualizado com sucesso!", ""));
+						"Os dados foram atualizados com sucesso!", ""));
 		return "";
 	}
 
@@ -49,7 +49,7 @@ public class Mensagem {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Upload realizado com sucesso!", "Clique em \"Baixar Planilha\" para Baixar a planilha com as CorreÁıes!"));
+						"Upload realizado com sucesso!", "Clique em \"Baixar Planilha\" para baixar a planilha com as corre√ß√µes!"));
 		return "";
 	}
 	
@@ -57,14 +57,14 @@ public class Mensagem {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"Por Favor preencha todos os campos!", ""));
+						"Por favor, preencha todos os campos!", ""));
 
 	}
 
 	public static void msgCNPJ() {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR, "CNPJ Invalido!",
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "CNPJ inv√°lido!",
 						""));
 
 	}
@@ -73,14 +73,14 @@ public class Mensagem {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"E-mail Invalido ou j· cadastrado!", ""));
+						"E-mail inv√°lido ou j√° cadastrado!", ""));
 	}
 
 	public static void msgUsuarioNaoEncontrado() {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"Usuario Invalido!", ""));
+						"Usu√°rio inv√°lido!", ""));
 
 	}
 
@@ -88,7 +88,7 @@ public class Mensagem {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"J· Existe um veÌculo cadastrado com esta Placa!", ""));
+						"J√° existe um ve√≠culo cadastrado com esta placa!", ""));
 
 	}
 
@@ -99,7 +99,7 @@ public class Mensagem {
 						null,
 						new FacesMessage(
 								FacesMessage.SEVERITY_ERROR,
-								"Login existente, por favor escolha um login diferente!",
+								"Login j√° existente, por favor escolha um login diferente!",
 								""));
 
 	}
@@ -108,7 +108,7 @@ public class Mensagem {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"J· Existe uma Empresa cadastrada com este CNPJ!", ""));
+						"J√° existe uma empresa cadastrada com este CNPJ!", ""));
 
 	}
 
@@ -119,7 +119,7 @@ public class Mensagem {
 						null,
 						new FacesMessage(
 								FacesMessage.SEVERITY_ERROR,
-								"J· Existe uma Empresa cadastrada com esta Ras„o Social!",
+								"J√° existe uma empresa cadastrada com esta raz√£o social!",
 								""));
 
 	}
@@ -128,8 +128,8 @@ public class Mensagem {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"A planilha enviada esta incorreta ou foi modificada!",
-						"Por favor selecione a planilha correta!"));
+						"A planilha enviada est√° incorreta ou foi modificada.",
+						"Por favor, selecione a planilha correta!"));
 
 	}
 
@@ -137,8 +137,8 @@ public class Mensagem {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"A planilha enviada n„o pertence a empresa cadastrada!",
-						"Por favor selecione a planilha correta!"));
+						"A planilha enviada n√£o pertence a empresa cadastrada.",
+						"Por favor, selecione a planilha correta!"));
 		
 	}
 
@@ -146,7 +146,7 @@ public class Mensagem {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"O campo Confirmar Senha n„o corresponde a Senha digitada!",
+						"O campo Confirmar Senha n√£o corresponde a senha digitada!",
 						""));
 		
 	}
@@ -155,9 +155,7 @@ public class Mensagem {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"O E-mail informado n„o esta cadastrado em nossa base de dados!",
+						"O e-mail informado n√£o est√° cadastrado em nossa base de dados!",
 						""));
 	}
-
-
 }
