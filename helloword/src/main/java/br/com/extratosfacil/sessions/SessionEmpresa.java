@@ -12,12 +12,12 @@ import javax.faces.context.FacesContext;
 import org.apache.commons.mail.EmailException;
 import org.hibernate.exception.ConstraintViolationException;
 
+import br.com.extratosfacil.constantes.Mensagem;
 import br.com.extratosfacil.entities.Email;
 import br.com.extratosfacil.entities.Empresa;
 import br.com.extratosfacil.entities.Plano;
 import br.com.extratosfacil.entities.location.Cidade;
 import br.com.extratosfacil.entities.location.Estado;
-import br.com.extratosfacil.messages.Mensagem;
 import br.com.jbc.controller.Controller;
 
 /**

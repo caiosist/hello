@@ -71,12 +71,6 @@ public class Empresa implements Serializable {
 	/**
 	 * 
 	 */
-	@ManyToOne
-	private Plano plano;
-
-	/**
-	 * 
-	 */
 	@Column(length = 20, unique = true, nullable = false)
 	private String login;
 
@@ -105,6 +99,12 @@ public class Empresa implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date vencimento;
 
+	/**
+	 * 
+	 */
+	@ManyToOne
+	private Plano plano;
+
 	/*-------------------------------------------------------------------
 	 *				 		     CONSTRUCTORS
 	 *-------------------------------------------------------------------*/
@@ -127,6 +127,18 @@ public class Empresa implements Serializable {
 
 	public String getRazaoSocial() {
 		return razaoSocial;
+	}
+
+	public Plano getPlano() {
+		return plano;
+	}
+
+	public void setPlano(Plano plano) {
+		this.plano = plano;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public void setRazaoSocial(String razaoSocial) {
@@ -155,14 +167,6 @@ public class Empresa implements Serializable {
 
 	public void setCidade(Cidade cidade) {
 		this.cidade = cidade;
-	}
-
-	public Plano getPlano() {
-		return plano;
-	}
-
-	public void setPlano(Plano plano) {
-		this.plano = plano;
 	}
 
 	public String getLogin() {

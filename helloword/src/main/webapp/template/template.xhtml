@@ -28,7 +28,7 @@
 }
 
 .bt-download {
-	cursor: pointer; 
+	cursor: pointer;
 	height: 25px;
 	width: 100px;
 	font-style: normal !important;
@@ -84,7 +84,6 @@
 	font-family: sans-serif !important;
 	font-size: 14px !important;
 }
-
 </style>
 	<script type="text/javascript" src="resource/js/validateDialog.js"></script>
 	<script type="text/javascript" src="resource/js/validateKeys.js"></script>
@@ -93,7 +92,7 @@
 <h:body>
 	<h:inputHidden value="#{beanEmpresa.usuarioLogado}" />
 	<h:form id="form" autocomplete="off">
-		<p:messages id="mensagens" showDetail="true" autoUpdate="true"
+		<p:growl id="mensagens" showDetail="true" autoUpdate="true"
 			closable="true" />
 		<ui:insert name="body">Page Body</ui:insert>
 	</h:form>

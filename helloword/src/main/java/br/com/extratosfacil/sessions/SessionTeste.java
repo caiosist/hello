@@ -16,10 +16,10 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import br.com.extratosfacil.constantes.Mensagem;
 import br.com.extratosfacil.entities.Veiculo;
 import br.com.extratosfacil.entities.planilha.ItemPlanilhaDownload;
 import br.com.extratosfacil.entities.planilha.ItemPlanilhaUpload;
-import br.com.extratosfacil.messages.Mensagem;
 import br.com.jbc.controller.Controller;
 
 /**

@@ -71,6 +71,7 @@ public class SessionPlano {
 	}
 
 	public boolean validaPlano(Plano plano) {
+		
 		return true;
 	}
 

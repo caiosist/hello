@@ -11,6 +11,7 @@ import javax.servlet.ServletContext;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import br.com.extratosfacil.constantes.Sessao;
 import br.com.extratosfacil.entities.Empresa;
 import br.com.extratosfacil.entities.planilha.PlanilhaDownload;
 import br.com.jbc.controller.Controller;
@@ -91,8 +92,7 @@ public class SessionPlanilhaDownload {
 		PlanilhaDownload planilha = new PlanilhaDownload();
 		planilha.setData(new Date());
 		planilha.setPath(arquivo);
-		planilha.setEmpresa((Empresa) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("empresa"));
+		planilha.setEmpresa(Sessao.getEmpresaSessao());
 		try {
 			this.controller.insert(planilha);
 		} catch (Exception e) {
@@ -112,8 +112,7 @@ public class SessionPlanilhaDownload {
 
 	public List<PlanilhaDownload> find(Date inicio, Date fim) {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		Empresa temp = (Empresa) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("empresa");
+		Empresa temp = Sessao.getEmpresaSessao();
 		try {
 			return this.controller
 					.getListByHQLCondition("From PlanilhaDownload where data >= '"
@@ -141,8 +140,7 @@ public class SessionPlanilhaDownload {
 
 	private String getNomeEmpresa() {
 		// Pega a empresa da sessao para dar nome a pasta da planilha
-		Empresa empresa = (Empresa) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("empresa");
+		Empresa empresa = Sessao.getEmpresaSessao();
 		if (empresa != null) {
 			return empresa.getRazaoSocial().trim();
 		}
@@ -151,8 +149,7 @@ public class SessionPlanilhaDownload {
 
 	// retorna as ultimas 3 planilhas geradas se houver
 	public List<PlanilhaDownload> findLast() {
-		Empresa temp = (Empresa) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("empresa");
+		Empresa temp = Sessao.getEmpresaSessao();
 		PlanilhaDownload plan = new PlanilhaDownload();
 		plan.setEmpresa(temp);
 		try {

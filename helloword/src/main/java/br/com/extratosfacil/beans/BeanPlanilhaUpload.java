@@ -20,10 +20,11 @@ import org.apache.poi.ss.usermodel.Row;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 
+import br.com.extratosfacil.constantes.Mensagem;
+import br.com.extratosfacil.constantes.Sessao;
 import br.com.extratosfacil.entities.Empresa;
 import br.com.extratosfacil.entities.planilha.ItemPlanilhaDownload;
 import br.com.extratosfacil.entities.planilha.PlanilhaUpload;
-import br.com.extratosfacil.messages.Mensagem;
 import br.com.extratosfacil.sessions.SessionPlanilhaDownload;
 import br.com.extratosfacil.sessions.SessionPlanilhaUpload;
 
@@ -148,8 +149,7 @@ public class BeanPlanilhaUpload {
 
 	private String getNomeEmpresa() {
 		// Pega a empresa da sessao para dar nome a pasta da planilha
-		Empresa empresa = (Empresa) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("empresa");
+		Empresa empresa = Sessao.getEmpresaSessao();
 		if (empresa != null) {
 			return empresa.getRazaoSocial().trim();
 		}

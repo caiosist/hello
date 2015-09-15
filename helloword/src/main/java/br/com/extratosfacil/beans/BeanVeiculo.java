@@ -5,15 +5,15 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.com.extratosfacil.constantes.Mensagem;
+import br.com.extratosfacil.constantes.Sessao;
 import br.com.extratosfacil.entities.Empresa;
 import br.com.extratosfacil.entities.Veiculo;
-import br.com.extratosfacil.messages.Mensagem;
 import br.com.extratosfacil.sessions.SessionVeiculo;
 
 /**
@@ -197,14 +197,12 @@ public class BeanVeiculo {
 	}
 
 	public void carregaVeiculo() {
-		this.veiculo.setEmpresa((Empresa) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("empresa"));
+		this.veiculo.setEmpresa(Sessao.getEmpresaSessao());
 		this.listaVeiculos = this.session.findList(this.veiculo);
 	}
 
 	public void find() throws Exception {
-		this.filtro.setEmpresa((Empresa) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("empresa"));
+		this.filtro.setEmpresa(Sessao.getEmpresaSessao());
 		this.listaVeiculos = this.session.findList(this.filtro);
 	}
 
@@ -228,8 +226,7 @@ public class BeanVeiculo {
 	}
 
 	private boolean verificaPlano() {
-		Empresa empresaTemp = (Empresa) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("empresa");
+		Empresa empresaTemp = Sessao.getEmpresaSessao();
 
 		if ((empresaTemp != null) && (botaoNovo != null)) {
 

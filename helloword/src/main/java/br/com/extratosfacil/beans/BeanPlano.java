@@ -9,8 +9,8 @@ import javax.faces.bean.SessionScoped;
 import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.com.extratosfacil.constantes.Mensagem;
 import br.com.extratosfacil.entities.Plano;
-import br.com.extratosfacil.messages.Mensagem;
 import br.com.extratosfacil.sessions.SessionPlano;
 
 /**
@@ -45,6 +45,8 @@ public class BeanPlano {
 	@Autowired
 	private SessionPlano session = new SessionPlano();
 
+	private Integer periodo;
+
 	/*-------------------------------------------------------------------
 	 * 		 					CONSTRUCTOR
 	 *-------------------------------------------------------------------*/
@@ -58,6 +60,14 @@ public class BeanPlano {
 
 	public SessionPlano getSession() {
 		return session;
+	}
+
+	public Integer getPeriodo() {
+		return periodo;
+	}
+
+	public void setPeriodo(Integer periodo) {
+		this.periodo = periodo;
 	}
 
 	public void setSession(SessionPlano session) {
@@ -171,5 +181,9 @@ public class BeanPlano {
 	public String goToMeuPlano() {
 		this.reinit();
 		return "views/plano/meuPlano";
+	}
+
+	public void assinar() {
+		
 	}
 }

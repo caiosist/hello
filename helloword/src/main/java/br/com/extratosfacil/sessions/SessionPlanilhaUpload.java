@@ -21,12 +21,13 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import br.com.extratosfacil.constantes.Mensagem;
+import br.com.extratosfacil.constantes.Sessao;
 import br.com.extratosfacil.entities.Empresa;
 import br.com.extratosfacil.entities.Veiculo;
 import br.com.extratosfacil.entities.planilha.ItemPlanilhaDownload;
 import br.com.extratosfacil.entities.planilha.ItemPlanilhaUpload;
 import br.com.extratosfacil.entities.planilha.PlanilhaUpload;
-import br.com.extratosfacil.messages.Mensagem;
 import br.com.jbc.controller.Controller;
 
 /**
@@ -321,8 +322,7 @@ public class SessionPlanilhaUpload {
 
 	private String getNomeEmpresa() {
 		// Pega a empresa da sessao para dar nome a pasta da planilha
-		Empresa empresa = (Empresa) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("empresa");
+		Empresa empresa = Sessao.getEmpresaSessao();
 		if (empresa != null) {
 			return empresa.getRazaoSocial();
 		}
@@ -343,8 +343,7 @@ public class SessionPlanilhaUpload {
 		// Setar a empresa no veiculo para a busca, no momento esta sendo um
 		// objeto vazio, posteriormente pegaremos a empresa da sessao do
 		// usuario
-		temp.setEmpresa((Empresa) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("empresa"));
+		temp.setEmpresa(Sessao.getEmpresaSessao());
 		// Buscar todos os veiculos da empresa
 		List<Veiculo> veiculos = new ArrayList<Veiculo>();
 		try {
@@ -400,8 +399,7 @@ public class SessionPlanilhaUpload {
 	}
 
 	public boolean validaPlanilha(PlanilhaUpload planilhaUpload) {
-		planilhaUpload.setEmpresa((Empresa) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("empresa"));
+		planilhaUpload.setEmpresa(Sessao.getEmpresaSessao());
 		return true;
 	}
 

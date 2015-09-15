@@ -11,10 +11,11 @@
 		<p:panel id="panel" style="border: none;">
 
 			<div align="center" class="page-header" style="color: #6A9A11">
-				<h2 style="font-size: 32px">
+				<h1 style="font-size: 40px">
 					Bem-vindo
-					<h:outputText value="#{beanEmpresa.empresa.nomeFantasia}" />!
-				</h2>
+					<h:outputText value="#{beanEmpresa.empresa.nomeFantasia}" />
+					!
+				</h1>
 
 
 				<h:panelGrid rendered="#{beanEmpresa.empresa.status == 'Pendente'}">
@@ -22,11 +23,11 @@
 						value="*Seu plano esta aguardando pagamento, por favor verifique a guia Meu Plano!" />
 				</h:panelGrid>
 
-				<br />
+				
 				<p:separator />
-				<br />
+	
 
-				<h:panelGrid>
+				<h:panelGrid rendered="#{beanEmpresa.empresa.plano != null}">
 					<p:dataTable id="gridPlanilha" dir="center"
 						value="#{beanPlanilhaDownload.lastPlanilhas}" scrollable="true"
 						var="planilha" emptyMessage="Nenhum registro encontrado!">
@@ -53,11 +54,45 @@
 							</center>
 						</p:column>
 					</p:dataTable>
-					<h:outputText value="*Para pesquisar planilhas geradas por data verifique a guia Histórico!"/>
+					<h:outputText
+						value="*Para pesquisar planilhas geradas por data verifique a guia Histórico!" />
 				</h:panelGrid>
 
 
+				<!-- Selecao de planos caso nao exista -->
 
+				<h:panelGrid rendered="#{beanEmpresa.empresa.plano == null}">
+
+					<h:outputText value="Numero de Veiculos" />
+					<p:inputText value="#{beanPlano.plano.quantidadeVeiculos}"
+						onkeypress="onlyNumbers(e)" />
+
+					<h:outputText value="Plano de pagamento" />
+					<p:selectOneRadio id="periodo" value="#{beanPlano.periodo}">
+						<f:selectItem itemLabel="Mensal" itemValue="1" />
+						<f:selectItem itemLabel="Trimestral - 6% de Desconto"
+							itemValue="3" />
+						<f:selectItem itemLabel="Semestral - 10% de Desconto"
+							itemValue="6" />
+						<f:selectItem itemLabel="Anual - 13% de desconto" itemValue="12" />
+					</p:selectOneRadio>
+
+					<p:commandButton value="Assinar" action="#{beanPlano.assinar}" />
+
+				</h:panelGrid>
+
+				<br /> <br />
+				<p:separator />
+				<h:panelGrid>
+					<h2 style="font-size: 32px">Veja abaixo um tutorial de como
+						utilizar o sistema Extratos Facil!</h2>
+					<br />
+					<div align="center">
+						<iframe width="560" height="315"
+							src="https://www.youtube.com/embed/8w3RLXM5CCk" frameborder="0"
+							allowfullscreen="true"></iframe>
+					</div>
+				</h:panelGrid>
 			</div>
 		</p:panel>
 	</ui:define>

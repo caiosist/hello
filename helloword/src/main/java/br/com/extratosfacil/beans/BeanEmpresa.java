@@ -11,12 +11,13 @@ import javax.faces.context.FacesContext;
 import org.apache.commons.mail.EmailException;
 import org.primefaces.context.RequestContext;
 
+import br.com.extratosfacil.constantes.Mensagem;
+import br.com.extratosfacil.constantes.Sessao;
 import br.com.extratosfacil.entities.Email;
 import br.com.extratosfacil.entities.Empresa;
 import br.com.extratosfacil.entities.Plano;
 import br.com.extratosfacil.entities.location.Cidade;
 import br.com.extratosfacil.entities.location.Estado;
-import br.com.extratosfacil.messages.Mensagem;
 import br.com.extratosfacil.sessions.SessionEmpresa;
 
 /**
@@ -55,6 +56,8 @@ public class BeanEmpresa {
 	private SessionEmpresa session = new SessionEmpresa();
 
 	private Boolean usuarioLogado = false;
+
+	private Boolean usuarioLogin = false;
 
 	private boolean recuperar = false;
 
@@ -96,6 +99,17 @@ public class BeanEmpresa {
 
 	public Empresa getUsuario() {
 		return usuario;
+	}
+
+	public Boolean getUsuarioLogin() {
+		if (usuarioLogado) {
+			Sessao.redireciona("index.html");
+		}
+		return usuarioLogin;
+	}
+
+	public void setUsuarioLogin(Boolean usuarioLogin) {
+		this.usuarioLogin = usuarioLogin;
 	}
 
 	public void setUsuario(Empresa usuario) {
@@ -142,15 +156,8 @@ public class BeanEmpresa {
 
 	public Boolean getUsuarioLogado() {
 		if (!usuarioLogado) {
-			try {
-				FacesContext.getCurrentInstance().getExternalContext()
-						.redirect("/helloword/login.html");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Sessao.redireciona("login.html");
 		}
-
 		return usuarioLogado;
 	}
 
@@ -230,7 +237,7 @@ public class BeanEmpresa {
 				context.addCallbackParam("sucesso", sucesso);
 				if (this.empresa.getStatus().equals("New")) {
 					this.reinit();
-					this.redirecionaSubscribe();
+					Sessao.redireciona("subscribe.html");
 					return "";
 				}
 				this.reinit();
@@ -311,10 +318,9 @@ public class BeanEmpresa {
 				}
 				usuarioLogado = true;
 				this.empresa = u;
-				FacesContext.getCurrentInstance().getExternalContext()
-						.redirect("/helloword/");
-				FacesContext.getCurrentInstance().getExternalContext()
-						.getSessionMap().put("empresa", this.empresa);
+				Sessao.setEmpresaSessao(this.empresa);
+				Sessao.redireciona("");
+
 			}
 
 		} catch (Exception e) {
@@ -324,10 +330,9 @@ public class BeanEmpresa {
 
 	public void logout() {
 		this.usuario = new Empresa();
-		FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
-				.put("empresa", null);
+		Sessao.setEmpresaSessao(null);
 
-		this.redirecionarLogin();
+		Sessao.redireciona("login.html");
 
 		FacesContext.getCurrentInstance().getExternalContext()
 				.invalidateSession();
@@ -337,7 +342,7 @@ public class BeanEmpresa {
 		this.empresa = this.session.validaRecovery();
 		if (this.empresa == null) {
 			this.empresa = new Empresa();
-			this.redirecionarLogin();
+			Sessao.redireciona("login.html");
 			return false;
 		}
 		return true;
@@ -353,30 +358,10 @@ public class BeanEmpresa {
 		}
 	}
 
-	public void redirecionarLogin() {
-		try {
-			FacesContext.getCurrentInstance().getExternalContext()
-					.redirect("/helloword/login.html");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void redirecionaSubscribe() {
-		try {
-			FacesContext.getCurrentInstance().getExternalContext()
-					.redirect("/helloword/subscribe.html");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 	public void enviarEmailRecuperarSenha() {
 		this.empresa = this.session.enviarEmailRecuperarSenha(this.empresa);
 		if (empresa.getId() != null) {
-			this.redirecionarLogin();
+			Sessao.redireciona("login.html");
 			this.empresa = new Empresa();
 		}
 	}
@@ -385,7 +370,7 @@ public class BeanEmpresa {
 		this.empresa = this.session.validaConfirmar();
 		if (this.empresa == null) {
 			this.empresa = new Empresa();
-			this.redirecionarLogin();
+			Sessao.redireciona("login.html");
 			return false;
 		}
 		this.empresa.setStatus("Pendente");

@@ -7,9 +7,10 @@ import javax.faces.context.FacesContext;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.com.extratosfacil.constantes.Mensagem;
+import br.com.extratosfacil.constantes.Sessao;
 import br.com.extratosfacil.entities.Empresa;
 import br.com.extratosfacil.entities.Veiculo;
-import br.com.extratosfacil.messages.Mensagem;
 import br.com.jbc.controller.Controller;
 
 /**
@@ -101,8 +102,7 @@ public class SessionVeiculo {
 			// deixa as placas em maiusculo
 			veiculo.setPlacaVeiculo(veiculo.getPlacaVeiculo().toUpperCase());
 			// capturar a empresa da sessao e setar no veiculo...
-			veiculo.setEmpresa((Empresa) FacesContext.getCurrentInstance()
-					.getExternalContext().getSessionMap().get("empresa"));
+			veiculo.setEmpresa(Sessao.getEmpresaSessao());
 			// veiculo.setEmpresa(null);
 		}
 

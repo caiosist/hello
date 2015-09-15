@@ -1,4 +1,4 @@
-package br.com.extratosfacil.messages;
+package br.com.extratosfacil.constantes;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -20,13 +20,14 @@ public class Mensagem {
 						"Os dados foram Excluidos com sucesso", ""));
 		return "";
 	}
-	
+
 	public static void msgUsuarioNaoConfirmado() {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Conta aguardando Confirma��o!", "Por favor, verifique o seu e-mail."));
-		
+						"Conta aguardando Confirma��o!",
+						"Por favor, verifique o seu e-mail."));
+
 	}
 
 	public static String msgNotRemove() {
@@ -46,13 +47,16 @@ public class Mensagem {
 	}
 
 	public static String msgUpload() {
-		FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Upload realizado com sucesso!", "Clique em \"Baixar Planilha\" para baixar a planilha com as correções!"));
+		FacesContext
+				.getCurrentInstance()
+				.addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO,
+								"Upload realizado com sucesso!",
+								"Clique em \"Baixar Planilha\" para baixar a planilha com as correções!"));
 		return "";
 	}
-	
+
 	public static void msgIncompleto() {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
@@ -85,10 +89,14 @@ public class Mensagem {
 	}
 
 	public static void msgPlaca() {
-		FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"Já existe um veículo cadastrado com esta placa!", ""));
+		FacesContext
+				.getCurrentInstance()
+				.addMessage(
+						null,
+						new FacesMessage(
+								FacesMessage.SEVERITY_ERROR,
+								"Já existe um veículo cadastrado com esta placa!",
+								""));
 
 	}
 
@@ -105,10 +113,14 @@ public class Mensagem {
 	}
 
 	public static void msgCNPJUnique() {
-		FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"Já existe uma empresa cadastrada com este CNPJ!", ""));
+		FacesContext
+				.getCurrentInstance()
+				.addMessage(
+						null,
+						new FacesMessage(
+								FacesMessage.SEVERITY_ERROR,
+								"Já existe uma empresa cadastrada com este CNPJ!",
+								""));
 
 	}
 
@@ -125,37 +137,49 @@ public class Mensagem {
 	}
 
 	public static void msgPlanilhaErrada() {
-		FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"A planilha enviada está incorreta ou foi modificada.",
-						"Por favor, selecione a planilha correta!"));
+		FacesContext
+				.getCurrentInstance()
+				.addMessage(
+						null,
+						new FacesMessage(
+								FacesMessage.SEVERITY_ERROR,
+								"A planilha enviada está incorreta ou foi modificada.",
+								"Por favor, selecione a planilha correta!"));
 
 	}
 
 	public static void msgEmpresaInvalida() {
-		FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"A planilha enviada não pertence a empresa cadastrada.",
-						"Por favor, selecione a planilha correta!"));
-		
+		FacesContext
+				.getCurrentInstance()
+				.addMessage(
+						null,
+						new FacesMessage(
+								FacesMessage.SEVERITY_ERROR,
+								"A planilha enviada não pertence a empresa cadastrada.",
+								"Por favor, selecione a planilha correta!"));
+
 	}
 
 	public static void msgConfSenha() {
-		FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"O campo Confirmar Senha não corresponde a senha digitada!",
-						""));
-		
+		FacesContext
+				.getCurrentInstance()
+				.addMessage(
+						null,
+						new FacesMessage(
+								FacesMessage.SEVERITY_ERROR,
+								"O campo Confirmar Senha não corresponde a senha digitada!",
+								""));
+
 	}
 
 	public static void msgEmailInvalido() {
-		FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"O e-mail informado não está cadastrado em nossa base de dados!",
-						""));
+		FacesContext
+				.getCurrentInstance()
+				.addMessage(
+						null,
+						new FacesMessage(
+								FacesMessage.SEVERITY_ERROR,
+								"O e-mail informado não está cadastrado em nossa base de dados!",
+								""));
 	}
 }

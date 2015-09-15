@@ -8,8 +8,8 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 
+import br.com.extratosfacil.constantes.Mensagem;
 import br.com.extratosfacil.entities.Usuario;
-import br.com.extratosfacil.messages.Mensagem;
 import br.com.extratosfacil.sessions.SessionUsuario;
 
 /**

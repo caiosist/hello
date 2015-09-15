@@ -8,6 +8,7 @@
 	<ui:define name="title">Extratos Fácil</ui:define>
 
 	<ui:define name="content">
+		<h:inputHidden value="#{beanEmpresa.usuarioLogin}" />
 		<div id="layoutMax">
 			<div
 				style="float: right; width: 400px; height: 480px; margin: 55px 50px 0 0">
@@ -52,7 +53,9 @@
 							event="change" />
 					</p:selectOneMenu>
 
-					<p:selectOneMenu id="cidade" converter="cidadeConverter" validatorMessage="Cidade Obrigatória!" converterMessage="Cidade Obrigatória!"
+					<p:selectOneMenu id="cidade" converter="cidadeConverter"
+						validatorMessage="Cidade Obrigatória!"
+						converterMessage="Cidade Obrigatória!"
 						value="#{beanEmpresa.empresa.cidade}" style="margin-top: 10px"
 						required="true" requiredMessage="Cidade obrigatória!">
 						<f:selectItem itemLabel="Selecione Cidade" itemValue="" />
@@ -107,6 +110,9 @@
 					<label
 						style="font-family: sans-serif; font-size: 22px; color: #669214">
 						VÍDEO COM TUTORIAL !!! </label>
+					<iframe width="560" height="315"
+						src="https://www.youtube.com/embed/8w3RLXM5CCk" frameborder="0"
+						allowfullscreen="true"></iframe>
 				</div>
 			</div>
 		</div>
