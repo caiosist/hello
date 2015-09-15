@@ -50,7 +50,7 @@ public class SessionVeiculo {
 		if (this.validaVeiculo(veiculo)) {
 			try {
 				this.controller.insert(veiculo);
-			}catch (ConstraintViolationException e) {
+			} catch (ConstraintViolationException e) {
 				e.printStackTrace();
 				Mensagem.msgPlaca();
 				return false;
@@ -67,10 +67,10 @@ public class SessionVeiculo {
 			try {
 				this.controller.update(veiculo);
 				return true;
-			}catch (ConstraintViolationException e) {
+			} catch (ConstraintViolationException e) {
 				e.printStackTrace();
 				return false;
-			}  catch (Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}

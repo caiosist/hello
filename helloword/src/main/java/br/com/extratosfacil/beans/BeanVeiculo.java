@@ -199,10 +199,12 @@ public class BeanVeiculo {
 	public void carregaVeiculo() {
 		this.veiculo.setEmpresa((Empresa) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("empresa"));
-		this.listaVeiculos = this.session.findList(new Veiculo());
+		this.listaVeiculos = this.session.findList(this.veiculo);
 	}
 
 	public void find() throws Exception {
+		this.filtro.setEmpresa((Empresa) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("empresa"));
 		this.listaVeiculos = this.session.findList(this.filtro);
 	}
 

@@ -17,7 +17,7 @@ public class Mensagem {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Os dados foram excluídos com sucesso", ""));
+						"Os dados foram Excluidos com sucesso", ""));
 		return "";
 	}
 	
@@ -25,7 +25,7 @@ public class Mensagem {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Conta aguardando confirmação!", "Por favor, verifique o seu e-mail."));
+						"Conta aguardando Confirma��o!", "Por favor, verifique o seu e-mail."));
 		
 	}
 
@@ -33,7 +33,7 @@ public class Mensagem {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"Não foi possível excluir!", ""));
+						"Nao foi possivel excluir!", ""));
 		return "";
 	}
 
@@ -64,7 +64,7 @@ public class Mensagem {
 	public static void msgCNPJ() {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR, "CNPJ inválido!",
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "CNPJ Invalido!",
 						""));
 
 	}
@@ -73,7 +73,7 @@ public class Mensagem {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"E-mail inválido ou já cadastrado!", ""));
+						"E-mail Invalido ou j� cadastrado!", ""));
 	}
 
 	public static void msgUsuarioNaoEncontrado() {

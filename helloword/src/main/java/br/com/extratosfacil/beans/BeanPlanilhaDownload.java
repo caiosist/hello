@@ -42,6 +42,8 @@ public class BeanPlanilhaDownload {
 
 	private List<PlanilhaDownload> planilhas = new ArrayList<PlanilhaDownload>();
 
+	private List<PlanilhaDownload> lastPlanilhas = new ArrayList<PlanilhaDownload>();
+
 	private Date inicio = new Date();
 
 	private Date fim = new Date();
@@ -66,6 +68,10 @@ public class BeanPlanilhaDownload {
 
 	public SessionPlanilhaDownload getSession() {
 		return session;
+	}
+
+	public void setLastPlanilhas(List<PlanilhaDownload> lastPlanilhas) {
+		this.lastPlanilhas = lastPlanilhas;
 	}
 
 	public Date getInicio() {
@@ -109,6 +115,11 @@ public class BeanPlanilhaDownload {
 
 	public void setFim(Date fim) {
 		this.fim = fim;
+	}
+
+	public List<PlanilhaDownload> getLastPlanilhas() {
+		this.carregaLastPlanilha();
+		return lastPlanilhas;
 	}
 
 	public void setSession(SessionPlanilhaDownload session) {
@@ -155,6 +166,17 @@ public class BeanPlanilhaDownload {
 		String d = String.valueOf(data.getDate());
 		d = d + "-" + String.valueOf(data.getMonth() + 1);
 		return d;
+	}
+
+	public void carregaLastPlanilha() {
+		this.lastPlanilhas = this.session.findLast();
+		int size = this.lastPlanilhas.size() -1;
+		if (size >= 2) {
+			for (int i = size; i > 2; i--) {
+				this.lastPlanilhas.remove(i);
+			}
+		}
+		
 	}
 
 	public String goToHistorico() {

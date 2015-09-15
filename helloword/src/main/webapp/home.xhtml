@@ -5,23 +5,61 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:head>
-	<link href="resource/css/bootstrap.min.css" rel="stylesheet" />
-	<link href="resource/css/bootstrap-responsive.min.css" rel="stylesheet" />
-	<link href="resource/css/style.css" rel="stylesheet" />
-</h:head>
-<h:body>
 
-	<h:form>
-		<p:panel style="border: none;">
-			<div class="page-header" style="color: #6A9A11">
-				<h2 align="center">
-					Bem-vindo ao Extratos Fácil!
+<ui:composition template="/template/template.xhtml">
+	<ui:define name="body">
+		<p:panel id="panel" style="border: none;">
+
+			<div align="center" class="page-header" style="color: #6A9A11">
+				<h2 style="font-size: 32px">
+					Bem-vindo
+					<h:outputText value="#{beanEmpresa.empresa.nomeFantasia}" />!
 				</h2>
+
+
+				<h:panelGrid rendered="#{beanEmpresa.empresa.status == 'Pendente'}">
+					<h:outputText style="color: red; font-size: 28px;"
+						value="*Seu plano esta aguardando pagamento, por favor verifique a guia Meu Plano!" />
+				</h:panelGrid>
+
+				<br />
+				<p:separator />
+				<br />
+
+				<h:panelGrid>
+					<p:dataTable id="gridPlanilha" dir="center"
+						value="#{beanPlanilhaDownload.lastPlanilhas}" scrollable="true"
+						var="planilha" emptyMessage="Nenhum registro encontrado!">
+
+						<f:facet name="header">
+           			Ultimas planilhas geradas
+       		 	</f:facet>
+
+						<p:column headerText="Data">
+							<center>
+								<h:outputText value="#{planilha.data}">
+									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00" />
+								</h:outputText>
+							</center>
+						</p:column>
+						<p:column headerText="Download">
+							<center>
+								<p:commandButton ajax="false"
+									icon="ui-icon-arrowreturnthick-1-s">
+									<f:setPropertyActionListener value="#{planilha}"
+										target="#{beanPlanilhaDownload.selected}" />
+									<p:fileDownload value="#{beanPlanilhaDownload.file}" />
+								</p:commandButton>
+							</center>
+						</p:column>
+					</p:dataTable>
+					<h:outputText value="*Para pesquisar planilhas geradas por data verifique a guia Histórico!"/>
+				</h:panelGrid>
+
+
+
 			</div>
 		</p:panel>
-
-	</h:form>
-
-</h:body>
+	</ui:define>
+</ui:composition>
 </html>

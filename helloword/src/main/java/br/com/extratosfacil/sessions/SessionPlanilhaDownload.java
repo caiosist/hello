@@ -112,13 +112,16 @@ public class SessionPlanilhaDownload {
 
 	public List<PlanilhaDownload> find(Date inicio, Date fim) {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
+		Empresa temp = (Empresa) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("empresa");
 		try {
 			return this.controller
 					.getListByHQLCondition("From PlanilhaDownload where data >= '"
 							+ df.format(inicio)
 							+ "' and data <= '"
-							+ df.format(fim) + "'");
+							+ df.format(fim)
+							+ "' and empresa_id = "
+							+ temp.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -144,6 +147,21 @@ public class SessionPlanilhaDownload {
 			return empresa.getRazaoSocial().trim();
 		}
 		return "empresa";
+	}
+
+	// retorna as ultimas 3 planilhas geradas se houver
+	public List<PlanilhaDownload> findLast() {
+		Empresa temp = (Empresa) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("empresa");
+		PlanilhaDownload plan = new PlanilhaDownload();
+		plan.setEmpresa(temp);
+		try {
+			return this.controller.findList(plan);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
 	}
 
 }

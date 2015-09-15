@@ -38,6 +38,8 @@ public class BeanEmpresa {
 
 	private Empresa empresa = new Empresa();
 
+	private Empresa usuario = new Empresa();
+
 	private Empresa selected = new Empresa();
 
 	private Empresa filtro = new Empresa();
@@ -70,11 +72,6 @@ public class BeanEmpresa {
 		this.carregaEstados();
 		this.carregaPlanos();
 
-		// simular login
-		// this.empresa.setLogin("teste");
-		// this.empresa.setSenha("teste");
-		// this.fazerLogin();
-
 	}
 
 	/*-------------------------------------------------------------------
@@ -95,6 +92,14 @@ public class BeanEmpresa {
 
 	public String getSenha() {
 		return senha;
+	}
+
+	public Empresa getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Empresa usuario) {
+		this.usuario = usuario;
 	}
 
 	public void setSenha(String senha) {
@@ -212,36 +217,30 @@ public class BeanEmpresa {
 	public String save() {
 		RequestContext context = RequestContext.getCurrentInstance();
 		boolean sucesso = false;
+		if (empresa.getSenha().equals(this.confSenha)) {
 
-		if (this.empresa.getId() != null) {
-			return this.update();
+			if (this.empresa.getId() != null) {
+				return this.update();
+			}
+
+			if (this.session.save(this.empresa)) {
+				this.session.sendEmailConfirmacao(this.empresa);
+				Mensagem.msgSave();
+				sucesso = true;
+				context.addCallbackParam("sucesso", sucesso);
+				if (this.empresa.getStatus().equals("New")) {
+					this.reinit();
+					this.redirecionaSubscribe();
+					return "";
+				}
+				this.reinit();
+				return "";
+			}
+		} else {
+			Mensagem.msgConfSenha();
 		}
-
-		if (this.session.save(empresa)) {
-			this.sendEmailConfirmacao();
-			this.reinit();
-			Mensagem.msgSave();
-			sucesso = true;
-			context.addCallbackParam("sucesso", sucesso);
-			return "";
-		}
-
 		context.addCallbackParam("sucesso", sucesso);
 		return "";
-	}
-
-	private void sendEmailConfirmacao() {
-		String link = "www.extratosfacil.com.br/confirmar.html?sb{bpTpdjbm="
-				+ this.session.crip(empresa.getRazaoSocial());
-		String mensagem = "Cadastro realizado com sucesso. Clique no link para confirmar: "
-				+ link;
-		String assunto = "Cadastro Extratos Fácil";
-		try {
-			Email.sendEmail(empresa.getEmail(), empresa.getNomeFantasia(),
-					assunto, mensagem);
-		} catch (EmailException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public String update() {
@@ -278,7 +277,8 @@ public class BeanEmpresa {
 
 	public void carregaCidades() {
 		// this.empresa.getCidade().setEstado(this.estado);
-		this.cidades = this.session.findCidades(this.empresa.getCidade());
+		this.cidades = this.session.findCidades(this.empresa.getCidade()
+				.getEstado());
 	}
 
 	public void carregaPlanos() {
@@ -300,7 +300,7 @@ public class BeanEmpresa {
 	public void fazerLogin() {
 
 		try {
-			Empresa u = this.session.efetuarLogin(empresa);
+			Empresa u = this.session.efetuarLogin(usuario);
 
 			if (u == null) {
 				Mensagem.msgUsuarioNaoEncontrado();
@@ -323,7 +323,7 @@ public class BeanEmpresa {
 	}
 
 	public void logout() {
-		this.empresa = new Empresa();
+		this.usuario = new Empresa();
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
 				.put("empresa", null);
 
@@ -363,6 +363,16 @@ public class BeanEmpresa {
 		}
 	}
 
+	private void redirecionaSubscribe() {
+		try {
+			FacesContext.getCurrentInstance().getExternalContext()
+					.redirect("/helloword/subscribe.html");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public void enviarEmailRecuperarSenha() {
 		this.empresa = this.session.enviarEmailRecuperarSenha(this.empresa);
 		if (empresa.getId() != null) {
@@ -379,7 +389,7 @@ public class BeanEmpresa {
 			return false;
 		}
 		this.empresa.setStatus("Pendente");
-		this.save();
+		this.update();
 		return true;
 	}
 

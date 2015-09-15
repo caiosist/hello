@@ -8,21 +8,22 @@
 
 <ui:composition>
 	<div id="header" align="center">
-		<img src="./resource/images/logo.png" style="float: left; height: 90px; width: 310px; margin-left: 35px"/>
+		<img src="./resource/images/logo.png"
+			style="float: left; height: 90px; width: 310px; margin-left: 35px" />
 	</div>
 
 	<div style="float: right; position: relative; margin: 20px 115px 0 0">
-		
+
 		<p:inputText placeholder="Login" id="autenticacao_login"
-			value="#{beanEmpresa.empresa.login}"
+			value="#{beanEmpresa.usuario.login}"
 			style="width: 150px; margin-right: 10px; height: 16px; font-size: 16px">
-			<p:ajax/>
+			<p:ajax />
 		</p:inputText>
-		
+
 		<p:password placeholder="Senha" id="autenticacao_senha"
-			value="#{beanEmpresa.empresa.senha}"
+			value="#{beanEmpresa.usuario.senha}"
 			style="width: 150px; margin-right: 10px; height: 16px; font-size: 16px">
-			<p:ajax/>
+			<p:ajax />
 		</p:password>
 
 		<p:commandButton id="submit_empresa" value="Entrar"

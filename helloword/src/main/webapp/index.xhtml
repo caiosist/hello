@@ -43,16 +43,16 @@
 									</ul>
 									<ul class="nav">
 
-										<li><h:commandLink value="Gerar Planilha"
+										<li><h:commandLink value="Gerar Planilha" rendered="#{beanEmpresa.empresa.status == 'Ativo'}"
 												action="#{beanPlanilhaUpload.goToGerarPlanilha}" target="frameCenter" styleClass="menuItem" /></li>
 
 										<li><h:commandLink value="Meu Plano"
 												action="#{beanPlano.goToMeuPlano}" target="frameCenter" styleClass="menuItem"/></li>
 
-										<li><h:commandLink value="Veículos"
+										<li><h:commandLink value="Veículos" rendered="#{beanEmpresa.empresa.status == 'Ativo'}"
 												action="#{beanVeiculo.goToVeiculo}" target="frameCenter" styleClass="menuItem"/></li>
 
-										<li><h:commandLink value="Histórico"
+										<li><h:commandLink value="Histórico" rendered="#{beanEmpresa.empresa.status == 'Ativo'}"
 												action="#{beanPlanilhaDownload.goToHistorico}" target="frameCenter" styleClass="menuItem"/></li>
 									</ul>
 
@@ -69,7 +69,7 @@
 		</div>
 		<div>
 			<iframe name="frameCenter" id="frameCenter" style="border: none;"
-				width="100%" height="750 px" src="home.xhtml"> </iframe>
+				width="100%" height="750 px" src="home.html"> </iframe>
 		</div>
 	</h:form>
 </h:body>

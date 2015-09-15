@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import javax.faces.context.FacesContext;
 
+import org.apache.commons.mail.EmailException;
 import org.hibernate.exception.ConstraintViolationException;
 
 import br.com.extratosfacil.entities.Email;
@@ -353,7 +354,9 @@ public class SessionEmpresa {
 
 	}
 
-	public List<Cidade> findCidades(Cidade cidade) {
+	public List<Cidade> findCidades(Estado estado) {
+		Cidade cidade = new Cidade();
+		cidade.setEstado(estado);
 		try {
 			return (List<Cidade>) this.controllerCidade.findList(cidade);
 		} catch (Exception e) {
@@ -455,5 +458,20 @@ public class SessionEmpresa {
 			return null;
 		}
 
+	}
+
+	public void sendEmailConfirmacao(Empresa empresa) {
+		String link = "www.extratosfacil.com.br/confirmar.html?sb{bpTpdjbm="
+				+ this.crip(empresa.getRazaoSocial());
+		String mensagem = "Cadastro realizado com sucesso. Clique no link para confirmar: "
+				+ link
+				+ "\n\n Caso nao consiga clicar no link copie e cole em seu navegador.";
+		String assunto = "Cadastro Extratos Fácil";
+		try {
+			Email.sendEmail(empresa.getEmail(), empresa.getNomeFantasia(),
+					assunto, mensagem);
+		} catch (EmailException e) {
+			e.printStackTrace();
+		}
 	}
 }
