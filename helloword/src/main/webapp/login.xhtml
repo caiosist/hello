@@ -94,26 +94,24 @@
 
 				</h:panelGrid>
 			</div>
+			
 			<p:dialog header="Recuperar Senha" widgetVar="dRecuperarSenha"
 				modal="true" dynamic="true" id="dmRecuperarSenha" resizable="false">
 				<ui:include src="recuperarSenha.xhtml"></ui:include>
 			</p:dialog>
-			<div style="width: 800px; height: 480px; margin: 65px 0 0 55px">
-				<label
-					style="font-family: sans-serif; font-size: 22px; color: #669214">
-					Simplificando o processo de consulta dos extratos via fácil! <br></br>
-					Veja como é simples e útil usar o Extratos Fácil:
-				</label>
-
-				<div
-					style="width: 750px; height: 400px; margin-top: 30px; border: 1px solid #669214">
-					<label
-						style="font-family: sans-serif; font-size: 22px; color: #669214">
-						VÍDEO COM TUTORIAL !!! </label>
+			
+			<div style="width: 800px; height: 480px; margin: 65px 0 0 55px" align="center">
+				<h:outputLabel styleClass="fraseInicial" value="Simplificando o processo de consulta dos extratos de sua frota."/>
+				
+				<br></br><br></br><br></br><br></br>
+					
+				<h:outputLabel styleClass="fraseInicial" value="Veja como é simples e útil usar o Extratos Fácil:"/>
+				<div style="margin-top: 15px">
 					<iframe width="560" height="315"
 						src="https://www.youtube.com/embed/8w3RLXM5CCk" frameborder="0"
-						allowfullscreen="true"></iframe>
-				</div>
+						allowfullscreen="true">
+					</iframe>
+				</div>	
 			</div>
 		</div>
 	</ui:define>

@@ -8,7 +8,39 @@
 	
 	<ui:composition>
 		<div id="footer" align="center">
-			Copyright 2015 - Extratos Fácil
+			<div style="float: left">
+				
+				<h:outputLabel id="info_faleConosco" styleClass="infos" value="Fale conosco" 
+					style="cursor: pointer; margin-left: 15px"
+					onclick="PF('dInfoFaleConosco').show()" />
+				
+				<h:outputLabel id="info_quemSomos" styleClass="infos" value="Quem somos" 
+					style="cursor: pointer; margin-left: 15px"
+					onclick="PF('dInfoQuemSomos').show()" />
+				
+				<h:outputLabel id="info_privacidade" styleClass="infos" value="Segurança e privacidade" 
+					style="cursor: pointer; margin-left: 15px"
+					onclick="PF('dInfoPrivacidade').show()" />
+			</div>
+			
+			<h:outputLabel id="info_copyright" styleClass="infos" style="float: right; margin-right: 15px" 
+					value="Todos os direitos reservados - Extratos Fácil 2015" />
 		</div>
+		
+		<p:dialog header="Fale Conosco" widgetVar="dInfoFaleConosco"
+			modal="true" dynamic="true" id="dmFaleConosco" resizable="false">
+			<ui:include src="faleConosco.xhtml"></ui:include>
+		</p:dialog>
+		
+		<p:dialog header="Quem Somos" widgetVar="dInfoQuemSomos"
+			modal="true" dynamic="true" id="dmQuemSomos" resizable="false">
+			<ui:include src="quemSomos.xhtml"></ui:include>
+		</p:dialog>
+		
+		<p:dialog header="Segurança e Privacidade" widgetVar="dInfoPrivacidade"
+			modal="true" dynamic="true" id="dmPrivacidade" resizable="false">
+			<ui:include src="privacidade.xhtml"></ui:include>
+		</p:dialog>
+		
 	</ui:composition>
 </html>
