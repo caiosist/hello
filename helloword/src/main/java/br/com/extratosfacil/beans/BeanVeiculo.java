@@ -154,7 +154,7 @@ public class BeanVeiculo {
 			if (this.session.save(veiculo)) {
 				this.reinit();
 				this.carregaVeiculo();
-				Mensagem.msgSave();
+				Mensagem.send(Mensagem.MSG_SALVA, Mensagem.INFO);
 				sucesso = true;
 				context.addCallbackParam("sucesso", sucesso);
 				this.verificaPlano();
@@ -176,7 +176,8 @@ public class BeanVeiculo {
 				sucesso = true;
 				context.addCallbackParam("sucesso", sucesso);
 				this.verificaPlano();
-				return Mensagem.msgUpdate();
+				Mensagem.send(Mensagem.MSG_UPDATE, Mensagem.INFO);
+				return "";
 			}
 		}
 		context.addCallbackParam("sucesso", sucesso);
@@ -190,9 +191,11 @@ public class BeanVeiculo {
 			this.reinit();
 			this.carregaVeiculo();
 			this.verificaPlano();
-			return Mensagem.msgRemove();
+			Mensagem.send(Mensagem.MSG_REMOVE, Mensagem.INFO);
+			return "";
 		} catch (Exception e) {
-			return Mensagem.msgNotRemove();
+			Mensagem.send(Mensagem.MSG_NOT_REMOVE, Mensagem.ERROR);
+			return "";
 		}
 	}
 
@@ -244,7 +247,13 @@ public class BeanVeiculo {
 
 	public String goToVeiculo() {
 		this.reinit();
-		return "views/veiculo/consultaVeiculo";
+		
+		Empresa empresa = Sessao.getEmpresaSessao();
+		if (empresa.getStatus().equals("Ativo")) {
+			return "views/veiculo/consultaVeiculo";
+		}
+		return "index";
+		
 	}
 
 }

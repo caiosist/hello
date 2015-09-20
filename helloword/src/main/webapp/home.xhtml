@@ -18,14 +18,15 @@
 				</h1>
 
 
-				<h:panelGrid rendered="#{beanEmpresa.empresa.status == 'Pendente'}">
+				<h:panelGrid
+					rendered="#{beanEmpresa.empresa.status == 'Pendente' and beanEmpresa.empresa.plano != null}">
 					<h:outputText style="color: red; font-size: 28px;"
-						value="*Seu plano esta aguardando pagamento, por favor verifique a guia Meu Plano!" />
+						value="*Seu plano esta vencido ou aguardando pagamento, por favor verifique a guia Meu Plano!" />
 				</h:panelGrid>
 
-				
+
 				<p:separator />
-	
+
 
 				<h:panelGrid rendered="#{beanEmpresa.empresa.plano != null}">
 					<p:dataTable id="gridPlanilha" dir="center"
@@ -62,10 +63,19 @@
 				<!-- Selecao de planos caso nao exista -->
 
 				<h:panelGrid rendered="#{beanEmpresa.empresa.plano == null}">
+					<h:outputText style="color: gren; font-size: 28px;"
+						value="Dados para pagamento:" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2"
+					rendered="#{beanEmpresa.empresa.plano == null}">
 
 					<h:outputText value="Numero de Veiculos" />
+
+
+
 					<p:inputText value="#{beanPlano.plano.quantidadeVeiculos}"
-						onkeypress="onlyNumbers(e)" />
+						onkeypress="return onlyNumbers(event)" />
 
 					<h:outputText value="Plano de pagamento" />
 					<p:selectOneRadio id="periodo" value="#{beanPlano.periodo}">
@@ -74,11 +84,14 @@
 							itemValue="3" />
 						<f:selectItem itemLabel="Semestral - 10% de Desconto"
 							itemValue="6" />
-						<f:selectItem itemLabel="Anual - 13% de desconto" itemValue="12" />
+						<f:selectItem itemLabel="Anual - 13% de Desconto" itemValue="12" />
 					</p:selectOneRadio>
+				</h:panelGrid>
 
-					<p:commandButton value="Assinar" action="#{beanPlano.assinar}" />
-
+				<h:panelGrid rendered="#{beanEmpresa.empresa.plano == null}">
+					<div align="center">
+						<p:commandButton value="Assinar" action="#{beanPlano.assinar}" />
+					</div>
 				</h:panelGrid>
 
 				<br /> <br />

@@ -10,31 +10,64 @@
 	<ui:define name="body">
 		<p:panel style="border: none;">
 			<h:outputLabel styleClass="subtitlePages">Meu Plano </h:outputLabel>
-		
+
 			<p:separator />
 
-			<p:dataTable id="gridPlanilha"
-				value="#{beanPlanilhaDownload.planilhas}" scrollable="true"
-				scrollHeight="330" var="planilha"
-				emptyMessage="Nenhum registro encontrado!">
+			<h:panelGrid columns="2" id="gridPlano">
 
-				<f:facet name="header">
-           			Histórico de planilhas geradas
-       		 	</f:facet>
+				<h:outputText value="Plano Atual: " />
+				<h:outputText value="#{beanEmpresa.empresa.plano.nomePlano}" />
 
-				<p:column headerText="Data">
-					<h:outputText value="#{planilha.data}">
-						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00" />
-					</h:outputText>
-				</p:column>
-				<p:column headerText="Donwload" width="20">
-					<h:outputLink value="#{planilha.path}">
-						<p:graphicImage value="/resource/img/excel.png" />
-					</h:outputLink>
-				</p:column>
-			</p:dataTable>
+				<h:outputText value="Numero de Veiculos: " />
+				<h:outputText
+					value="#{beanEmpresa.empresa.plano.quantidadeVeiculos}" />
+
+				<h:outputText value="Crédito utilizado R$: "
+					rendered="#{beanEmpresa.empresa.plano.credito > 0}" />
+				<h:outputText value="#{beanEmpresa.empresa.plano.credito}"
+					rendered="#{beanEmpresa.empresa.plano.credito > 0}">
+					<f:convertNumber pattern="#0.00" currencySymbol="R$"
+						currencyCode="BRL" />
+				</h:outputText>
+
+				<h:outputText value="Valor do Plano R$: " />
+				<h:outputText value="#{beanEmpresa.empresa.plano.valorPlano}">
+					<f:convertNumber pattern="#0.00" currencySymbol="R$"
+						currencyCode="BRL" />
+				</h:outputText>
+
+				<h:outputText value="Status do Plano: " />
+				<h:outputText value="#{beanEmpresa.empresa.plano.status}"
+					styleClass="#{beanEmpresa.empresa.status == 'Pendente' ? vencido : null}" />
+
+				<h:outputText value="Vencimento: "
+					rendered="#{beanEmpresa.empresa.plano.status != 'Aguardando Pagamento'}" />
+				<h:outputText value="#{beanEmpresa.empresa.plano.vencimento}"
+					styleClass="#{beanEmpresa.empresa.status == 'Pendente' ? vencido : null}"
+					rendered="#{beanEmpresa.empresa.plano.status != 'Aguardando Pagamento'}">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00" />
+				</h:outputText>
+
+			</h:panelGrid>
+
+			<p:commandButton value="Pagar" action="#{beanPlano.pagar}"
+				update=":form" />
+
+			<p:commandButton value="Alterar Plano"
+				onclick="PF('dEditarPlano').show()" update=":form:pnPlano" />
+
 			<p:separator />
 		</p:panel>
+
+		<!-- 
+*******************************************************************************
+							DIALOG MANTER CLIENTE
+*******************************************************************************
+-->
+		<p:dialog header="Alterar Plano" widgetVar="dEditarPlano" modal="true"
+			dynamic="true" id="dmPlano" resizable="false">
+			<ui:include src="/views/plano/pManterPlano.xhtml"></ui:include>
+		</p:dialog>
 
 	</ui:define>
 </ui:composition>

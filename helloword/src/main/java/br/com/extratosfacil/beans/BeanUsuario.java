@@ -114,7 +114,7 @@ public class BeanUsuario {
 		boolean sucesso = false;
 
 		if (this.session.save(usuario)) {
-			Mensagem.msgSave();
+			Mensagem.send(Mensagem.MSG_SALVA, Mensagem.INFO);
 			sucesso = true;
 			this.findList();
 		}
@@ -128,11 +128,11 @@ public class BeanUsuario {
 
 	public void delete() {
 		if (this.session.delete(usuario)) {
-			Mensagem.msgRemove();
+			Mensagem.send(Mensagem.MSG_REMOVE, Mensagem.INFO);
 			this.findList();
 			return;
 		} else {
-			Mensagem.msgNotRemove();
+			Mensagem.send(Mensagem.MSG_NOT_REMOVE, Mensagem.ERROR);
 			return;
 		}
 	}

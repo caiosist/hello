@@ -1,6 +1,7 @@
 package br.com.extratosfacil.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * Classe que representa um Plano
@@ -41,7 +44,7 @@ public class Plano implements Serializable {
 	/**
 	 * 
 	 */
-	@Column(length = 50, unique = true, nullable = false)
+	@Column(length = 50, nullable = false)
 	private String nomePlano;
 
 	/**
@@ -54,13 +57,32 @@ public class Plano implements Serializable {
 	 * 
 	 */
 	@Column(nullable = false)
+	private Float credito;
+
+	/**
+	 * 
+	 */
+	@Column(nullable = false)
 	private Long quantidadeVeiculos;
 
 	/**
 	 * 
 	 */
 	@Column(length = 255, nullable = false)
-	private String detalhes;
+	private String status;
+
+	/**
+	 * 
+	 */
+	@Column
+	@Temporal(TemporalType.DATE)
+	private Date vencimento;
+
+	/**
+	 * Numero de meses do plano
+	 */
+	@Column
+	private Integer periodo;
 
 	/*-------------------------------------------------------------------
 	 *				 		     CONSTRUCTORS
@@ -81,16 +103,44 @@ public class Plano implements Serializable {
 		this.id = id;
 	}
 
+	public Date getVencimento() {
+		return vencimento;
+	}
+
+	public Float getCredito() {
+		return credito;
+	}
+
+	public void setCredito(Float credito) {
+		this.credito = credito;
+	}
+
+	public Integer getPeriodo() {
+		return periodo;
+	}
+
+	public void setPeriodo(Integer periodo) {
+		this.periodo = periodo;
+	}
+
+	public void setVencimento(Date vencimento) {
+		this.vencimento = vencimento;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	public String getNomePlano() {
 		return nomePlano;
 	}
 
-	public String getDetalhes() {
-		return detalhes;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setDetalhes(String detalhes) {
-		this.detalhes = detalhes;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public void setNomePlano(String nomePlano) {

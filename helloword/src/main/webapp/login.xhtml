@@ -14,6 +14,7 @@
 				style="float: right; width: 400px; height: 480px; margin: 55px 50px 0 0">
 
 				<p:commandLink id="recuperar_senha" value="Esqueceu sua senha?"
+					immediate="true"
 					style="font-size: 12px; color: #669214; position: absolute; margin: -45px 0 0 90px"
 					onclick="PF('dRecuperarSenha').show()" />
 
@@ -94,24 +95,29 @@
 
 				</h:panelGrid>
 			</div>
-			
+
 			<p:dialog header="Recuperar Senha" widgetVar="dRecuperarSenha"
 				modal="true" dynamic="true" id="dmRecuperarSenha" resizable="false">
 				<ui:include src="recuperarSenha.xhtml"></ui:include>
 			</p:dialog>
-			
-			<div style="width: 800px; height: 480px; margin: 65px 0 0 55px" align="center">
-				<h:outputLabel styleClass="fraseInicial" value="Simplificando o processo de consulta dos extratos de sua frota."/>
-				
-				<br></br><br></br><br></br><br></br>
-					
-				<h:outputLabel styleClass="fraseInicial" value="Veja como é simples e útil usar o Extratos Fácil:"/>
+
+			<div style="width: 800px; height: 480px; margin: 65px 0 0 55px"
+				align="center">
+				<h:outputLabel styleClass="fraseInicial"
+					value="Simplificando o processo de consulta dos extratos de sua frota." />
+
+				<br></br>
+				<br></br>
+				<br></br>
+				<br></br>
+
+				<h:outputLabel styleClass="fraseInicial"
+					value="Veja como é simples e útil usar o Extratos Fácil:" />
 				<div style="margin-top: 15px">
 					<iframe width="560" height="315"
 						src="https://www.youtube.com/embed/8w3RLXM5CCk" frameborder="0"
-						allowfullscreen="true">
-					</iframe>
-				</div>	
+						allowfullscreen="true"> </iframe>
+				</div>
 			</div>
 		</div>
 	</ui:define>

@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
+import br.com.extratosfacil.constantes.Sessao;
 import br.com.extratosfacil.entities.Empresa;
 import br.com.extratosfacil.entities.planilha.PlanilhaDownload;
 import br.com.extratosfacil.sessions.SessionPlanilhaDownload;
@@ -170,17 +171,21 @@ public class BeanPlanilhaDownload {
 
 	public void carregaLastPlanilha() {
 		this.lastPlanilhas = this.session.findLast();
-		int size = this.lastPlanilhas.size() -1;
+		int size = this.lastPlanilhas.size() - 1;
 		if (size >= 2) {
 			for (int i = size; i > 2; i--) {
 				this.lastPlanilhas.remove(i);
 			}
 		}
-		
+
 	}
 
 	public String goToHistorico() {
 		this.reinit();
-		return "views/historico/historico";
+		Empresa empresa = Sessao.getEmpresaSessao();
+		if (empresa.getStatus().equals("Ativo")) {
+			return "views/historico/historico";
+		}
+		return "index";
 	}
 }

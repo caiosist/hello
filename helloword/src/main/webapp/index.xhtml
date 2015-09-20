@@ -17,7 +17,8 @@
 	<link href="resource/css/bootstrap.min.css" rel="stylesheet" />
 	<link href="resource/css/bootstrap-responsive.min.css" rel="stylesheet" />
 	<link href="resource/css/style.css" rel="stylesheet" />
-	<link rel="shortcut icon" href="./resource/images/favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="./resource/images/favicon.ico"
+		type="image/x-icon" />
 
 	<script type="text/javascript" src="resource/js/validateDialog.js"></script>
 	<script type="text/javascript" src="resource/js/validateKeys.js"></script>
@@ -33,32 +34,42 @@
 					<div class="navbar">
 						<div class="navbar-inner">
 							<div class="container-fluid">
-							
+
 								<img src="./resource/images/logoMenu.png"
-									 style="float: left; height: 35px; width: 200px; margin: 1px 30px 0 -30px" />
-								
+									style="float: left; height: 35px; width: 200px; margin: 1px 30px 0 -30px" />
+
 								<div class="nav-collapse collapse navbar-responsive-collapse">
 									<ul class="nav">
-										<li><h:commandLink value="Início" action="index" styleClass="menuItem" /></li>
+										<li><h:commandLink value="Início" action="index"
+												styleClass="menuItem" /></li>
 									</ul>
 									<ul class="nav">
 
-										<li><h:commandLink value="Gerar Planilha" rendered="#{beanEmpresa.empresa.status == 'Ativo'}"
-												action="#{beanPlanilhaUpload.goToGerarPlanilha}" target="frameCenter" styleClass="menuItem" /></li>
+										<li><h:commandLink value="Gerar Planilha"
+												rendered="#{beanEmpresa.empresa.status == 'Ativo'}"
+												action="#{beanPlanilhaUpload.goToGerarPlanilha}"
+												target="frameCenter" styleClass="menuItem" /></li>
 
 										<li><h:commandLink value="Meu Plano"
-												action="#{beanPlano.goToMeuPlano}" target="frameCenter" styleClass="menuItem"/></li>
+												rendered="#{beanEmpresa.empresa.plano != null}"
+												action="#{beanPlano.goToMeuPlano}" target="frameCenter"
+												styleClass="menuItem" /></li>
 
-										<li><h:commandLink value="Veículos" rendered="#{beanEmpresa.empresa.status == 'Ativo'}"
-												action="#{beanVeiculo.goToVeiculo}" target="frameCenter" styleClass="menuItem"/></li>
+										<li><h:commandLink value="Veículos"
+												rendered="#{beanEmpresa.empresa.status == 'Ativo'}"
+												action="#{beanVeiculo.goToVeiculo}" target="frameCenter"
+												styleClass="menuItem" /></li>
 
-										<li><h:commandLink value="Histórico" rendered="#{beanEmpresa.empresa.status == 'Ativo'}"
-												action="#{beanPlanilhaDownload.goToHistorico}" target="frameCenter" styleClass="menuItem"/></li>
+										<li><h:commandLink value="Histórico"
+												rendered="#{beanEmpresa.empresa.status == 'Ativo'}"
+												action="#{beanPlanilhaDownload.goToHistorico}"
+												target="frameCenter" styleClass="menuItem" /></li>
 									</ul>
 
 									<ul class="nav pull-right">
-										<li><h:commandLink value="Sair" action="#{beanEmpresa.logout}" styleClass="menuItem" 
-										style="margin-right: -40px"/></li>
+										<li><h:commandLink value="Sair"
+												action="#{beanEmpresa.logout}" styleClass="menuItem"
+												style="margin-right: -40px" /></li>
 									</ul>
 								</div>
 							</div>

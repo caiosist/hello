@@ -222,12 +222,12 @@ public class SessionTeste {
 			XSSFSheet sheet = workbook.getSheetAt(3);
 
 			if (!sheet.getSheetName().equals("Passagens de Pedágio")) {
-				Mensagem.msgPlanilhaErrada();
+				Mensagem.send(Mensagem.MSG_PLANILHA_ERRADA, Mensagem.ERROR);
 				return false;
 			}
 			sheet = workbook.getSheetAt(0);
 			if (!sheet.getSheetName().equals("Resumo da Fatura")) {
-				Mensagem.msgPlanilhaErrada();
+				Mensagem.send(Mensagem.MSG_PLANILHA_ERRADA, Mensagem.ERROR);
 				return false;
 			}
 		} catch (Exception e) {

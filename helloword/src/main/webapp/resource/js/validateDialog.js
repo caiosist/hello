@@ -36,3 +36,13 @@ function validaSenha(xhr, status, args) {
 	}
 }
 
+function validaPlano(xhr, status, args) {
+	if (!args.sucesso) {
+		/*
+		 * $(PrimeFaces.escapeClientId('form:dmCliente')).effect("shake", {
+		 * times : 5 }, 100);
+		 */
+	} else {
+		PF('dEditarPlano').hide();
+	}
+}

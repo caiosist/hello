@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:panel id="pnPlano" style="border: none;">
+
+	<h:panelGrid>
+		<h:outputText style="color: gren; font-size: 28px;"
+			value="Regras para Alterar Plano:" />
+	</h:panelGrid>
+
+	<h:panelGrid columns="2">
+
+		<h:outputText value="Numero de Veiculos" />
+
+
+
+		<p:inputText value="#{beanPlano.plano.quantidadeVeiculos}"
+			onkeypress="return onlyNumbers(event)" />
+
+		<h:outputText value="Plano de pagamento" />
+		<p:selectOneRadio id="periodo" value="#{beanPlano.periodo}">
+			<f:selectItem itemLabel="Mensal" itemValue="1" />
+			<f:selectItem itemLabel="Trimestral - 6% de Desconto" itemValue="3" />
+			<f:selectItem itemLabel="Semestral - 10% de Desconto" itemValue="6" />
+			<f:selectItem itemLabel="Anual - 13% de Desconto" itemValue="12" />
+		</p:selectOneRadio>
+	</h:panelGrid>
+
+	<h:panelGrid>
+		<div align="center">
+			<p:commandButton value="Assinar" action="#{beanPlano.alterar}"
+				update=":form:gridPlano"
+				oncomplete="validaPlano(xhr, status, args);" />
+		</div>
+	</h:panelGrid>
+
+</p:panel>
+
+</html>

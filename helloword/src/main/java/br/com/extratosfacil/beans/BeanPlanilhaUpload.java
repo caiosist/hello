@@ -131,7 +131,7 @@ public class BeanPlanilhaUpload {
 			}
 
 		} catch (Exception ex) {
-			Mensagem.msgPlanilhaErrada();
+			Mensagem.send(Mensagem.MSG_PLANILHA_ERRADA, Mensagem.ERROR);
 			System.out.println("Erro no upload da Planilha" + ex);
 		}
 	}
@@ -171,7 +171,7 @@ public class BeanPlanilhaUpload {
 
 		if (this.session.save(planilhaUpload)) {
 			this.planilhaUpload = new PlanilhaUpload();
-			Mensagem.msgUpload();
+			Mensagem.send(Mensagem.MSG_UPLOAD, Mensagem.INFO);
 			sucesso = true;
 			context.addCallbackParam("sucesso", sucesso);
 			return "";
@@ -190,7 +190,7 @@ public class BeanPlanilhaUpload {
 				this.planilhaUpload = new PlanilhaUpload();
 				sucesso = true;
 				context.addCallbackParam("sucesso", sucesso);
-				return Mensagem.msgUpdate();
+				Mensagem.send(Mensagem.MSG_UPDATE, Mensagem.INFO);
 			}
 		}
 		context.addCallbackParam("sucesso", sucesso);
@@ -231,6 +231,10 @@ public class BeanPlanilhaUpload {
 
 	public String goToGerarPlanilha() {
 		this.reinit();
-		return "views/planilha/gerarPlanilha";
+		Empresa empresa = Sessao.getEmpresaSessao();
+		if (empresa.getStatus().equals("Ativo")) {
+			return "views/planilha/gerarPlanilha";
+		}
+		return "index";
 	}
 }

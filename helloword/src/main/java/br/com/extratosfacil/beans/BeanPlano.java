@@ -117,24 +117,23 @@ public class BeanPlano {
 		this.listaPlanos = new ArrayList<Plano>();
 	}
 
-	public String save() throws Exception {
+	public String save() {
 		RequestContext context = RequestContext.getCurrentInstance();
 		boolean sucesso = false;
 
 		if (this.plano.getId() != null) {
 			return this.update();
 		}
-		if (this.session.validaPlano(this.plano)) {
-			if (this.session.save(plano)) {
-				this.reinit();
-				Mensagem.msgSave();
-				sucesso = true;
-				context.addCallbackParam("sucesso", sucesso);
-				return "";
-			}
+		if (this.session.save(this.plano)) {
+			this.reinit();
+			Mensagem.send(Mensagem.MSG_SALVA, Mensagem.INFO);
+			sucesso = true;
+			context.addCallbackParam("sucesso", sucesso);
+			return "";
 		}
+
 		context.addCallbackParam("sucesso", sucesso);
-		return "getPlano";
+		return "";
 	}
 
 	public String update() {
@@ -147,7 +146,8 @@ public class BeanPlano {
 				this.carregaPlano();
 				sucesso = true;
 				context.addCallbackParam("sucesso", sucesso);
-				return Mensagem.msgUpdate();
+				Mensagem.send(Mensagem.MSG_UPDATE, Mensagem.INFO);
+				return "";
 			}
 		}
 		context.addCallbackParam("sucesso", sucesso);
@@ -160,9 +160,11 @@ public class BeanPlano {
 			this.session.remove(this.plano);
 			this.reinit();
 			this.carregaPlano();
-			return Mensagem.msgRemove();
+			Mensagem.send(Mensagem.MSG_REMOVE, Mensagem.INFO);
+			return "";
 		} catch (Exception e) {
-			return Mensagem.msgNotRemove();
+			Mensagem.send(Mensagem.MSG_NOT_REMOVE, Mensagem.ERROR);
+			return "";
 		}
 	}
 
@@ -184,6 +186,38 @@ public class BeanPlano {
 	}
 
 	public void assinar() {
-		
+
+		if (this.validaPlano(this.plano)) {
+			this.session.assinar(this.plano, this.periodo);
+		}
+
+	}
+
+	public void pagar() {
+		this.session.pagar();
+	}
+
+	private boolean validaPlano(Plano p) {
+		if ((p.getQuantidadeVeiculos() == null)
+				|| (p.getQuantidadeVeiculos() == 0)) {
+			Mensagem.send(Mensagem.MSG_QUANTIDADE_INVALIDA, Mensagem.ERROR);
+			return false;
+		}
+		if ((this.periodo == null) || (this.periodo == 0)) {
+			Mensagem.send(Mensagem.MSG_PERIODO, Mensagem.ERROR);
+			return false;
+		}
+		return true;
+	}
+
+	public void alterar() {
+		RequestContext context = RequestContext.getCurrentInstance();
+		boolean sucesso = false;
+
+		if (this.validaPlano(this.plano)) {
+			this.plano = this.session.alterar(this.plano, this.periodo);
+			sucesso = true;
+		}
+		context.addCallbackParam("sucesso", sucesso);
 	}
 }

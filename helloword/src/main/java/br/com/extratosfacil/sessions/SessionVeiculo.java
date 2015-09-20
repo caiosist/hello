@@ -53,7 +53,7 @@ public class SessionVeiculo {
 				this.controller.insert(veiculo);
 			} catch (ConstraintViolationException e) {
 				e.printStackTrace();
-				Mensagem.msgPlaca();
+				Mensagem.send(Mensagem.MSG_PLACA, Mensagem.ERROR);
 				return false;
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -85,18 +85,18 @@ public class SessionVeiculo {
 
 	public boolean validaVeiculo(Veiculo veiculo) {
 		if (veiculo.getCategoria() == null) {
-			Mensagem.msgIncompleto();
+			Mensagem.send(Mensagem.MSG_INCOMPLETO, Mensagem.ERROR);
 			return false;
 		} else if (veiculo.getMaximoEixo() == null) {
-			Mensagem.msgIncompleto();
+			Mensagem.send(Mensagem.MSG_INCOMPLETO, Mensagem.ERROR);
 			return false;
 		} else if ((veiculo.getModeloVeiculo() == null)
 				|| (veiculo.getModeloVeiculo().trim().equals(""))) {
-			Mensagem.msgIncompleto();
+			Mensagem.send(Mensagem.MSG_INCOMPLETO, Mensagem.ERROR);
 			return false;
 		} else if ((veiculo.getPlacaVeiculo() == null)
 				|| (veiculo.getPlacaVeiculo().trim().equals(""))) {
-			Mensagem.msgIncompleto();
+			Mensagem.send(Mensagem.MSG_INCOMPLETO, Mensagem.ERROR);
 			return false;
 		} else {
 			// deixa as placas em maiusculo

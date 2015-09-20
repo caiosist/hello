@@ -1,7 +1,6 @@
 package br.com.extratosfacil.entities;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import br.com.extratosfacil.entities.location.Cidade;
 
@@ -91,13 +88,6 @@ public class Empresa implements Serializable {
 	 */
 	@Column(length = 20, nullable = false)
 	private String status;
-
-	/**
-	 * 
-	 */
-	@Column
-	@Temporal(TemporalType.DATE)
-	private Date vencimento;
 
 	/**
 	 * 
@@ -199,13 +189,5 @@ public class Empresa implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public Date getVencimento() {
-		return vencimento;
-	}
-
-	public void setVencimento(Date vencimento) {
-		this.vencimento = vencimento;
 	}
 }

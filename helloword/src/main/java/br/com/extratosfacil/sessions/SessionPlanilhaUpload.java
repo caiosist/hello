@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.faces.context.FacesContext;
-
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -446,16 +444,16 @@ public class SessionPlanilhaUpload {
 			HSSFSheet sheet = workbook.getSheet("Passagens de Pedágio");
 
 			if (sheet == null) {
-				Mensagem.msgPlanilhaErrada();
+				Mensagem.send(Mensagem.MSG_PLANILHA_ERRADA, Mensagem.ERROR);
 				return false;
 			}
 			sheet = workbook.getSheet("Resumo da Fatura");
 			if (sheet == null) {
-				Mensagem.msgPlanilhaErrada();
+				Mensagem.send(Mensagem.MSG_PLANILHA_ERRADA, Mensagem.ERROR);
 				return false;
 			}
 			if (!this.validaEmpresaPlanilhaXls(workbook)) {
-				Mensagem.msgEmpresaInvalida();
+				Mensagem.send(Mensagem.MSG_PLANILHA_ERRADA, Mensagem.ERROR);
 				return false;
 			}
 		} catch (Exception e) {
@@ -477,16 +475,16 @@ public class SessionPlanilhaUpload {
 			XSSFSheet sheet = workbook.getSheet("Passagens de Pedágio");
 
 			if (sheet == null) {
-				Mensagem.msgPlanilhaErrada();
+				Mensagem.send(Mensagem.MSG_PLANILHA_ERRADA, Mensagem.ERROR);
 				return false;
 			}
 			sheet = workbook.getSheet("Resumo da Fatura");
 			if (sheet == null) {
-				Mensagem.msgPlanilhaErrada();
+				Mensagem.send(Mensagem.MSG_PLANILHA_ERRADA, Mensagem.ERROR);
 				return false;
 			}
 			if (!this.validaEmpresaPlanilha(workbook)) {
-				Mensagem.msgEmpresaInvalida();
+				Mensagem.send(Mensagem.MSG_PLANILHA_ERRADA, Mensagem.ERROR);
 				return false;
 			}
 		} catch (Exception e) {

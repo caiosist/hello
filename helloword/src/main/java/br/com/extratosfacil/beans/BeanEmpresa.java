@@ -1,6 +1,5 @@
 package br.com.extratosfacil.beans;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,12 +7,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import org.apache.commons.mail.EmailException;
 import org.primefaces.context.RequestContext;
 
 import br.com.extratosfacil.constantes.Mensagem;
 import br.com.extratosfacil.constantes.Sessao;
-import br.com.extratosfacil.entities.Email;
 import br.com.extratosfacil.entities.Empresa;
 import br.com.extratosfacil.entities.Plano;
 import br.com.extratosfacil.entities.location.Cidade;
@@ -232,7 +229,7 @@ public class BeanEmpresa {
 
 			if (this.session.save(this.empresa)) {
 				this.session.sendEmailConfirmacao(this.empresa);
-				Mensagem.msgSave();
+				Mensagem.send(Mensagem.MSG_SALVA, Mensagem.INFO);
 				sucesso = true;
 				context.addCallbackParam("sucesso", sucesso);
 				if (this.empresa.getStatus().equals("New")) {
@@ -244,7 +241,7 @@ public class BeanEmpresa {
 				return "";
 			}
 		} else {
-			Mensagem.msgConfSenha();
+			Mensagem.send(Mensagem.MSG_CONF_SENHA, Mensagem.ERROR);
 		}
 		context.addCallbackParam("sucesso", sucesso);
 		return "";
@@ -259,7 +256,7 @@ public class BeanEmpresa {
 			this.carregaEmpresa();
 			sucesso = true;
 			context.addCallbackParam("sucesso", sucesso);
-			return Mensagem.msgUpdate();
+			Mensagem.send(Mensagem.MSG_UPDATE, Mensagem.INFO);
 		}
 
 		context.addCallbackParam("sucesso", sucesso);
@@ -272,9 +269,11 @@ public class BeanEmpresa {
 			this.session.remove(this.empresa);
 			this.reinit();
 			this.carregaEmpresa();
-			return Mensagem.msgRemove();
+			Mensagem.send(Mensagem.MSG_REMOVE, Mensagem.INFO);
+			return "";
 		} catch (Exception e) {
-			return Mensagem.msgNotRemove();
+			Mensagem.send(Mensagem.MSG_NOT_REMOVE, Mensagem.ERROR);
+			return "";
 		}
 	}
 
@@ -310,21 +309,22 @@ public class BeanEmpresa {
 			Empresa u = this.session.efetuarLogin(usuario);
 
 			if (u == null) {
-				Mensagem.msgUsuarioNaoEncontrado();
+				Mensagem.send(Mensagem.MSG_USER_NAO_ENCONTRADO, Mensagem.ERROR);
 			} else {
 				if (u.getStatus().equals("New")) {
-					Mensagem.msgUsuarioNaoConfirmado();
+					Mensagem.send(Mensagem.MSG_USER_NAO_CONFIRMADO,
+							Mensagem.ERROR);
 					return;
 				}
 				usuarioLogado = true;
 				this.empresa = u;
 				Sessao.setEmpresaSessao(this.empresa);
+				this.session.validaVencimento(this.empresa);
 				Sessao.redireciona("");
-
 			}
 
 		} catch (Exception e) {
-			// Mensagens.msgUsuarioNaoEncontrado();
+			Mensagem.send(Mensagem.MSG_USER_NAO_ENCONTRADO, Mensagem.ERROR);
 		}
 	}
 
@@ -354,7 +354,7 @@ public class BeanEmpresa {
 			this.update();
 			// this.redirecionarLogin();
 		} else {
-			Mensagem.msgConfSenha();
+			Mensagem.send(Mensagem.MSG_CONF_SENHA, Mensagem.ERROR);
 		}
 	}
 

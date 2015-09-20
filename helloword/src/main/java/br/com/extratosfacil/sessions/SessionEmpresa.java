@@ -1,6 +1,5 @@
 package br.com.extratosfacil.sessions;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -120,54 +119,43 @@ public class SessionEmpresa {
 	public boolean validaEmpresa(Empresa empresa, boolean update) {
 		if ((empresa.getCidade() == null)
 				|| (empresa.getCidade().getId() == null)) {
-			Mensagem.msgIncompleto();
+			Mensagem.send(Mensagem.MSG_INCOMPLETO, Mensagem.ERROR);
 			return false;
 		} else if ((empresa.getCnpj() == null)
 				|| (empresa.getCnpj().trim().equals(""))) {
-			Mensagem.msgIncompleto();
+			Mensagem.send(Mensagem.MSG_INCOMPLETO, Mensagem.ERROR);
 			return false;
 		} else if (!this.validaCNPJ(empresa.getCnpj())) {
-			Mensagem.msgCNPJ();
+			Mensagem.send(Mensagem.MSG_CNPJ, Mensagem.ERROR);
 			return false;
 		} else if ((empresa.getEmail() == null)
 				|| (empresa.getEmail().trim().equals(""))) {
-			Mensagem.msgIncompleto();
+			Mensagem.send(Mensagem.MSG_INCOMPLETO, Mensagem.ERROR);
 			return false;
 		} else if (!this.validaEmail(empresa.getEmail())) {
-			Mensagem.msgEmail();
+			Mensagem.send(Mensagem.MSG_EMAIL, Mensagem.ERROR);
 			return false;
 		} else if ((empresa.getLogin() == null)
 				|| (empresa.getLogin().trim().equals(""))) {
-			Mensagem.msgIncompleto();
+			Mensagem.send(Mensagem.MSG_INCOMPLETO, Mensagem.ERROR);
 			return false;
 		} else if ((empresa.getNomeFantasia() == null)
 				|| (empresa.getNomeFantasia().trim().equals(""))) {
-			Mensagem.msgIncompleto();
+			Mensagem.send(Mensagem.MSG_INCOMPLETO, Mensagem.ERROR);
 			return false;
 		} else if ((empresa.getRazaoSocial() == null)
 				|| (empresa.getRazaoSocial().trim().equals(""))) {
-			Mensagem.msgIncompleto();
+			Mensagem.send(Mensagem.MSG_INCOMPLETO, Mensagem.ERROR);
 			return false;
 		} else if ((empresa.getSenha() == null)
 				|| (empresa.getSenha().trim().equals(""))) {
-			Mensagem.msgIncompleto();
+			Mensagem.send(Mensagem.MSG_INCOMPLETO, Mensagem.ERROR);
 			return false;
 		} else if ((!update) && (!validaUnique(empresa))) {
 			return false;
 		} else {
 			if (!update) {
 				empresa.setStatus("New");
-				Date data = new Date();
-
-				// Adicionamos 30 dias para o vencimento
-				Calendar c = Calendar.getInstance();
-				c.setTime(data);
-				c.add(Calendar.DATE, +30);
-
-				// Obtemos a data alterada
-				data = c.getTime();
-				empresa.setVencimento(data);
-
 			} else {
 				// verifica se a senha foi alterada
 				try {
@@ -201,7 +189,7 @@ public class SessionEmpresa {
 			e.printStackTrace();
 		}
 		if (temp != null) {
-			Mensagem.msgRasaoSocial();
+			Mensagem.send(Mensagem.MSG_RAZAO_SOCIAL, Mensagem.ERROR);
 			return false;
 		}
 
@@ -214,7 +202,8 @@ public class SessionEmpresa {
 			e.printStackTrace();
 		}
 		if (temp != null) {
-			Mensagem.msgCNPJ();
+			Mensagem.send(Mensagem.MSG_CNPJ, Mensagem.ERROR);
+			;
 			return false;
 		}
 
@@ -227,7 +216,7 @@ public class SessionEmpresa {
 			e.printStackTrace();
 		}
 		if (temp != null) {
-			Mensagem.msgLogin();
+			Mensagem.send(Mensagem.MSG_LOGIN, Mensagem.ERROR);
 			return false;
 		}
 
@@ -240,7 +229,7 @@ public class SessionEmpresa {
 			e.printStackTrace();
 		}
 		if (temp != null) {
-			Mensagem.msgEmail();
+			Mensagem.send(Mensagem.MSG_EMAIL, Mensagem.ERROR);
 			return false;
 		}
 		return true;
@@ -436,7 +425,7 @@ public class SessionEmpresa {
 		} catch (Exception e) {
 			return new Empresa();
 		}
-		Mensagem.msgEmailInvalido();
+		Mensagem.send(Mensagem.MSG_EMAIL_INVALIDO, Mensagem.ERROR);
 		return new Empresa();
 	}
 
@@ -472,6 +461,19 @@ public class SessionEmpresa {
 					assunto, mensagem);
 		} catch (EmailException e) {
 			e.printStackTrace();
+		}
+	}
+
+	public void validaVencimento(Empresa empresa) {
+		Date hoje = new Date();
+		if (empresa.getPlano() != null) {
+			Date vencimento = empresa.getPlano().getVencimento();
+			if (vencimento != null) {
+				if (hoje.after(vencimento)) {
+					SessionPlano sPlano = new SessionPlano();
+					sPlano.bloquear(empresa.getPlano());
+				}
+			}
 		}
 	}
 }
