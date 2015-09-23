@@ -168,6 +168,7 @@ public class BeanPlanilhaUpload {
 	}
 
 	public void reinit() {
+		this.total = 0.0;
 		this.planilhaUpload = new PlanilhaUpload();
 		this.itens = new ArrayList<ItemPlanilhaDownload>();
 	}
@@ -209,9 +210,13 @@ public class BeanPlanilhaUpload {
 	}
 
 	public void postProcessXLS(Object document) {
+
 		HSSFWorkbook wb = (HSSFWorkbook) document;
+		wb.setSheetName(0, Sessao.getEmpresaSessao().getRazaoSocial()
+				+ " - Correção");
 		HSSFSheet sheet = wb.getSheetAt(0);
-		int width = sheet.getColumnWidth(0) * 2;
+
+		int width = sheet.getColumnWidth(0) * 3;
 		sheet.setColumnWidth(0, width);
 		sheet.setColumnWidth(1, width);
 		sheet.setColumnWidth(2, width);
@@ -220,6 +225,8 @@ public class BeanPlanilhaUpload {
 		sheet.setColumnWidth(5, width);
 		sheet.setColumnWidth(6, width);
 		sheet.setColumnWidth(7, width);
+		sheet.setColumnWidth(9, width);
+		sheet.setColumnWidth(8, width);
 		Iterator<Row> rowIterator = sheet.iterator();
 		Row row = rowIterator.next();
 

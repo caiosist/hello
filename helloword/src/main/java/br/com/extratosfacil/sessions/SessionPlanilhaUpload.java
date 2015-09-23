@@ -81,13 +81,21 @@ public class SessionPlanilhaUpload {
 	public List<ItemPlanilhaDownload> carregaPlanilha(String path, boolean xlsx) {
 
 		if (xlsx) {
-			return this.lerXlsx(path);
+			// return this.lerXlsx(path);
+			XSSFWorkbook workbook = null;
+			XSSFSheet sheet = null;
+			return this.lerPlanilha(path, workbook, sheet);
 		} else {
-			return this.lerXls(path);
+			HSSFWorkbook workbook = null;
+			HSSFSheet sheet = null;
+			return this.lerPlanilha(path, workbook, sheet);
+			// return this.lerXls(path);
 		}
 	}
 
-	private List<ItemPlanilhaDownload> lerXlsx(String path) {
+	private List<ItemPlanilhaDownload> lerPlanilha(String path,
+			Object workbook, Object sheet) {
+
 		// formatar a data da planilha para o Obj
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -104,13 +112,21 @@ public class SessionPlanilhaUpload {
 		try {
 			File file = new File(path);
 			fisPlanilha = new FileInputStream(file);
+			Iterator<Row> rowIterator = null;
 
-			XSSFWorkbook workbook = new XSSFWorkbook(fisPlanilha);
-
-			XSSFSheet sheet = workbook.getSheet("Passagens de Pedágio");
-
-			// retorna todas as linhas da planilha 0 (aba 1)
-			Iterator<Row> rowIterator = sheet.iterator();
+			if (workbook instanceof XSSFWorkbook) {
+				workbook = new XSSFWorkbook(fisPlanilha);
+				sheet = ((XSSFWorkbook) workbook)
+						.getSheet("Passagens de Pedágio");
+				// retorna todas as linhas da planilha 0 (aba 1)
+				rowIterator = ((XSSFSheet) sheet).iterator();
+			} else {
+				workbook = new HSSFWorkbook(fisPlanilha);
+				sheet = ((HSSFWorkbook) workbook)
+						.getSheet("Passagens de Pedágio");
+				// retorna todas as linhas da planilha 0 (aba 1)
+				rowIterator = ((HSSFSheet) sheet).iterator();
+			}
 
 			// varre todas as linhas da planilha 0
 			while (rowIterator.hasNext()) {
@@ -165,10 +181,6 @@ public class SessionPlanilhaUpload {
 
 			}
 
-		} catch (FileNotFoundException ex) {
-			Logger.getLogger(SessionPlanilhaUpload.class.getName()).log(
-					Level.SEVERE, null, ex);
-			ex.printStackTrace();
 		} catch (IOException ex) {
 			Logger.getLogger(SessionPlanilhaUpload.class.getName()).log(
 					Level.SEVERE, null, ex);
@@ -177,145 +189,12 @@ public class SessionPlanilhaUpload {
 			try {
 				fisPlanilha.close();
 			} catch (IOException ex) {
-				Logger.getLogger(SessionPlanilhaUpload.class.getName()).log(
-						Level.SEVERE, null, ex);
 				ex.printStackTrace();
 			}
 
 		}
+
 		return this.makeTheMagic(lista);
-	}
-
-	private List<ItemPlanilhaDownload> lerXls(String path) {
-		// formatar a data da planilha para o Obj
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-		// Formatar a Hora da Planilha para o objeto
-		SimpleDateFormat shf = new SimpleDateFormat("HH:mm:ss");
-
-		FileInputStream fisPlanilha = null;
-
-		// Lista de veiculos da planilha
-		List<ItemPlanilhaUpload> lista = new ArrayList<ItemPlanilhaUpload>();
-
-		ItemPlanilhaUpload item = new ItemPlanilhaUpload();
-
-		try {
-			File file = new File(path);
-			fisPlanilha = new FileInputStream(file);
-
-			// cria um workbook = planilha toda com todas as abas
-			HSSFWorkbook workbook = new HSSFWorkbook(fisPlanilha);
-			;
-			// recuperamos apenas a primeira aba ou primeira planilha
-			HSSFSheet sheet = workbook.getSheet("Passagens de Pedágio");
-
-			// retorna todas as linhas da planilha 0 (aba 1)
-			Iterator<Row> rowIterator = sheet.iterator();
-
-			// varre todas as linhas da planilha 0
-			while (rowIterator.hasNext()) {
-
-				// recebe cada linha da planilha
-				Row row = rowIterator.next();
-
-				if (row.getRowNum() == 0) {
-					continue;
-				}
-
-				// pegamos todas as celulas desta linha
-				Iterator<Cell> cellIterator = row.iterator();
-
-				// varremos todas as celulas da linha atual
-				while (cellIterator.hasNext()) {
-
-					// criamos uma celula
-					Cell cell = cellIterator.next();
-
-					if (cell.getColumnIndex() == 0) {
-						item.setPlaca(cell.getStringCellValue());
-					} else if (cell.getColumnIndex() == 2) {
-						item.setCategoria(Integer.valueOf(cell
-								.getStringCellValue()));
-					} else if (cell.getColumnIndex() == 3) {
-						try {
-							item.setData(sdf.parse(cell.getStringCellValue()));
-						} catch (ParseException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					} else if (cell.getColumnIndex() == 4) {
-						try {
-							item.setHora(shf.parse(cell.getStringCellValue()));
-						} catch (ParseException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					} else if (cell.getColumnIndex() == 5) {
-						item.setConcessionaria(cell.getStringCellValue());
-					} else if (cell.getColumnIndex() == 6) {
-						item.setPraca(cell.getStringCellValue());
-					}
-					if (cell.getColumnIndex() == 7) {
-						item.setValor(cell.getNumericCellValue());
-						lista.add(item);
-						item = new ItemPlanilhaUpload();
-					}
-
-				}
-
-			}
-
-		} catch (FileNotFoundException ex) {
-			Logger.getLogger(SessionPlanilhaUpload.class.getName()).log(
-					Level.SEVERE, null, ex);
-			ex.printStackTrace();
-		} catch (IOException ex) {
-			Logger.getLogger(SessionPlanilhaUpload.class.getName()).log(
-					Level.SEVERE, null, ex);
-			ex.printStackTrace();
-		} finally {
-			try {
-				fisPlanilha.close();
-			} catch (IOException ex) {
-				Logger.getLogger(SessionPlanilhaUpload.class.getName()).log(
-						Level.SEVERE, null, ex);
-				ex.printStackTrace();
-			}
-
-		}
-		return this.makeTheMagic(lista);
-	}
-
-	private boolean validaEmpresaPlanilha(XSSFWorkbook workbook) {
-
-		XSSFSheet sheet = workbook.getSheetAt(0);
-
-		Iterator<Row> rowIterator = sheet.iterator();
-
-		while (rowIterator.hasNext()) {
-			Row row = rowIterator.next();
-
-			if (row.getRowNum() == 0) {
-				continue;
-			}
-
-			Iterator<Cell> cellIterator = row.iterator();
-			while (cellIterator.hasNext()) {
-
-				Cell cell = cellIterator.next();
-
-				if ((cell.getRowIndex() == 1) && (cell.getColumnIndex() == 1)) {
-					if (Cell.CELL_TYPE_STRING == cell.getCellType()) {
-						String razaoSocial = cell.getStringCellValue().trim();
-						if (razaoSocial.trim().equals(this.getNomeEmpresa())) {
-							return true;
-						}
-					}
-				}
-			}
-		}
-		return false;
 	}
 
 	private String getNomeEmpresa() {
@@ -385,6 +264,11 @@ public class SessionPlanilhaUpload {
 
 		ItemPlanilhaDownload item = new ItemPlanilhaDownload();
 		item.setCategoria(itemPlanilhaUpload.getCategoria());
+		// Caso a categoria seja com dois digitos tipo 61
+		if (item.getCategoria() > 10) {
+			item.setCategoria(this.sumInt(item.getCategoria()));
+		}
+
 		item.setCategoriaCorreta(temp.getMaximoEixo());
 		item.setConcessionaria(itemPlanilhaUpload.getConcessionaria());
 		item.setData(itemPlanilhaUpload.getData());
@@ -397,6 +281,15 @@ public class SessionPlanilhaUpload {
 		item.setValorRestituicao(item.getValor() - item.getValorCorreto());
 		return item;
 
+	}
+
+	private int sumInt(Integer numero) {
+		int soma = 0;
+		while (numero != 0) {
+			soma += numero % 10;
+			numero = numero / 10;
+		}
+		return soma;
 	}
 
 	public boolean validaPlanilha(PlanilhaUpload planilhaUpload) {
@@ -428,14 +321,7 @@ public class SessionPlanilhaUpload {
 		return false;
 	}
 
-	// verifica se o nome da primeira e quarta abas da planilha estao corretos
-	// para validar se ï¿½ a planilha verdadeira
-	@SuppressWarnings("resource")
-	public boolean validaPlanilha(String path, boolean xlsx) {
-
-		if (xlsx) {
-			return validaXlsx(path);
-		}
+	public boolean validaPlanilha(String path, Object workbook, Object sheet) {
 
 		FileInputStream fisPlanilha = null;
 
@@ -443,51 +329,23 @@ public class SessionPlanilhaUpload {
 			File file = new File(path);
 			fisPlanilha = new FileInputStream(file);
 
-			HSSFWorkbook workbook = new HSSFWorkbook(fisPlanilha);
-			HSSFSheet sheet = workbook.getSheet("Passagens de Pedágio");
+			if (workbook instanceof XSSFWorkbook) {
+				workbook = new XSSFWorkbook(fisPlanilha);
+				sheet = ((XSSFWorkbook) workbook)
+						.getSheet("Passagens de Pedágio");
+			} else {
+				workbook = new HSSFWorkbook(fisPlanilha);
+				sheet = ((HSSFWorkbook) workbook)
+						.getSheet("Passagens de Pedágio");
+			}
 
 			if (sheet == null) {
 				Mensagem.send(Mensagem.MSG_PLANILHA_ERRADA, Mensagem.ERROR);
 				return false;
 			}
-			sheet = workbook.getSheet("Resumo da Fatura");
-			if (sheet == null) {
-				Mensagem.send(Mensagem.MSG_PLANILHA_ERRADA, Mensagem.ERROR);
-				return false;
-			}
-			if (!this.validaEmpresaPlanilhaXls(workbook)) {
-				Mensagem.send(Mensagem.MSG_PLANILHA_ERRADA, Mensagem.ERROR);
-				return false;
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			return false;
-		}
-		return true;
-	}
 
-	public boolean validaXlsx(String path) {
-
-		FileInputStream fisPlanilha = null;
-
-		try {
-			File file = new File(path);
-			fisPlanilha = new FileInputStream(file);
-
-			XSSFWorkbook workbook = new XSSFWorkbook(fisPlanilha);
-			XSSFSheet sheet = workbook.getSheet("Passagens de Pedágio");
-
-			if (sheet == null) {
-				Mensagem.send(Mensagem.MSG_PLANILHA_ERRADA, Mensagem.ERROR);
-				return false;
-			}
-			sheet = workbook.getSheet("Resumo da Fatura");
-			if (sheet == null) {
-				Mensagem.send(Mensagem.MSG_PLANILHA_ERRADA, Mensagem.ERROR);
-				return false;
-			}
 			if (!this.validaEmpresaPlanilha(workbook)) {
-				Mensagem.send(Mensagem.MSG_PLANILHA_ERRADA, Mensagem.ERROR);
+				Mensagem.send(Mensagem.MSG_EMPRESA_INVALIDA, Mensagem.ERROR);
 				return false;
 			}
 		} catch (Exception e) {
@@ -497,11 +355,16 @@ public class SessionPlanilhaUpload {
 		return true;
 	}
 
-	private boolean validaEmpresaPlanilhaXls(HSSFWorkbook workbook) {
+	private boolean validaEmpresaPlanilha(Object workbook) {
+		Iterator<Row> rowIterator = null;
 
-		HSSFSheet sheet = workbook.getSheetAt(0);
-
-		Iterator<Row> rowIterator = sheet.iterator();
+		if (workbook instanceof XSSFWorkbook) {
+			XSSFSheet sheet = ((XSSFWorkbook) workbook).getSheetAt(0);
+			rowIterator = sheet.iterator();
+		} else {
+			HSSFSheet sheet = ((HSSFWorkbook) workbook).getSheetAt(0);
+			rowIterator = sheet.iterator();
+		}
 
 		while (rowIterator.hasNext()) {
 			Row row = rowIterator.next();
@@ -517,9 +380,8 @@ public class SessionPlanilhaUpload {
 
 				if ((cell.getRowIndex() == 1) && (cell.getColumnIndex() == 1)) {
 					if (Cell.CELL_TYPE_STRING == cell.getCellType()) {
-						String razaoSocial = cell.getStringCellValue();
-						if (razaoSocial.trim().equals(
-								this.getNomeEmpresa().trim())) {
+						String razaoSocial = cell.getStringCellValue().trim();
+						if (razaoSocial.trim().equals(this.getNomeEmpresa())) {
 							return true;
 						}
 					}
@@ -527,6 +389,18 @@ public class SessionPlanilhaUpload {
 			}
 		}
 		return false;
+	}
+
+	public boolean validaPlanilha(String path, boolean xlsx) {
+		if (xlsx) {
+			XSSFWorkbook workbook = null;
+			XSSFSheet sheet = null;
+			return validaPlanilha(path, workbook, sheet);
+		} else {
+			HSSFWorkbook workbook = null;
+			HSSFSheet sheet = null;
+			return validaPlanilha(path, workbook, sheet);
+		}
 	}
 
 }

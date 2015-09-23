@@ -10,8 +10,17 @@
 	<ui:define name="pageTitle">Consulta de Veículos</ui:define>
 	<ui:define name="body">
 		<p:panel id="cVeiculoPanel" style="border: none;">
-			<h:outputLabel styleClass="subtitlePages">Veículos</h:outputLabel>
-			
+
+
+			<h:panelGrid columns="3">
+				<h:outputLabel styleClass="subtitlePages">Veículos</h:outputLabel>
+				<p:commandButton id="cVeiculoNovo" value="Novo"
+					binding="#{beanVeiculo.botaoNovo}" update=":form:pnVeiculo"
+					actionListener="#{beanVeiculo.novo}" title="Criar Veiculo"
+					disabled="#{beanVeiculo.statusBotaoNovo}" icon="ui-icon-plus"
+					onclick="PF('dManterVeiculo').show()" />
+			</h:panelGrid>
+
 			<h:panelGrid columns="7" cellpadding="2" style="border: 2px;">
 				<h:outputText value="Código" />
 				<h:outputText value="Modelo" />
@@ -28,7 +37,7 @@
 
 				<p:inputText maxlength="30" style="width: 450px"
 					value="#{beanVeiculo.filtro.modeloVeiculo}" onkeyup="up(this)"
-					onkeypress="return onlyLetters(event)" size="78">
+					size="78">
 					<p:ajax />
 				</p:inputText>
 
@@ -89,17 +98,9 @@
 			<br></br>
 			<p:separator />
 
-			<h:panelGrid columns="3" style="float: right;">
-				<p:commandButton id="cVeiculoNovo" value="Novo"
-					binding="#{beanVeiculo.botaoNovo}" update=":form:pnVeiculo"
-					actionListener="#{beanVeiculo.novo}" title="Criar Veiculo"
-					disabled="#{beanVeiculo.statusBotaoNovo}" icon="ui-icon-plus"
-					onclick="PF('dManterVeiculo').show()" />
-			</h:panelGrid>
-
 			<h:panelGrid rendered="#{beanVeiculo.botaoNovo.disabled}">
 				<h:outputText style="color: red;"
-					value="*Você atingiu o número máximo de veículos, para adicionar novos veículos atualize seu plano!"/>
+					value="*Você atingiu o número máximo de veículos, para adicionar novos veículos atualize seu plano!" />
 			</h:panelGrid>
 
 		</p:panel>

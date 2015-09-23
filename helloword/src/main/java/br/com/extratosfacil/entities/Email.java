@@ -1,7 +1,11 @@
 package br.com.extratosfacil.entities;
 
+import java.net.MalformedURLException;
+
+import javax.print.DocFlavor.URL;
+
 import org.apache.commons.mail.EmailException;
-import org.apache.commons.mail.SimpleEmail;
+import org.apache.commons.mail.HtmlEmail;
 
 public class Email {
 
@@ -13,9 +17,11 @@ public class Email {
 	private static String password = "Extratos*facil";
 
 	public static void sendEmail(String destinatario, String nomeDestinatario,
-			String assunto, String mensagem) throws EmailException {
-
-		SimpleEmail email = new SimpleEmail();
+			String assunto, String mensagem, String link) throws EmailException {
+		mensagem = "<html><body>" + mensagem + "<a href=\"" + link
+				+ "\">Link</a></body></html>";
+		System.out.println(mensagem);
+		HtmlEmail email = new HtmlEmail();
 		// Utilize o hostname do seu provedor de email
 		// System.out.println("alterando hostname...");
 		email.setHostName(smtpServer);
@@ -28,7 +34,7 @@ public class Email {
 		// Adicione um assunto
 		email.setSubject(assunto);
 		// Adicione a mensagem do email
-		email.setMsg(mensagem);
+		email.setHtmlMsg(mensagem);
 		// Para autenticar no servidor é necessário chamar os dois métodos
 		// abaixo
 		// System.out.println("autenticando...");
@@ -39,4 +45,5 @@ public class Email {
 		email.send();
 		// System.out.println("Email enviado!");
 	}
+
 }

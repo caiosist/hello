@@ -108,4 +108,49 @@ public class Estado implements Serializable {
 	public String toString() {
 		return this.nomeEstado;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((nomeEstado == null) ? 0 : nomeEstado.hashCode());
+		result = prime * result + ((pais == null) ? 0 : pais.hashCode());
+		result = prime * result + ((uf == null) ? 0 : uf.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Estado other = (Estado) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (nomeEstado == null) {
+			if (other.nomeEstado != null)
+				return false;
+		} else if (!nomeEstado.equals(other.nomeEstado))
+			return false;
+		if (pais == null) {
+			if (other.pais != null)
+				return false;
+		} else if (!pais.equals(other.pais))
+			return false;
+		if (uf == null) {
+			if (other.uf != null)
+				return false;
+		} else if (!uf.equals(other.uf))
+			return false;
+		return true;
+	}
+	
 }

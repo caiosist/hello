@@ -307,7 +307,6 @@ public class SessionEmpresa {
 	}
 
 	private boolean validaEmail(String email) {
-		System.out.println("Metodo de validacao de email");
 		Pattern p = Pattern
 				.compile("^[\\w-]+(\\.[\\w-]+)*@([\\w-]+\\.)+[a-zA-Z]{2,7}$");
 		Matcher m = p.matcher(email);
@@ -459,15 +458,16 @@ public class SessionEmpresa {
 			empresa = this.controller.find(empresa);
 			if (empresa != null) {
 				String assunto = "Recuperar Senha";
-				String mensagem = "Clique no link para alterar sua senha: \n \n extratosfacil.com.br/recuperar.html?je="
-						+ empresa.getId()
-						+ "&sb{bp="
+				String mensagem = "<p>Clique no link para alterar sua senha:</p>";
+				String link = "http://extratosfacil.com.br/recuperar.html?je="
+						+ empresa.getId() + "&sb{bp="
 						+ this.crip(empresa.getRazaoSocial());
 				Email.sendEmail(empresa.getEmail(), empresa.getNomeFantasia(),
-						assunto, mensagem);
+						assunto, mensagem, link);
 				return empresa;
 			}
 		} catch (Exception e) {
+			Mensagem.send(Mensagem.MSG_EMAIL_INVALIDO, Mensagem.ERROR);
 			return new Empresa();
 		}
 		Mensagem.send(Mensagem.MSG_EMAIL_INVALIDO, Mensagem.ERROR);
@@ -495,15 +495,13 @@ public class SessionEmpresa {
 	}
 
 	public void sendEmailConfirmacao(Empresa empresa) {
-		String link = "www.extratosfacil.com.br/confirmar.html?sb{bpTpdjbm="
+		String link = "http://www.extratosfacil.com.br/confirmar.html?sb{bpTpdjbm="
 				+ this.crip(empresa.getRazaoSocial());
-		String mensagem = "Cadastro realizado com sucesso. Clique no link para confirmar: "
-				+ link
-				+ "\n\n Caso nao consiga clicar no link copie e cole em seu navegador.";
+		String mensagem = "<p>Cadastro realizado com sucesso. Clique no link para confirmar: </p>";
 		String assunto = "Cadastro Extratos Fácil";
 		try {
 			Email.sendEmail(empresa.getEmail(), empresa.getNomeFantasia(),
-					assunto, mensagem);
+					assunto, mensagem, link);
 		} catch (EmailException e) {
 			e.printStackTrace();
 		}

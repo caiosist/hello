@@ -17,7 +17,7 @@
 					mode="advanced" dragDropSupport="false" auto="true"
 					allowTypes="/(\.|\/)(xlsx|xls)$/"
 					invalidFileMessage="Tipo de arquivo inválido!"
-					update="mensagens, gridPlanilha, botaoDownload" label="Selecionar" />
+					update="mensagens, gridPlanilha, botaoDownload, valor" label="Selecionar" />
 			</p:panel>
 
 			<br />
@@ -73,25 +73,39 @@
 					<h:outputText value="#{planilha.categoriaCorreta}" />
 				</p:column>
 			</p:dataTable>
+			<h:panelGrid id="valor" style="float: right;">
+				<h:panelGrid columns="2">
+					<h:outputText value="Valor Total a ser Restituido" />
+					<p:inputText disabled="true" value="#{beanPlanilhaUpload.total}">
+						<f:convertNumber pattern="#0.00" />
+					</p:inputText>
+				</h:panelGrid>
+			</h:panelGrid>
+
+			<br></br>
+			<br></br>
 			<br></br>
 			<p:separator />
 			<div align="center">
-				<h:panelGrid columns="1" id="botaoDownload">
+				<h:panelGrid id="botaoDownload">
 					<h:panelGrid rendered="#{not empty beanPlanilhaUpload.itens}">
-						<h:outputText value="Valor Total a ser Restituido" />
-						<p:inputText value="#{beanPlanilhaUpload.total}">
-							<f:convertNumber pattern="#0.00" />
-						</p:inputText>
+						<h:commandButton styleClass="bt-download">
+							<p:dataExporter type="xls" fileName="Correções_do_Extrato"
+								postProcessor="#{beanPlanilhaUpload.postProcessXLS}"
+								target="gridPlanilha">
+							</p:dataExporter>
+						</h:commandButton>
 					</h:panelGrid>
-					<h:commandButton styleClass="bt-download"
-						rendered="#{not empty beanPlanilhaUpload.itens}">
-						<p:dataExporter type="xls" fileName="Correções do Extrato"
-							postProcessor="#{beanPlanilhaUpload.postProcessXLS}"
-							target="gridPlanilha">
-						</p:dataExporter>
-					</h:commandButton>
 				</h:panelGrid>
 			</div>
+			<!-- 			<div align="center"> -->
+			<!-- 				<h:panelGrid id="textoDownload"> -->
+			<!-- 					<h:panelGrid> -->
+			<!-- 						<h2>Click em Download para baixar a planilha com as -->
+			<!-- 							correções.</h2> -->
+			<!-- 					</h:panelGrid> -->
+			<!-- 				</h:panelGrid> -->
+			<!-- 			</div> -->
 		</p:panel>
 
 	</ui:define>
