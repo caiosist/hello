@@ -7,20 +7,20 @@
 
 	<ui:define name="title">Extratos Fácil</ui:define>
 
-	<ui:define name="content">
+	<ui:define name="content" scroll="yes">
 		<h:inputHidden value="#{beanEmpresa.usuarioLogin}" />
 		<div id="layoutMax">
 			<div
 				style="float: right; width: 400px; height: 480px; margin: 55px 50px 0 0">
 
-				<p:commandLink id="reenviarEmail" value="Reenviar E-mail"
+				<p:commandLink id="reenviarEmail" value="Reenviar e-mail"
 					immediate="true"
-					style="font-size: 12px; color: #669214; position: absolute; margin: -45px 0 0 -30px"
+					style="font-size: 12px; color: #669214; position: absolute; margin: -50px 0 0 -45px"
 					onclick="PF('dReenviarEmail').show()" />
 
 				<p:commandLink id="recuperar_senha" value="Esqueceu sua senha?"
 					immediate="true"
-					style="font-size: 12px; color: #669214; position: absolute; margin: -45px 0 0 100px"
+					style="font-size: 12px; color: #669214; position: absolute; margin: -50px 0 0 105px"
 					onclick="PF('dRecuperarSenha').show()" />
 
 				<label
@@ -31,7 +31,7 @@
 						<p:selectBooleanCheckbox value="#{beanEmpresa.pessoaFisica}">
 							<p:ajax event="change" update="panelCad" process="@this" />
 						</p:selectBooleanCheckbox>
-						<h:outputText value="Pessoa Fisica: " />
+						<h:outputText style="font-size: 18px; font-family: sans-serif; color: #669214" value="Pessoa Física" />
 					</h:panelGrid>
 
 					<p:inputText id="empresa_razaoSocial" onkeyup="up(this)"
@@ -132,15 +132,17 @@
 
 					<h:panelGrid columns="2">
 						<p:selectBooleanCheckbox value="#{beanEmpresa.aceito}" />
-						<h:outputText value="Li e aceito os Termos de Incricao " />
+						<h:outputText styleClass="infosText" style="font-weight: bold" value="Li e aceito os termos de utilização" />
 					</h:panelGrid>
 					<p:commandButton id="bt_empresa_cadastrar"
 						style="width: 150px; height: 25px; font-size: 16px; margin: 5px 0 0 100px"
 						value="Cadastrar" actionListener="#{beanEmpresa.save}"
 						update="panelCad, mensagens" />
 
-					<p>Problemas para realizar o cadastro? entre em contato com o
-						nossa equipe de suporte: suporte@extratosfacil.com.br</p>
+					<p style="color: #669214; font-size: 12px; font-family: sans-serif">
+						Problemas para realizar o cadastro? Entre em contato com nossa 
+						equipe de suporte através do e-mail: suporte@extratosfacil.com.br
+					</p>
 
 				</h:panelGrid>
 			</div>
@@ -163,7 +165,7 @@
 				<br></br> <br></br> <br></br> <br></br>
 
 				<h:outputLabel styleClass="fraseInicial"
-					value="Veja Porque Utilizar o Extratos Fácil:" />
+					value="Veja porque utilizar o Extratos Fácil:" />
 				<div style="margin-top: 15px">
 					<iframe width="560" height="315"
 						src="https://www.youtube.com/embed/8w3RLXM5CCk" frameborder="0"
