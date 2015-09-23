@@ -6,6 +6,10 @@ import javax.faces.context.FacesContext;
 
 public class Mensagem {
 
+	public static String EMAIL_ENVIADO = "E-mail enviado com sucesso!";
+
+	public static String MSG_ACEITO = "Voc� precisa Aceitar os Termos!";
+
 	public static String MSG_SALVA = "Os dados foram salvos com sucesso!";
 
 	public static String MSG_REMOVE = "Os dados foram Excluidos com sucesso!";
@@ -21,8 +25,12 @@ public class Mensagem {
 	public static String MSG_INCOMPLETO = "Por favor, preencha todos os campos!";
 
 	public static String MSG_CNPJ = "CNPJ Invalido!";
+	
+	public static String MSG_CPF = "CPF Invalido!";
 
 	public static String MSG_EMAIL = "E-mail Invalido ou j� cadastrado!";
+	
+	public static String MSG_EMAIL_ENVIADO = "E-mail Enviado!";
 
 	public static String MSG_USER_NAO_ENCONTRADO = "Usuário inválido!";
 
@@ -30,7 +38,9 @@ public class Mensagem {
 
 	public static String MSG_LOGIN = "Login já existente, por favor escolha um login diferente!";
 
-	public static String MSG_CMPJ_UNIQUE = "Já existe uma empresa cadastrada com este CNPJ!";
+	public static String MSG_CNPJ_UNIQUE = "Já existe uma empresa cadastrada com este CNPJ!";
+	
+	public static String MSG_CPF_UNIQUE = "Já existe um usuario cadastrado com este CPF!";
 
 	public static String MSG_RAZAO_SOCIAL = "Já existe uma empresa cadastrada com esta razão social!";
 

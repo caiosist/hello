@@ -20,7 +20,7 @@ import br.com.extratosfacil.entities.location.Estado;
 import br.com.jbc.controller.Controller;
 
 /**
- * Session que representa as regras de negócios da entidade Empresa
+ * Session que representa as regras de negÃ³cios da entidade Empresa
  * 
  * @author Paulo Henrique da Silva
  * @since 29/07/2015
@@ -82,8 +82,8 @@ public class SessionEmpresa {
 	 * 		 					METHODS
 	 *-------------------------------------------------------------------*/
 
-	public boolean save(Empresa empresa) {
-		if (this.validaEmpresa(empresa, false)) {
+	public boolean save(Empresa empresa, boolean pessoaFisica) {
+		if (this.validaEmpresa(empresa, false, pessoaFisica)) {
 			try {
 				this.controller.insert(empresa);
 			} catch (ConstraintViolationException e) {
@@ -99,8 +99,8 @@ public class SessionEmpresa {
 		return false;
 	}
 
-	public boolean update(Empresa empresa) {
-		if (this.validaEmpresa(empresa, true)) {
+	public boolean update(Empresa empresa, boolean pessoaFisica) {
+		if (this.validaEmpresa(empresa, true, pessoaFisica)) {
 			try {
 				this.controller.update(empresa);
 				return true;
@@ -116,7 +116,8 @@ public class SessionEmpresa {
 		return true;
 	}
 
-	public boolean validaEmpresa(Empresa empresa, boolean update) {
+	public boolean validaEmpresa(Empresa empresa, boolean update,
+			boolean pessoaFisica) {
 		if ((empresa.getCidade() == null)
 				|| (empresa.getCidade().getId() == null)) {
 			Mensagem.send(Mensagem.MSG_INCOMPLETO, Mensagem.ERROR);
@@ -125,8 +126,13 @@ public class SessionEmpresa {
 				|| (empresa.getCnpj().trim().equals(""))) {
 			Mensagem.send(Mensagem.MSG_INCOMPLETO, Mensagem.ERROR);
 			return false;
-		} else if (!this.validaCNPJ(empresa.getCnpj())) {
-			Mensagem.send(Mensagem.MSG_CNPJ, Mensagem.ERROR);
+		} else if (!this.validaCNPJ(empresa.getCnpj())
+				&& (!validaCPF(empresa.getCnpj()))) {
+			if (!pessoaFisica) {
+				Mensagem.send(Mensagem.MSG_CNPJ, Mensagem.ERROR);
+			} else {
+				Mensagem.send(Mensagem.MSG_CPF, Mensagem.ERROR);
+			}
 			return false;
 		} else if ((empresa.getEmail() == null)
 				|| (empresa.getEmail().trim().equals(""))) {
@@ -151,7 +157,7 @@ public class SessionEmpresa {
 				|| (empresa.getSenha().trim().equals(""))) {
 			Mensagem.send(Mensagem.MSG_INCOMPLETO, Mensagem.ERROR);
 			return false;
-		} else if ((!update) && (!validaUnique(empresa))) {
+		} else if ((!update) && (!validaUnique(empresa, pessoaFisica))) {
 			return false;
 		} else {
 			if (!update) {
@@ -177,8 +183,43 @@ public class SessionEmpresa {
 		return true;
 	}
 
+	public boolean validaCPF(Object value) {
+		String cpf = (String) value;
+		if (cpf.length() != 11
+				|| !calcularDigitoVerificador(cpf.substring(0, 9)).equals(
+						cpf.substring(9, 11))) {
+			return false;
+		}
+		return true;
+	}
+
+	private String calcularDigitoVerificador(String num) {
+		Integer primDig, segDig;
+		int soma = 0, peso = 10;
+		for (int i = 0; i < num.length(); i++) {
+			soma += Integer.parseInt(num.substring(i, i + 1)) * peso--;
+		}
+		if (soma % 11 == 0 | soma % 11 == 1) {
+			primDig = new Integer(0);
+		} else {
+			primDig = new Integer(11 - (soma % 11));
+		}
+		soma = 0;
+		peso = 11;
+		for (int i = 0; i < num.length(); i++) {
+			soma += Integer.parseInt(num.substring(i, i + 1)) * peso--;
+		}
+		soma += primDig.intValue() * 2;
+		if (soma % 11 == 0 | soma % 11 == 1) {
+			segDig = new Integer(0);
+		} else {
+			segDig = new Integer(11 - (soma % 11));
+		}
+		return primDig.toString() + segDig.toString();
+	}
+
 	// Da uma mensagem personalizada para Razao social, cnpj e login repetidos
-	private boolean validaUnique(Empresa empresa) {
+	private boolean validaUnique(Empresa empresa, boolean pessoaFisica) {
 		Empresa temp = new Empresa();
 		try {
 			temp = this.controller
@@ -202,8 +243,12 @@ public class SessionEmpresa {
 			e.printStackTrace();
 		}
 		if (temp != null) {
-			Mensagem.send(Mensagem.MSG_CNPJ, Mensagem.ERROR);
-			;
+			if (pessoaFisica) {
+				Mensagem.send(Mensagem.MSG_CPF_UNIQUE, Mensagem.ERROR);
+			} else {
+				Mensagem.send(Mensagem.MSG_CNPJ_UNIQUE, Mensagem.ERROR);
+			}
+
 			return false;
 		}
 
@@ -270,7 +315,7 @@ public class SessionEmpresa {
 			// System.out.println("O email " + email + " e valido");
 			return true;
 		} else {
-			// System.out.println("O E-mail " + email + " � inv�lido");
+			// System.out.println("O E-mail " + email + " ï¿½ invï¿½lido");
 			return false;
 		}
 	}
@@ -455,7 +500,7 @@ public class SessionEmpresa {
 		String mensagem = "Cadastro realizado com sucesso. Clique no link para confirmar: "
 				+ link
 				+ "\n\n Caso nao consiga clicar no link copie e cole em seu navegador.";
-		String assunto = "Cadastro Extratos F�cil";
+		String assunto = "Cadastro Extratos Fácil";
 		try {
 			Email.sendEmail(empresa.getEmail(), empresa.getNomeFantasia(),
 					assunto, mensagem);

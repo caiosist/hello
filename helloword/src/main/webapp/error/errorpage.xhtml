@@ -18,7 +18,7 @@
 }
 
 body {
-	background-color: #43a047;
+	background-color: red;
 }
 </style>
 	<script type="text/javascript" src="resource/js/validateDialog.js"></script>
@@ -28,18 +28,13 @@ body {
 		<p:panel style="border: none">
 			<div id="body" align="center">
 				<div align="center">
-					<h2>Quase no final...</h2>
-					<p>Precisamos confirmar o seu endereço de e-mail.</p>
+					<h2>Ocorreu um Erro... =/</h2>
 
-					<p>
-						Para concluir o seu cadastro, click no link existente no e-mail
-						que acabamos de enviar para você. <BR />Verifique também a sua
-						caixa de span.
-					</p>
+					<p>Sua sessão expirou ou você acessou uma pagina inexistente!</p>
 				</div>
 				<br />
-				<h:commandButton value="Voltar ao nosso Site"
-					action="#{beanEmpresa.redirecionaLogin}" />
+				<h:commandButton value="Voltar a página de login"
+					action="#{beanEmpresa.logout}" />
 			</div>
 		</p:panel>
 	</h:form>

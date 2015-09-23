@@ -5,10 +5,8 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
 
-<p:panel id="pnRecuperarSenha" style="border: none;">
+<p:panel id="pnReenviarEmail" style="border: none;">
 	<h:panelGrid columns="2" cellpadding="2">
-		<p:messages id="mensagens" showDetail="true" autoUpdate="true"
-			closable="true" />
 		<div>
 			<div id="login_wrapper" align="center">
 				<p:inputText placeholder="Informe seu e-mail"
@@ -20,7 +18,7 @@
 				<b></b><b></b>
 
 				<p:commandButton value="Enviar" ajax="false" immediate="true"
-					action="#{beanEmpresa.enviarEmailRecuperarSenha}"
+					action="#{beanEmpresa.reenviarEmail}"
 					style="width: 100px; height: 25px; font-size: 16px; margin: 20px 0 0 130px" />
 			</div>
 		</div>

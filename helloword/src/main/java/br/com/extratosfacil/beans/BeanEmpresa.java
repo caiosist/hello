@@ -64,6 +64,10 @@ public class BeanEmpresa {
 
 	private String senha = new String();
 
+	private boolean pessoaFisica = false;
+
+	private boolean aceito = false;
+
 	/*-------------------------------------------------------------------
 	 * 		 					CONSTRUCTOR
 	 *-------------------------------------------------------------------*/
@@ -120,6 +124,14 @@ public class BeanEmpresa {
 	public boolean isRecuperar() {
 		recuperar = this.validaRecovery();
 		return recuperar;
+	}
+
+	public boolean isPessoaFisica() {
+		return pessoaFisica;
+	}
+
+	public void setPessoaFisica(boolean pessoaFisica) {
+		this.pessoaFisica = pessoaFisica;
 	}
 
 	public boolean isConfirmar() {
@@ -194,6 +206,14 @@ public class BeanEmpresa {
 		this.planos = planos;
 	}
 
+	public boolean isAceito() {
+		return aceito;
+	}
+
+	public void setAceito(boolean aceito) {
+		this.aceito = aceito;
+	}
+
 	public void setEmpresas(List<Empresa> empresas) {
 		this.empresas = empresas;
 	}
@@ -211,7 +231,8 @@ public class BeanEmpresa {
 	 *-------------------------------------------------------------------*/
 
 	public void reinit() {
-
+		this.aceito = false;
+		this.pessoaFisica = false;
 		this.empresa = new Empresa();
 		this.filtro = new Empresa();
 		this.selected = new Empresa();
@@ -221,13 +242,13 @@ public class BeanEmpresa {
 	public String save() {
 		RequestContext context = RequestContext.getCurrentInstance();
 		boolean sucesso = false;
-		if (empresa.getSenha().equals(this.confSenha)) {
+		if (empresa.getSenha().equals(this.confSenha) && this.aceito) {
 
 			if (this.empresa.getId() != null) {
 				return this.update();
 			}
 
-			if (this.session.save(this.empresa)) {
+			if (this.session.save(this.empresa, this.pessoaFisica)) {
 				this.session.sendEmailConfirmacao(this.empresa);
 				Mensagem.send(Mensagem.MSG_SALVA, Mensagem.INFO);
 				sucesso = true;
@@ -241,7 +262,12 @@ public class BeanEmpresa {
 				return "";
 			}
 		} else {
-			Mensagem.send(Mensagem.MSG_CONF_SENHA, Mensagem.ERROR);
+			if (aceito) {
+				Mensagem.send(Mensagem.MSG_CONF_SENHA, Mensagem.ERROR);
+			} else {
+				Mensagem.send(Mensagem.MSG_ACEITO, Mensagem.ERROR);
+			}
+
 		}
 		context.addCallbackParam("sucesso", sucesso);
 		return "";
@@ -251,7 +277,7 @@ public class BeanEmpresa {
 		RequestContext context = RequestContext.getCurrentInstance();
 		boolean sucesso = false;
 
-		if (this.session.update(this.empresa)) {
+		if (this.session.update(this.empresa, this.pessoaFisica)) {
 			this.reinit();
 			this.carregaEmpresa();
 			sucesso = true;
@@ -352,7 +378,6 @@ public class BeanEmpresa {
 		if (this.senha.equals(this.confSenha)) {
 			this.empresa.setSenha(this.senha);
 			this.update();
-			// this.redirecionarLogin();
 		} else {
 			Mensagem.send(Mensagem.MSG_CONF_SENHA, Mensagem.ERROR);
 		}
@@ -361,7 +386,8 @@ public class BeanEmpresa {
 	public void enviarEmailRecuperarSenha() {
 		this.empresa = this.session.enviarEmailRecuperarSenha(this.empresa);
 		if (empresa.getId() != null) {
-			Sessao.redireciona("login.html");
+			// Sessao.redireciona("login.html");
+			Mensagem.send(Mensagem.EMAIL_ENVIADO, Mensagem.INFO);
 			this.empresa = new Empresa();
 		}
 	}
@@ -376,6 +402,21 @@ public class BeanEmpresa {
 		this.empresa.setStatus("Pendente");
 		this.update();
 		return true;
+	}
+
+	public void redirecionaLogin() {
+		Sessao.redireciona("login.html");
+	}
+
+	public void reenviarEmail() {
+		this.empresa = this.session.find(this.empresa);
+		if (empresa == null) {
+			Mensagem.send(Mensagem.MSG_EMAIL_INVALIDO, Mensagem.ERROR);
+		} else {
+			this.session.sendEmailConfirmacao(this.empresa);
+			Mensagem.send(Mensagem.MSG_EMAIL_ENVIADO, Mensagem.INFO);
+		}
+		this.reinit();
 	}
 
 }

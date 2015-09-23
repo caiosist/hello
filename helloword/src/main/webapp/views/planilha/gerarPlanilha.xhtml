@@ -51,9 +51,19 @@
 					<h:outputText value="#{planilha.praca}" />
 				</p:column>
 				<p:column headerText="Valor Cobrado">
-					<h:outputText value="R$ #{planilha.valor}">
+					<h:outputText value="#{planilha.valor}">
 						<f:convertNumber pattern="#0.00" currencySymbol="R$"
 							currencyCode="BRL" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Valor Correto">
+					<h:outputText value="#{planilha.valorCorreto}">
+						<f:convertNumber groupingUsed="true" minFractionDigits="2" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Valor a ser Restituido">
+					<h:outputText value="#{planilha.valorRestituicao}">
+						<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 					</h:outputText>
 				</p:column>
 				<p:column headerText="Categoria Cobrada">
@@ -65,15 +75,23 @@
 			</p:dataTable>
 			<br></br>
 			<p:separator />
-			<h:panelGrid columns="3" style="float: right;">
-				<h:commandButton value="Download" styleClass="bt-download"
-					id="botaoDownload" disabled="#{empty beanPlanilhaUpload.itens}">
-					<p:dataExporter type="xls" fileName="Correções do Extrato"
-						postProcessor="#{beanPlanilhaUpload.postProcessXLS}"
-						target="gridPlanilha">
-					</p:dataExporter>
-				</h:commandButton>
-			</h:panelGrid>
+			<div align="center">
+				<h:panelGrid columns="1" id="botaoDownload">
+					<h:panelGrid rendered="#{not empty beanPlanilhaUpload.itens}">
+						<h:outputText value="Valor Total a ser Restituido" />
+						<p:inputText value="#{beanPlanilhaUpload.total}">
+							<f:convertNumber pattern="#0.00" />
+						</p:inputText>
+					</h:panelGrid>
+					<h:commandButton styleClass="bt-download"
+						rendered="#{not empty beanPlanilhaUpload.itens}">
+						<p:dataExporter type="xls" fileName="Correções do Extrato"
+							postProcessor="#{beanPlanilhaUpload.postProcessXLS}"
+							target="gridPlanilha">
+						</p:dataExporter>
+					</h:commandButton>
+				</h:panelGrid>
+			</div>
 		</p:panel>
 
 	</ui:define>

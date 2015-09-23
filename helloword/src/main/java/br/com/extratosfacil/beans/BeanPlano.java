@@ -45,7 +45,11 @@ public class BeanPlano {
 	@Autowired
 	private SessionPlano session = new SessionPlano();
 
-	private Integer periodo;
+	private Integer periodo = 1;
+
+	private Double desconto = (double) 0;
+
+	private Double valorTotal = (double) 0;
 
 	/*-------------------------------------------------------------------
 	 * 		 					CONSTRUCTOR
@@ -68,6 +72,22 @@ public class BeanPlano {
 
 	public void setPeriodo(Integer periodo) {
 		this.periodo = periodo;
+	}
+
+	public Double getDesconto() {
+		return desconto;
+	}
+
+	public void setDesconto(Double desconto) {
+		this.desconto = desconto;
+	}
+
+	public Double getValorTotal() {
+		return valorTotal;
+	}
+
+	public void setValorTotal(Double valorTotal) {
+		this.valorTotal = valorTotal;
 	}
 
 	public void setSession(SessionPlano session) {
@@ -219,5 +239,26 @@ public class BeanPlano {
 			sucesso = true;
 		}
 		context.addCallbackParam("sucesso", sucesso);
+	}
+
+	public void aplicaDesconto() {
+		this.desconto = (this.plano.getQuantidadeVeiculos() * 4.99);
+		if (this.periodo == 3) {
+			this.desconto = this.desconto * 0.06;
+		} else if (this.periodo == 6) {
+			this.desconto = this.desconto * 0.1;
+		} else if (this.periodo == 12) {
+			this.desconto = this.desconto * 0.13;
+		} else {
+			this.desconto = 0.0;
+		}
+		this.calculaValor();
+	}
+
+	public void calculaValor() {
+		this.valorTotal = this.plano.getQuantidadeVeiculos() * 4.99;
+		if (desconto > 0) {
+			this.valorTotal = this.valorTotal - this.desconto;
+		}
 	}
 }

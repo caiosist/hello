@@ -13,16 +13,29 @@
 			<div
 				style="float: right; width: 400px; height: 480px; margin: 55px 50px 0 0">
 
+				<p:commandLink id="reenviarEmail" value="Reenviar E-mail"
+					immediate="true"
+					style="font-size: 12px; color: #669214; position: absolute; margin: -45px 0 0 -30px"
+					onclick="PF('dReenviarEmail').show()" />
+
 				<p:commandLink id="recuperar_senha" value="Esqueceu sua senha?"
 					immediate="true"
-					style="font-size: 12px; color: #669214; position: absolute; margin: -45px 0 0 90px"
+					style="font-size: 12px; color: #669214; position: absolute; margin: -45px 0 0 100px"
 					onclick="PF('dRecuperarSenha').show()" />
 
 				<label
 					style="font-family: sans-serif; font-size: 36px; color: #669214">Cadastre-se</label>
 				<h:panelGrid columns="1" cellpadding="1" id="panelCad">
 
-					<p:inputText id="empresa_razaoSocial"
+					<h:panelGrid columns="2">
+						<p:selectBooleanCheckbox value="#{beanEmpresa.pessoaFisica}">
+							<p:ajax event="change" update="panelCad" process="@this" />
+						</p:selectBooleanCheckbox>
+						<h:outputText value="Pessoa Fisica: " />
+					</h:panelGrid>
+
+					<p:inputText id="empresa_razaoSocial" onkeyup="up(this)"
+						rendered="#{!beanEmpresa.pessoaFisica}"
 						placeholder="Razão Social (conforme está no via fácil)"
 						required="true" requiredMessage="Razão Social obrigatória!"
 						value="#{beanEmpresa.empresa.razaoSocial}"
@@ -31,6 +44,7 @@
 					</p:inputText>
 
 					<p:inputText id="empresa_nomeFantasia" placeholder="Nome Fantasia"
+						onkeyup="up(this)" rendered="#{not beanEmpresa.pessoaFisica}"
 						required="true" requiredMessage="Nome Fantasia obrigatório!"
 						value="#{beanEmpresa.empresa.nomeFantasia}"
 						styleClass="inputsCadastro">
@@ -39,7 +53,35 @@
 
 					<p:inputText id="empresa_cnpj"
 						placeholder="CNPJ (conforme está no via fácil)" required="true"
+						onkeypress="return onlyNumbers(event)"
+						rendered="#{not beanEmpresa.pessoaFisica}"
 						requiredMessage="CNPJ obrigatório!"
+						value="#{beanEmpresa.empresa.cnpj}" styleClass="inputsCadastro">
+						<p:ajax />
+					</p:inputText>
+
+					<p:inputText id="empresa_nome"
+						placeholder="Nome (conforme está no via fácil)" required="true"
+						onkeyup="up(this)" requiredMessage="Nome obrigatório!"
+						value="#{beanEmpresa.empresa.razaoSocial}"
+						rendered="#{beanEmpresa.pessoaFisica}" styleClass="inputsCadastro">
+						<p:ajax />
+					</p:inputText>
+
+					<p:inputText id="empresa_apelido" placeholder="Apelido"
+						onkeyup="up(this)" required="true"
+						requiredMessage="Apelido obrigatório!"
+						rendered="#{beanEmpresa.pessoaFisica}"
+						value="#{beanEmpresa.empresa.nomeFantasia}"
+						styleClass="inputsCadastro">
+						<p:ajax />
+					</p:inputText>
+
+					<p:inputText id="empresa_cpf"
+						rendered="#{beanEmpresa.pessoaFisica}"
+						placeholder="CPF (conforme está no via fácil)" required="true"
+						onkeypress="return onlyNumbers(event)"
+						requiredMessage="CPF obrigatório!"
 						value="#{beanEmpresa.empresa.cnpj}" styleClass="inputsCadastro">
 						<p:ajax />
 					</p:inputText>
@@ -88,10 +130,17 @@
 						<p:ajax />
 					</p:password>
 
+					<h:panelGrid columns="2">
+						<p:selectBooleanCheckbox value="#{beanEmpresa.aceito}" />
+						<h:outputText value="Li e aceito os Termos de Incricao " />
+					</h:panelGrid>
 					<p:commandButton id="bt_empresa_cadastrar"
 						style="width: 150px; height: 25px; font-size: 16px; margin: 5px 0 0 100px"
 						value="Cadastrar" actionListener="#{beanEmpresa.save}"
 						update="panelCad, mensagens" />
+
+					<p>Problemas para realizar o cadastro? entre em contato com o
+						nossa equipe de suporte: suporte@extratosfacil.com.br</p>
 
 				</h:panelGrid>
 			</div>
@@ -101,18 +150,20 @@
 				<ui:include src="recuperarSenha.xhtml"></ui:include>
 			</p:dialog>
 
+			<p:dialog header="Reenviar e-mail" widgetVar="dReenviarEmail"
+				modal="true" dynamic="true" id="dmReenviarEmail" resizable="false">
+				<ui:include src="reenviarEmail.xhtml"></ui:include>
+			</p:dialog>
+
 			<div style="width: 800px; height: 480px; margin: 65px 0 0 55px"
 				align="center">
 				<h:outputLabel styleClass="fraseInicial"
 					value="Simplificando o processo de consulta dos extratos de sua frota." />
 
-				<br></br>
-				<br></br>
-				<br></br>
-				<br></br>
+				<br></br> <br></br> <br></br> <br></br>
 
 				<h:outputLabel styleClass="fraseInicial"
-					value="Veja como é simples e útil usar o Extratos Fácil:" />
+					value="Veja Porque Utilizar o Extratos Fácil:" />
 				<div style="margin-top: 15px">
 					<iframe width="560" height="315"
 						src="https://www.youtube.com/embed/8w3RLXM5CCk" frameborder="0"

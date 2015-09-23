@@ -49,6 +49,8 @@ public class BeanPlanilhaDownload {
 
 	private Date fim = new Date();
 
+	private Double total = 0.0;
+
 	private StreamedContent file;
 
 	/*-------------------------------------------------------------------
@@ -77,6 +79,14 @@ public class BeanPlanilhaDownload {
 
 	public Date getInicio() {
 		return inicio;
+	}
+
+	public Double getTotal() {
+		return total;
+	}
+
+	public void setTotal(Double total) {
+		this.total = total;
 	}
 
 	public PlanilhaDownload getSelected() {

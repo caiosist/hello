@@ -51,6 +51,8 @@ public class BeanPlanilhaUpload {
 
 	private List<ItemPlanilhaDownload> itens = new ArrayList<ItemPlanilhaDownload>();
 
+	private Double total = 0.0;
+
 	/*-------------------------------------------------------------------
 	 * 		 					CONSTRUCTOR
 	 *-------------------------------------------------------------------*/
@@ -77,6 +79,14 @@ public class BeanPlanilhaUpload {
 
 	public List<ItemPlanilhaDownload> getItens() {
 		return itens;
+	}
+
+	public Double getTotal() {
+		return total;
+	}
+
+	public void setTotal(Double total) {
+		this.total = total;
 	}
 
 	public void setItens(List<ItemPlanilhaDownload> itens) {
@@ -127,6 +137,7 @@ public class BeanPlanilhaUpload {
 			if (this.session.validaPlanilha(planilhaUpload.getPath(), xlsx)) {
 				itens = this.session.carregaPlanilha(planilhaUpload.getPath(),
 						xlsx);
+				this.calculaTotal(itens);
 				this.save();
 			}
 
@@ -236,5 +247,12 @@ public class BeanPlanilhaUpload {
 			return "views/planilha/gerarPlanilha";
 		}
 		return "index";
+	}
+
+	public void calculaTotal(List<ItemPlanilhaDownload> itensDownload) {
+		total = 0.0;
+		for (int i = 0; i < itensDownload.size(); i++) {
+			total = total + itensDownload.get(i).getValorRestituicao();
+		}
 	}
 }

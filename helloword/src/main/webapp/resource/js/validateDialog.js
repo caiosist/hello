@@ -44,5 +44,6 @@ function validaPlano(xhr, status, args) {
 		 */
 	} else {
 		PF('dEditarPlano').hide();
+		window.top.location.href = "http://localhost:8080/helloword/"; 
 	}
 }

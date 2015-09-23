@@ -87,6 +87,18 @@ public class ItemPlanilhaDownload implements Serializable {
 	@Column
 	private Double valor;
 
+	/**
+	 * 
+	 */
+	@Column(length = 20, nullable = false)
+	private Double valorCorreto;
+
+	/**
+	 * 
+	 */
+	@Column(length = 20, nullable = false)
+	private Double valorRestituicao;
+
 	/*-------------------------------------------------------------------
 	 *				 		     CONSTRUCTORS
 	 *-------------------------------------------------------------------*/
@@ -128,6 +140,22 @@ public class ItemPlanilhaDownload implements Serializable {
 
 	public void setData(Date data) {
 		this.data = data;
+	}
+
+	public Double getValorCorreto() {
+		return valorCorreto;
+	}
+
+	public void setValorCorreto(Double valorCorreto) {
+		this.valorCorreto = valorCorreto;
+	}
+
+	public Double getValorRestituicao() {
+		return valorRestituicao;
+	}
+
+	public void setValorRestituicao(Double valorRestituicao) {
+		this.valorRestituicao = valorRestituicao;
 	}
 
 	public Date getHora() {

@@ -67,16 +67,34 @@
 						value="Dados para pagamento:" />
 				</h:panelGrid>
 
-				<h:panelGrid columns="2"
+				<h:panelGrid columns="3" id="gridPlano"
 					rendered="#{beanEmpresa.empresa.plano == null}">
 
 					<h:outputText value="Numero de Veiculos" />
-
-
+					<h:outputText value="Desconto" />
+					<h:outputText value="Valor Total" />
 
 					<p:inputText value="#{beanPlano.plano.quantidadeVeiculos}"
-						onkeypress="return onlyNumbers(event)" />
+						onkeypress="return onlyNumbers(event)">
+						<p:ajax event="change" process="@this" update="gridPlano"
+							listener="#{beanPlano.calculaValor}" />
+					</p:inputText>
 
+
+					<p:inputText value="#{beanPlano.desconto}" disabled="true">
+						<f:convertNumber pattern="#0.00" currencySymbol="R$"
+							currencyCode="BRL" />
+					</p:inputText>
+
+
+					<p:inputText value="#{beanPlano.valorTotal}" disabled="true">
+						<f:convertNumber pattern="#0.00" currencySymbol="R$"
+							currencyCode="BRL" />
+					</p:inputText>
+				</h:panelGrid>
+
+				<h:panelGrid columns="2"
+					rendered="#{beanEmpresa.empresa.plano == null}">
 					<h:outputText value="Plano de pagamento" />
 					<p:selectOneRadio id="periodo" value="#{beanPlano.periodo}">
 						<f:selectItem itemLabel="Mensal" itemValue="1" />
@@ -85,6 +103,8 @@
 						<f:selectItem itemLabel="Semestral - 10% de Desconto"
 							itemValue="6" />
 						<f:selectItem itemLabel="Anual - 13% de Desconto" itemValue="12" />
+						<p:ajax event="change" listener="#{beanPlano.aplicaDesconto}"
+							update="gridPlano" process="@this" />
 					</p:selectOneRadio>
 				</h:panelGrid>
 

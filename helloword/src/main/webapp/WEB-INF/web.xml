@@ -29,6 +29,16 @@
 		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
 	</listener>
 
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error/errorpage.html</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error/errorpage.html</location>
+	</error-page>
+
 	<!-- SpringFramework -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>

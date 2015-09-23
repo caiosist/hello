@@ -392,6 +392,9 @@ public class SessionPlanilhaUpload {
 		item.setPlaca(itemPlanilhaUpload.getPlaca());
 		item.setPraca(itemPlanilhaUpload.getPraca());
 		item.setValor(itemPlanilhaUpload.getValor());
+		item.setValorCorreto(item.getValor() / item.getCategoria()
+				* item.getCategoriaCorreta());
+		item.setValorRestituicao(item.getValor() - item.getValorCorreto());
 		return item;
 
 	}
