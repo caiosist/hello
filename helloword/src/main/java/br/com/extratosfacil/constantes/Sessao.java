@@ -2,6 +2,7 @@ package br.com.extratosfacil.constantes;
 
 import java.io.IOException;
 
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import br.com.extratosfacil.entities.Empresa;
@@ -22,6 +23,17 @@ public class Sessao {
 		try {
 			FacesContext.getCurrentInstance().getExternalContext()
 					.redirect("/helloword/" + pagina);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static void redirect(String page) {
+		ExternalContext externalContext = FacesContext.getCurrentInstance()
+				.getExternalContext();
+		try {
+			externalContext.redirect(page);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

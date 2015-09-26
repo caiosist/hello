@@ -11,6 +11,9 @@
 		<p:panel style="border: none;">
 			<h:outputLabel styleClass="subtitlePages">Meu Plano </h:outputLabel>
 
+			<p:commandButton value="Editar Plano" icon="ui-icon-pencil"
+				onclick="PF('dEditarPlano').show()" update=":form:pnPlano" />
+
 			<p:separator />
 
 			<h:panelGrid columns="2" id="gridPlano">
@@ -50,18 +53,19 @@
 
 			</h:panelGrid>
 
-			<p:commandButton value="Pagar" action="#{beanPlano.pagar}"
-				update=":form" />
-
-			<p:commandButton value="Alterar Plano"
-				onclick="PF('dEditarPlano').show()" update=":form:pnPlano" />
+			<h:panelGrid id="botaoPagar">
+				<h:panelGrid
+					rendered="#{beanEmpresa.empresa.plano.status != 'Ativo'}">
+					<h:commandButton styleClass="bt-pagar" action="#{beanPlano.pagar}" />
+				</h:panelGrid>
+			</h:panelGrid>
 
 			<p:separator />
 		</p:panel>
 
 		<!-- 
 *******************************************************************************
-							DIALOG MANTER CLIENTE
+							DIALOG MANTER Plano
 *******************************************************************************
 -->
 		<p:dialog header="Alterar Plano" widgetVar="dEditarPlano" modal="true"

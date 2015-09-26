@@ -51,6 +51,10 @@ public class BeanPlano {
 
 	private Double valorTotal = (double) 0;
 
+	private boolean retorno = false;
+
+	private boolean notificacao = false;
+
 	/*-------------------------------------------------------------------
 	 * 		 					CONSTRUCTOR
 	 *-------------------------------------------------------------------*/
@@ -72,6 +76,24 @@ public class BeanPlano {
 
 	public void setPeriodo(Integer periodo) {
 		this.periodo = periodo;
+	}
+
+	public boolean isRetorno() {
+		this.checkRetorno();
+		return retorno;
+	}
+
+	public void setRetorno(boolean retorno) {
+		this.retorno = retorno;
+	}
+
+	public boolean isNotificacao() {
+		this.checkNotificacao();
+		return notificacao;
+	}
+
+	public void setNotificacao(boolean notificacao) {
+		this.notificacao = notificacao;
 	}
 
 	public Double getDesconto() {
@@ -214,7 +236,7 @@ public class BeanPlano {
 	}
 
 	public void pagar() {
-		this.session.pagar();
+		this.session.criarCheckout();
 	}
 
 	private boolean validaPlano(Plano p) {
@@ -261,4 +283,14 @@ public class BeanPlano {
 			this.valorTotal = this.valorTotal - this.desconto;
 		}
 	}
+
+	private void checkNotificacao() {
+		this.session.checkNotificacao();
+	}
+
+	private void checkRetorno() {
+		this.session.checkRetorno();
+
+	}
+
 }
