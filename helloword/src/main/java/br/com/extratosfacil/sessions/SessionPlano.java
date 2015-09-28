@@ -1,16 +1,31 @@
 package br.com.extratosfacil.sessions;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
+import javax.faces.context.FacesContext;
+
+import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.extratosfacil.constantes.Mensagem;
 import br.com.extratosfacil.constantes.Sessao;
+import br.com.extratosfacil.entities.Compra;
+import br.com.extratosfacil.entities.Email;
 import br.com.extratosfacil.entities.Empresa;
 import br.com.extratosfacil.entities.Plano;
 import br.com.jbc.controller.Controller;
+import br.com.uol.pagseguro.domain.Transaction;
+import br.com.uol.pagseguro.domain.checkout.Checkout;
+import br.com.uol.pagseguro.enums.Currency;
+import br.com.uol.pagseguro.enums.TransactionStatus;
+import br.com.uol.pagseguro.exception.PagSeguroServiceException;
+import br.com.uol.pagseguro.properties.PagSeguroConfig;
+import br.com.uol.pagseguro.service.NotificationService;
 
 /**
  * Session que representa as regras de negócios da entidade Plano
@@ -29,6 +44,8 @@ public class SessionPlano {
 
 	@Autowired
 	private Controller<Plano> controller = new Controller<Plano>();
+	private Controller<Empresa> controllerEmpresa = new Controller<Empresa>();
+	private Controller<Compra> controllerCompra = new Controller<Compra>();
 
 	/*-------------------------------------------------------------------
 	 * 		 					GETTERS AND SETTERS
@@ -36,6 +53,22 @@ public class SessionPlano {
 
 	public Controller<Plano> getController() {
 		return controller;
+	}
+
+	public Controller<Empresa> getControllerEmpresa() {
+		return controllerEmpresa;
+	}
+
+	public void setControllerEmpresa(Controller<Empresa> controllerEmpresa) {
+		this.controllerEmpresa = controllerEmpresa;
+	}
+
+	public Controller<Compra> getControllerCompra() {
+		return controllerCompra;
+	}
+
+	public void setControllerCompra(Controller<Compra> controllerCompra) {
+		this.controllerCompra = controllerCompra;
 	}
 
 	public void setController(Controller<Plano> controller) {
@@ -247,6 +280,12 @@ public class SessionPlano {
 			} else {
 				valor = valor - plano.getCredito();
 			}
+
+			if (valor < 0) {
+				Mensagem.send(Mensagem.MSG_VALOR_PLANO, Mensagem.ERROR);
+				return plano;
+			}
+
 			novoPlano.setId(plano.getId());
 			novoPlano.setCredito(plano.getCredito());
 			novoPlano.setValorPlano(valor);
@@ -278,6 +317,147 @@ public class SessionPlano {
 		plano = empresa.getPlano();
 		plano.setStatus("Pendente");
 		this.update(plano);
+
+	}
+
+	public void criarCheckout() {
+		Locale.setDefault(Locale.US);
+		Empresa empresa = Sessao.getEmpresaSessao();
+		Plano plano = empresa.getPlano();
+		Checkout checkout = new Checkout();
+
+		Double valor = Double.valueOf(plano.getValorPlano());
+		BigDecimal valorFormatado = BigDecimal.valueOf(valor);
+		valorFormatado = formataDecimal(valorFormatado);
+
+		String nomePlano = "Plano - " + plano.getQuantidadeVeiculos()
+				+ " Veiculos - " + plano.getPeriodo();
+
+		if (plano.getPeriodo() == 1) {
+			nomePlano += " Mês";
+		} else {
+			nomePlano += " Mêses";
+		}
+
+		checkout.addItem(String.valueOf(plano.getId()), //
+				nomePlano, //
+				Integer.valueOf(1), //
+				valorFormatado, //
+				null, null);
+
+		checkout.setCurrency(Currency.BRL);
+		checkout.setReference(String.valueOf(empresa.getId()));
+		checkout.setRedirectURL("http://extratosfacil.com/retorno_compra.html");
+
+		Compra compra = new Compra();
+		compra.setEmpresa(empresa);
+		compra.setPlano(plano);
+		compra.setReferencia(String.valueOf(empresa.getId()));
+		compra.setStatus("Aguardando Pagamento");
+
+		try {
+
+			Boolean onlyCheckoutCode = false;
+
+			String checkoutURL = checkout.register(
+					PagSeguroConfig.getAccountCredentials(), onlyCheckoutCode);
+
+			controllerCompra.insert(compra);
+			Sessao.redirect(checkoutURL);
+
+		} catch (Exception e) {
+			try {
+				Email.sendEmail("problemas@extratosfacil.com.br",
+						empresa.getRazaoSocial(), "Erro no Pagamento",
+						"Erro no pagamento Pagseguro" + e.getMessage(), "");
+			} catch (EmailException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+
+	}
+
+	public static BigDecimal formataDecimal(BigDecimal vlrFator) {
+		BigDecimal numFormatado = vlrFator.setScale(2, BigDecimal.ROUND_UP);
+		return numFormatado;
+	}
+
+	public void checkRetorno() {
+		// try {
+		// Map<String, String> rec = FacesContext.getCurrentInstance()
+		// .getExternalContext().getRequestParameterMap();
+		// String transaction = rec.get("transaction_id");
+		//
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+	}
+
+	public void checkNotificacao() {
+		Map<String, String> rec = FacesContext.getCurrentInstance()
+				.getExternalContext().getRequestParameterMap();
+
+		String notificationCode = rec.get("notificationCode");
+
+		Transaction transaction = null;
+
+		try {
+
+			transaction = NotificationService.checkTransaction(
+					PagSeguroConfig.getAccountCredentials(), notificationCode);
+
+			if (transaction != null) {
+				if (transaction.getStatus() == TransactionStatus.PAID) {
+
+					Empresa empresa = new Empresa();
+					empresa.setId(Long.valueOf(transaction.getReference()));
+					empresa = controllerEmpresa.find(empresa);
+
+					if (empresa != null) {
+						empresa.getPlano().setStatus("Ativo");
+						empresa.setStatus("Ativo");
+						controllerEmpresa.update(empresa);
+						empresa.getPlano().setVencimento(
+								this.getVencimento(empresa.getPlano()
+										.getPeriodo()));
+						this.update(empresa.getPlano());
+					} else {
+						this.sendEmailErroReference(transaction.getReference());
+					}
+				}
+			}
+		} catch (PagSeguroServiceException e1) {
+			this.sendEmailErroNotificacao(notificationCode, e1);
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+
+	}
+
+	private void sendEmailErroNotificacao(String notificationCode,
+			PagSeguroServiceException e1) {
+		try {
+			Email.sendEmail("problemas@extratosfacil.com.br", notificationCode,
+					"erro notificacao", "A notificacao: " + notificationCode
+							+ "Deu erro: " + e1.getMessage(), "");
+		} catch (EmailException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private void sendEmailErroReference(String referencia) {
+		try {
+			Email.sendEmail("problemas@extratosfacil.com.br", referencia,
+					"erro apos pagamento", "A referencia da empresa de ID "
+							+ referencia + "Deu erro", "");
+		} catch (EmailException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 }

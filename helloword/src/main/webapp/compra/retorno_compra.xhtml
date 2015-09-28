@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+
+	<title><ui:insert name="pageTitle">Extrato Facil</ui:insert></title>
+
+	<link type="text/css" rel="stylesheet"
+		href="#{request.contextPath}/resource/css/bootstrap/theme.css" />
+
+	<style>
+div #body {
+	background-color: #FFF;
+}
+
+body {
+	background-color: #43a047;
+}
+</style>
+	<script type="text/javascript" src="resource/js/validateDialog.js"></script>
+</h:head>
+<h:body>
+	<h:form>
+		<h:inputHidden value="#{beanPlano.retorno}" />
+		<p:panel style="border: none">
+			<div align="center">
+				<h2>Caro Cliente, Sua compra foi computada, estamos aguardando
+					a confirmação do pagamento para liberarmos acesso total ao nosso
+					sistema.</h2>
+
+				<h2>Assim que confirmado o pagamento você receberá um e-mail
+					informando-lhe.</h2>
+
+				<h2>Obrigado por escolher a Extratos Fácil!</h2>
+
+				<img src="./../resource/images/logo.png"
+					alt="Soluções Inteligentes pra sua frota!" />
+			</div>
+		</p:panel>
+	</h:form>
+
+</h:body>
+</html>

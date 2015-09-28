@@ -7,11 +7,6 @@
 
 <p:panel id="pnPlano" style="border: none;">
 
-	<h:panelGrid>
-		<h:outputText style="color: gren; font-size: 28px;"
-			value="Regras para Alterar Plano:" />
-	</h:panelGrid>
-
 	<h:panelGrid columns="2">
 
 		<h:outputText value="Numero de Veiculos" />
@@ -30,14 +25,13 @@
 		</p:selectOneRadio>
 	</h:panelGrid>
 
-	<h:panelGrid>
-		<div align="center">
-			<p:commandButton value="Assinar" action="#{beanPlano.alterar}"
+	<div align="center">
+		<h:panelGrid>
+			<p:commandButton value="Alterar" action="#{beanPlano.alterar}"
 				update=":form:gridPlano"
 				oncomplete="validaPlano(xhr, status, args);" />
-		</div>
-	</h:panelGrid>
-
+		</h:panelGrid>
+	</div>
 </p:panel>
 
 </html>
