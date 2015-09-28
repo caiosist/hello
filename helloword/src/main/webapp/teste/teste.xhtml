@@ -7,7 +7,7 @@
 
 <h:head>
 
-	<title><ui:insert name="pageTitle">Extrato Facil</ui:insert></title>
+	<title><ui:insert name="pageTitle">Extratos Fácil</ui:insert></title>
 
 	<link type="text/css" rel="stylesheet"
 		href="#{request.contextPath}/resource/css/bootstrap/theme.css" />
@@ -26,7 +26,7 @@
 	<h:form id="form">
 		<p:messages id="mensagens" showDetail="true" autoUpdate="true"
 			closable="true" />
-		<h1>Faça Um Teste Gratuito!</h1>
+		<h1>Faça um teste gratuito!</h1>
 		<p:panel style="border: none">
 
 			<h:panelGrid columns="4">
@@ -59,7 +59,7 @@
 			<p:fileUpload fileUploadListener="#{beanTeste.fileUploadAction}"
 				mode="advanced" dragDropSupport="false" auto="true"
 				allowTypes="/(\.|\/)(xlsx)$/"
-				invalidFileMessage="Tipo de Arquivo Invalido!" update=":form"
+				invalidFileMessage="Tipo de arquivo inválido!" update=":form"
 				label="Selecionar" />
 		</p:panel>
 
@@ -67,11 +67,11 @@
 		<p:separator />
 
 		<h:outputText id="text"
-			value="O veiculo citado possui #{beanTeste.erros} passagens incorretas" />
+			value="O veículo citado possui #{beanTeste.erros} passagens incorretas" />
 
 		<br />
 
-		<h:outputText value="Abaixo um Exemplo"
+		<h:outputText value="Abaixo um exemplo"
 			rendered="#{not empty beanTeste.itens}" />
 
 		<br />
@@ -103,6 +103,11 @@
 			</p:column>
 			<p:column headerText="Praça">
 				<h:outputText value="#{planilha.praca}" />
+			</p:column>
+			<p:column headerText="Valor Cobrado">
+				<h:outputText value="R$ #{planilha.valor}">
+					<f:convertNumber pattern="#0.00" currencySymbol="R$" currencyCode="BRL" />
+				</h:outputText>
 			</p:column>
 			<p:column headerText="Categoria Cobrada">
 				<h:outputText value="#{planilha.categoria}" />

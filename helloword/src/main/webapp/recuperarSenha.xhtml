@@ -5,26 +5,23 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
 
-<p:panel id="pnRecuperarSenha" style="border: none;">
-	<h:panelGrid columns="2" cellpadding="2">
-		<p:messages id="mensagens" showDetail="true" autoUpdate="true"
-			closable="true" />
-		<div>
-			<div id="login_wrapper" align="center">
-				<p:inputText placeholder="Informe seu e-mail"
-					value="#{beanEmpresa.empresa.email}"
-					style="width: 350px; font-size: 16px; color: #787878">
-					<p:ajax />
-				</p:inputText>
-
-				<b></b><b></b>
-
-				<p:commandButton value="Enviar" ajax="false" immediate="true"
-					action="#{beanEmpresa.enviarEmailRecuperarSenha}"
-					style="width: 100px; height: 25px; font-size: 16px; margin: 20px 0 0 130px" />
+	<p:panel id="pnRecuperarSenha" style="border: none;">
+		<h:panelGrid columns="2" cellpadding="2">
+			<div>
+				<div id="login_wrapper" align="center">
+					<p:inputText placeholder="Informe seu e-mail"
+						value="#{beanEmpresa.empresa.email}"
+						style="width: 350px; font-size: 16px; color: #787878">
+						<p:ajax />
+					</p:inputText>
+	
+					<b></b><b></b>
+	
+					<p:commandButton value="Enviar" ajax="false" immediate="true"
+						action="#{beanEmpresa.enviarEmailRecuperarSenha}"
+						style="width: 100px; height: 25px; font-size: 16px; margin: 20px 0 0 130px" />
+				</div>
 			</div>
-		</div>
-	</h:panelGrid>
-</p:panel>
-
+		</h:panelGrid>
+	</p:panel>
 </html>

@@ -7,38 +7,35 @@
 
 <h:head>
 
-	<title><ui:insert name="pageTitle">Extrato Facil</ui:insert></title>
+	<title><ui:insert name="pageTitle">Extratos Fácil</ui:insert></title>
+	
+	<link rel="shortcut icon" href="#{request.contextPath}/resource/images/favicon.ico" type="image/x-icon" />
 
 	<link type="text/css" rel="stylesheet"
 		href="#{request.contextPath}/resource/css/bootstrap/theme.css" />
+		
+	<link type="text/css" rel="stylesheet"
+		href="#{request.contextPath}/resource/css/main.css" />		
 
-	<style>
-#body {
-	background-color: #FFF;
-}
-
-body {
-	background-color: #43a047;
-}
-</style>
 	<script type="text/javascript" src="resource/js/validateDialog.js"></script>
 </h:head>
+
 <h:body>
 	<h:form>
 		<p:panel style="border: none">
 			<div id="body" align="center">
 				<div align="center">
-					<h2>Quase no final...</h2>
-					<p>Precisamos confirmar o seu endereço de e-mail.</p>
+					<p class="title" style="font-size: 26px !important">Quase pronto ...</p>
+					
+					<p class="textFonts" style="font-size: 18px !important">Precisamos confirmar o seu endereço de e-mail.</p>
 
-					<p>
-						Para concluir o seu cadastro, click no link existente no e-mail
-						que acabamos de enviar para você. <BR />Verifique também a sua
-						caixa de span.
+					<p class="textFonts" style="font-size: 18px !important">
+						Para concluir o seu cadastro, clique no link que que acabamos de enviar para seu e-mail.
+						<BR />Caso não tenha recebido, verifique a sua caixa de spam ou clique no link reenviar e-mail em nossa página inicial.
 					</p>
 				</div>
 				<br />
-				<h:commandButton value="Voltar ao nosso Site"
+				<h:commandButton value="Voltar ao nosso site"
 					action="#{beanEmpresa.redirecionaLogin}" />
 			</div>
 		</p:panel>

@@ -1,30 +1,18 @@
-<ui:composition template="/template/templateLogin.xhtml"
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" 
+	template="main.xhtml">
 
-	<ui:define name="title">Extratos Fácil</ui:define>
-
-	<ui:define name="content" scroll="yes">
+	<ui:define name="content">
 		<h:inputHidden value="#{beanEmpresa.usuarioLogin}" />
-		<div id="layoutMax">
-			<div
-				style="float: right; width: 400px; height: 480px; margin: 55px 50px 0 0">
-
-				<p:commandLink id="reenviarEmail" value="Reenviar e-mail"
-					immediate="true"
-					style="font-size: 12px; color: #669214; position: absolute; margin: -50px 0 0 -45px"
-					onclick="PF('dReenviarEmail').show()" />
-
-				<p:commandLink id="recuperar_senha" value="Esqueceu sua senha?"
-					immediate="true"
-					style="font-size: 12px; color: #669214; position: absolute; margin: -50px 0 0 105px"
-					onclick="PF('dRecuperarSenha').show()" />
-
-				<label
-					style="font-family: sans-serif; font-size: 36px; color: #669214">Cadastre-se</label>
+			
+			<div id="formCadastro">
+				<label style="font-family: sans-serif; font-size: 36px; color: #669214">Cadastre-se</label>
 				<h:panelGrid columns="1" cellpadding="1" id="panelCad">
 
 					<h:panelGrid columns="2">
@@ -52,7 +40,7 @@
 					</p:inputText>
 
 					<p:inputText id="empresa_cnpj"
-						placeholder="CNPJ (conforme está no via fácil)" required="true"
+						placeholder="CNPJ (somente números)" required="true"
 						onkeypress="return onlyNumbers(event)"
 						rendered="#{not beanEmpresa.pessoaFisica}"
 						requiredMessage="CNPJ obrigatório!"
@@ -79,8 +67,8 @@
 
 					<p:inputText id="empresa_cpf"
 						rendered="#{beanEmpresa.pessoaFisica}"
-						placeholder="CPF (conforme está no via fácil)" required="true"
-						onkeypress="return onlyNumbers(event)"
+						placeholder="CPF (somente números)" required="true"
+						onkeyup="return onlyNumbers(event)"
 						requiredMessage="CPF obrigatório!"
 						value="#{beanEmpresa.empresa.cnpj}" styleClass="inputsCadastro">
 						<p:ajax />
@@ -132,14 +120,18 @@
 
 					<h:panelGrid columns="2">
 						<p:selectBooleanCheckbox value="#{beanEmpresa.aceito}" />
-						<h:outputText styleClass="infosText" style="font-weight: bold" value="Li e aceito os termos de utilização" />
+						<h:outputText styleClass="textFonts" style="font-weight: bold" value="Li e aceito os termos de adesão" />
 					</h:panelGrid>
+					
+					<h:outputLabel style="margin-top: -25px; float: right; text-decoration: underline" id="termosUtilizacao" 
+							value="Termos" styleClass="footerInfos textFonts" onclick="PF('dInfoTermos').show()" />					
+					
 					<p:commandButton id="bt_empresa_cadastrar"
 						style="width: 150px; height: 25px; font-size: 16px; margin: 5px 0 0 100px"
 						value="Cadastrar" actionListener="#{beanEmpresa.save}"
 						update="panelCad, mensagens" />
 
-					<p style="color: #669214; font-size: 12px; font-family: sans-serif">
+					<p class="textFonts" style="font-size: 12px !important">
 						Problemas para realizar o cadastro? Entre em contato com nossa 
 						equipe de suporte através do e-mail: suporte@extratosfacil.com.br
 					</p>
@@ -147,31 +139,19 @@
 				</h:panelGrid>
 			</div>
 
-			<p:dialog header="Recuperar Senha" widgetVar="dRecuperarSenha"
-				modal="true" dynamic="true" id="dmRecuperarSenha" resizable="false">
-				<ui:include src="recuperarSenha.xhtml"></ui:include>
-			</p:dialog>
-
-			<p:dialog header="Reenviar e-mail" widgetVar="dReenviarEmail"
-				modal="true" dynamic="true" id="dmReenviarEmail" resizable="false">
-				<ui:include src="reenviarEmail.xhtml"></ui:include>
-			</p:dialog>
-
-			<div style="width: 800px; height: 480px; margin: 65px 0 0 55px"
-				align="center">
-				<h:outputLabel styleClass="fraseInicial"
-					value="Simplificando o processo de consulta dos extratos de sua frota." />
-
-				<br></br> <br></br> <br></br> <br></br>
-
-				<h:outputLabel styleClass="fraseInicial"
-					value="Veja porque utilizar o Extratos Fácil:" />
-				<div style="margin-top: 15px">
+			<div id="formVideo" align="center">
+				<h:outputLabel styleClass="fraseVideo" style="font-weight: bold"
+					value="Com o extratos fácil você ganha tempo e economia!"/>
+				
+				<br></br><br></br> <br></br><br></br>
+				
+				<h:outputLabel styleClass="fraseVideo" value="Veja porque utilizar o Extratos Fácil:" />
+				
+				<div style="margin-top: 15px; max-width: 560px; max-height: 315px">
 					<iframe width="560" height="315"
 						src="https://www.youtube.com/embed/8w3RLXM5CCk" frameborder="0"
 						allowfullscreen="true"> </iframe>
 				</div>
 			</div>
-		</div>
 	</ui:define>
 </ui:composition>

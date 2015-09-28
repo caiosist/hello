@@ -1,46 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
 	
+<h:body>
 	<ui:composition>
-		<div id="footer" align="center">
-			<div style="float: left">
-				
-				<h:outputLabel id="info_faleConosco" styleClass="infos" value="Fale conosco" 
-					style="cursor: pointer; margin-left: 15px"
-					onclick="PF('dInfoFaleConosco').show()" />
-				
-				<h:outputLabel id="info_quemSomos" styleClass="infos" value="Quem somos" 
-					style="cursor: pointer; margin-left: 15px"
-					onclick="PF('dInfoQuemSomos').show()" />
-				
-				<h:outputLabel id="info_privacidade" styleClass="infos" value="Segurança e privacidade" 
-					style="cursor: pointer; margin-left: 15px"
-					onclick="PF('dInfoPrivacidade').show()" />
-			</div>
+		<div id="mainFooter" align="center">
 			
-			<h:outputLabel id="info_copyright" styleClass="infos" style="float: right; margin-right: 15px" 
-					value="Todos os direitos reservados - Extratos Fácil 2015" />
+			<h:outputLabel id="info_faleConosco" value="Fale conosco" styleClass="footerInfos textFonts" 
+				onclick="PF('dInfoFaleConosco').show()" />
+			
+			<h:outputLabel id="info_quemSomos" value="Quem somos" styleClass="footerInfos textFonts"
+				onclick="PF('dInfoQuemSomos').show()" />
+			
+			<h:outputLabel id="info_privacidade" value="Segurança e privacidade" styleClass="footerInfos textFonts"
+				onclick="PF('dInfoPrivacidade').show()" />
+			
+			<h:outputLabel id="info_copyright" value="Todos os direitos reservados - Extratos Fácil 2015" 
+					styleClass="footerDireitos textFonts" style="font-weight: bold"/>  
 		</div>
-		
-		<p:dialog header="Fale conosco" widgetVar="dInfoFaleConosco"
-			modal="true" dynamic="true" id="dmFaleConosco" resizable="false">
-			<ui:include src="faleConosco.xhtml"></ui:include>
-		</p:dialog>
-		
-		<p:dialog header="Quem somos" widgetVar="dInfoQuemSomos"
-			modal="true" dynamic="true" id="dmQuemSomos" resizable="false">
-			<ui:include src="quemSomos.xhtml"></ui:include>
-		</p:dialog>
-		
-		<p:dialog header="Segurança e privacidade" widgetVar="dInfoPrivacidade"
-			modal="true" dynamic="true" id="dmPrivacidade" resizable="false">
-			<ui:include src="privacidade.xhtml"></ui:include>
-		</p:dialog>
-		
 	</ui:composition>
+</h:body>	
 </html>

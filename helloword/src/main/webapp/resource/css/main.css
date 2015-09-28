@@ -1,0 +1,88 @@
+body, html {
+	background-color: #E0E0E0;
+}
+
+#mainHeader {
+	background-color: #E0E0E0;
+}
+
+#mainFooter {
+	margin-top: -10px;
+	padding-top: 5px;
+	background-color: #E0E0E0;
+}
+
+.footerInfos {
+	cursor: pointer;
+	margin-left: 15px;
+	float: left;
+}
+
+.footerDireitos {
+	margin-right: 15px;
+	float: right;
+}
+
+#formCadastro {
+	float: right; 
+	max-width: 365px;
+	max-height: 660px; 
+	margin: 15px 50px 0 0;
+}
+
+#formVideo {
+	max-width: 800px; 
+	max-height: 480px; 
+	margin: 15px 0 0 55px;
+}
+
+.fraseVideo {
+	font-family: sans-serif;
+	font-size: 26px;
+	color: #669214;
+}
+
+.inputsCadastro {
+	width: 350px;
+	font-size: 16px;
+	margin-top: 10px;
+	color: #787878;
+}
+
+.textFonts {
+	font-family: sans-serif;
+	font-size: 14px;
+	color: #649112;
+}
+
+.title{
+	font-family: sans-serif; 
+	color: #669214; 
+	font-size: 22px; 
+	font-weight: bold;
+}
+
+.ui-button-text {
+	font-style: normal !important;
+	font-weight: initial !important;
+	font-family: sans-serif !important;
+	font-size: 14px !important;
+}
+
+.ui-button-text:hover {
+	background-color: #649112 !important;
+	color: #FFFFFF !important;
+	font-style: normal !important;
+	font-weight: initial !important;
+	font-family: sans-serif !important;
+	font-size: 14px !important;
+}
+
+.ui-selectonemenu-trigger:hover {
+	background-color: #78A92A !important;
+}
+
+.ui-selectonemenu-item:hover, .ui-selectonemenu-list-item:hover {
+	background-color: #78A92A !important;
+}
+	

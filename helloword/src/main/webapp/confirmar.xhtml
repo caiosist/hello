@@ -7,35 +7,31 @@
 
 <h:head>
 
-	<title><ui:insert name="pageTitle">Extrato Facil</ui:insert></title>
+	<title><ui:insert name="pageTitle">Extratos Fácil</ui:insert></title>
+	
+	<link rel="shortcut icon" href="#{request.contextPath}/resource/images/favicon.ico" type="image/x-icon" />
 
 	<link type="text/css" rel="stylesheet"
 		href="#{request.contextPath}/resource/css/bootstrap/theme.css" />
+		
+	<link type="text/css" rel="stylesheet"
+		href="#{request.contextPath}/resource/css/main.css" />		
 
-	<style>
-	
-	div #body {
-	background-color: #FFF;
-}
-
-body {
-	background-color: #43a047;
-}
-
-</style>
 	<script type="text/javascript" src="resource/js/validateDialog.js"></script>
 </h:head>
+
 <h:body>
 	<h:inputHidden value="#{beanEmpresa.confirmar}" />
 	<h:form>
 		<p:panel style="border: none">
 			<div id="body" align="center">
-				<h2>Cadastro confirmado.</h2>
-				<div>
-					<p>Agradecemos a sua inscrição.</p>
-				</div>
+			
+				<p class="title" style="font-size: 26px !important">Cadastro confirmado! =)</p>
+			
+				<p class="textFonts" style="font-size: 18px !important">Agradecemos a sua inscrição.</p>
+				
 				<br />
-				<h:commandButton value="Ir para a pagina de login."
+				<h:commandButton value="Ir para a página de login"
 					action="#{beanEmpresa.redirecionaLogin}" />
 			</div>
 		</p:panel>

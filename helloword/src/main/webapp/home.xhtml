@@ -4,37 +4,30 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-
-
+	
 <ui:composition template="/template/template.xhtml">
 	<ui:define name="body">
-		<p:panel id="panel" style="border: none;">
+		<p:panel id="panel" style="border: none">
 
-			<div align="center" class="page-header" style="color: #6A9A11">
-				<h1 style="font-size: 40px">
-					Bem-vindo
-					<h:outputText value="#{beanEmpresa.empresa.nomeFantasia}" />
-					!
-				</h1>
-
+			<div align="center" class="page-header">
+				<p class="title" style="font-size: 34px !important; font-weight: bold">Bem-vindo
+					<h:outputText value="#{beanEmpresa.empresa.nomeFantasia}" />!
+				</p>
 
 				<h:panelGrid
 					rendered="#{beanEmpresa.empresa.status == 'Pendente' and beanEmpresa.empresa.plano != null}">
 					<h:outputText style="color: red; font-size: 28px;"
-						value="*Seu plano esta vencido ou aguardando pagamento, por favor verifique a guia Meu Plano!" />
+						value="*Seu plano está vencido ou aguardando pagamento. Por favor, verifique a guia Meu Plano!" />
 				</h:panelGrid>
-
-
 				<p:separator />
-
-
+				
 				<h:panelGrid rendered="#{beanEmpresa.empresa.plano != null}">
 					<p:dataTable id="gridPlanilha" dir="center"
 						value="#{beanPlanilhaDownload.lastPlanilhas}" scrollable="true"
 						var="planilha" emptyMessage="Nenhum registro encontrado!">
 
-						<f:facet name="header">
-           			Ultimas planilhas geradas
+				<f:facet name="header">
+           			Últimas planilhas geradas
        		 	</f:facet>
 
 						<p:column headerText="Data">
@@ -55,24 +48,30 @@
 							</center>
 						</p:column>
 					</p:dataTable>
-					<h:outputText
-						value="*Para pesquisar planilhas geradas por data verifique a guia Histórico!" />
+					<h:outputText value="*Para pesquisar planilhas geradas por data verifique a guia Histórico!" />
 				</h:panelGrid>
 
-
 				<!-- Selecao de planos caso nao exista -->
-
+				
+				<div align="center">
+					<p class="title" style="font-size: 26px !important; font-weight: bold">Veja abaixo nossos planos de assinatura</p>
+					<br />
+					
+					<div align="center">
+						<img src="./resource/images/banner.jpg"/>
+					</div>
+				</div>
+				
 				<h:panelGrid rendered="#{beanEmpresa.empresa.plano == null}">
-					<h:outputText style="color: gren; font-size: 28px;"
-						value="Dados para pagamento:" />
+					<h:outputText styleClass="title" value="Dados e valores para a assinatura" />
 				</h:panelGrid>
 
 				<h:panelGrid columns="3" id="gridPlano"
 					rendered="#{beanEmpresa.empresa.plano == null}">
 
-					<h:outputText value="Numero de Veiculos" />
-					<h:outputText value="Desconto" />
-					<h:outputText value="Valor Total" />
+					<h:outputText value="Nº de Veículos" />
+					<h:outputText value="Desconto R$" />
+					<h:outputText value="Valor Mensal R$" />
 
 					<p:inputText value="#{beanPlano.plano.quantidadeVeiculos}"
 						onkeypress="return onlyNumbers(event)">
@@ -80,31 +79,33 @@
 							listener="#{beanPlano.calculaValor}" />
 					</p:inputText>
 
-
 					<p:inputText value="#{beanPlano.desconto}" disabled="true">
 						<f:convertNumber pattern="#0.00" currencySymbol="R$"
 							currencyCode="BRL" />
 					</p:inputText>
-
 
 					<p:inputText value="#{beanPlano.valorTotal}" disabled="true">
 						<f:convertNumber pattern="#0.00" currencySymbol="R$"
 							currencyCode="BRL" />
 					</p:inputText>
 				</h:panelGrid>
-
-				<h:panelGrid columns="2"
-					rendered="#{beanEmpresa.empresa.plano == null}">
-					<h:outputText value="Plano de pagamento" />
+				
+				<br></br>
+				
+				<h:panelGrid columns="2" rendered="#{beanEmpresa.empresa.plano == null}">
+					
+					<div align="center">
+						<h:outputText value="Planos" styleClass="title" style="margin-left: 160px"/>
+					</div>
+					
 					<p:selectOneRadio id="periodo" value="#{beanPlano.periodo}">
+						
 						<f:selectItem itemLabel="Mensal" itemValue="1" />
-						<f:selectItem itemLabel="Trimestral - 6% de Desconto"
-							itemValue="3" />
-						<f:selectItem itemLabel="Semestral - 10% de Desconto"
-							itemValue="6" />
-						<f:selectItem itemLabel="Anual - 13% de Desconto" itemValue="12" />
-						<p:ajax event="change" listener="#{beanPlano.aplicaDesconto}"
-							update="gridPlano" process="@this" />
+						<f:selectItem itemLabel="Trimestral (-6%)" itemValue="3" />
+						<f:selectItem itemLabel="Semestral (-10%)" itemValue="6" />
+						<f:selectItem itemLabel="Anual (-13%)" itemValue="12" />
+						<p:ajax event="change" listener="#{beanPlano.aplicaDesconto}" update="gridPlano" process="@this" />
+					
 					</p:selectOneRadio>
 				</h:panelGrid>
 
@@ -116,16 +117,6 @@
 
 				<br /> <br />
 				<p:separator />
-				<h:panelGrid>
-					<h2 style="font-size: 32px">Veja abaixo um tutorial de como
-						utilizar o sistema Extratos Facil!</h2>
-					<br />
-					<div align="center">
-						<iframe width="560" height="315"
-							src="https://www.youtube.com/embed/8w3RLXM5CCk" frameborder="0"
-							allowfullscreen="true"></iframe>
-					</div>
-				</h:panelGrid>
 			</div>
 		</p:panel>
 	</ui:define>

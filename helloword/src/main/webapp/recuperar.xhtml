@@ -7,45 +7,52 @@
 
 <h:head>
 
-	<title><ui:insert name="pageTitle">Extrato Facil</ui:insert></title>
+	<title><ui:insert name="pageTitle">Extratos Fácil</ui:insert></title>
+	
+	<link rel="shortcut icon" href="#{request.contextPath}/resource/images/favicon.ico" type="image/x-icon" />
 
 	<link type="text/css" rel="stylesheet"
 		href="#{request.contextPath}/resource/css/bootstrap/theme.css" />
+		
+	<link type="text/css" rel="stylesheet"
+		href="#{request.contextPath}/resource/css/main.css" />		
 
-	<style>
-.ui-widget, .ui-widget .ui-widget {
-	font-size: 13px !important;
-}
-
-.ui-state-disabled {
-	opacity: .78 !important;
-}
-</style>
 	<script type="text/javascript" src="resource/js/validateDialog.js"></script>
+	
+	<style>
+	.ui-widget, .ui-widget .ui-widget {
+		font-size: 13px !important;
+	}
+	
+	.ui-state-disabled {
+		opacity: .78 !important;
+	}
+	</style>
 </h:head>
 <h:body>
 	<h:inputHidden value="#{beanEmpresa.recuperar}" />
 	<h:form>
-		<p:messages id="mensagens" showDetail="true" autoUpdate="true"
-			closable="true" />
+		<p:messages id="mensagens" showDetail="true" autoUpdate="true" closable="true" />
 		<p:panel style="border: none">
-			<center>
+			<div align="center">
+				<p class="title" style="font-size: 26px !important">Definir nova senha</p>	
+				
 				<h:panelGrid>
-					<h:outputText value="Nova Senha:" />
-					<p:password value="#{beanEmpresa.senha}" />
+				
+					<p:password placeholder="Nova Senha" styleClass="inputsCadastro" value="#{beanEmpresa.senha}" />
+					
+					<p:password placeholder="Confirmar Senha" styleClass="inputsCadastro" value="#{beanEmpresa.confSenha}" />
 
-					<h:outputText value="Confirmar Senha:" />
-					<p:password value="#{beanEmpresa.confSenha}" />
-
-					<p:commandButton value="Alterar Senha"
+					<p:commandButton style="margin: 10px 0 0 125px" value="Alterar Senha"
 						oncomplete="validaSenha(xhr, status, args)"
 						actionListener="#{beanEmpresa.alterarSenha}" />
 				</h:panelGrid>
-			</center>
+					
+			</div>
 		</p:panel>
 	</h:form>
 
-	<p:dialog header="Senha Alterada com Sucesso!" widgetVar="dAlteraSenha"
+	<p:dialog header="Senha alterada com sucesso!" widgetVar="dAlteraSenha"
 		closable="false" modal="true" dynamic="true" resizable="false">
 		<center>
 			<p:commandButton value="OK" action="#{beanEmpresa.redirecionaLogin}"

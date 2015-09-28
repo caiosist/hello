@@ -7,30 +7,27 @@
 
 <h:head>
 
-	<title><ui:insert name="pageTitle">Extrato Facil</ui:insert></title>
+	<title><ui:insert name="pageTitle">Extratos Fácil</ui:insert></title>
+	
+	<link rel="shortcut icon" href="#{request.contextPath}/resource/images/favicon.ico" type="image/x-icon" />
 
 	<link type="text/css" rel="stylesheet"
 		href="#{request.contextPath}/resource/css/bootstrap/theme.css" />
+		
+	<link type="text/css" rel="stylesheet"
+		href="#{request.contextPath}/resource/css/main.css" />			
 
-	<style>
-#body {
-	background-color: #FFF;
-}
-
-body {
-	background-color: red;
-}
-</style>
 	<script type="text/javascript" src="resource/js/validateDialog.js"></script>
 </h:head>
+
 <h:body>
 	<h:form>
 		<p:panel style="border: none">
 			<div id="body" align="center">
 				<div align="center">
-					<h2>Ocorreu um Erro... =/</h2>
-
-					<p>Sua sessão expirou ou você acessou uma pagina inexistente!</p>
+					
+					<p class="title" style="font-size: 26px !important; color: red !important">Ocorreu um erro! =/</p>
+					<p class="textFonts" style="font-size: 18px !important; color: red !important">Sua sessão expirou ou você acessou uma página inexistente.</p>
 				</div>
 				<br />
 				<h:commandButton value="Voltar a página de login"
