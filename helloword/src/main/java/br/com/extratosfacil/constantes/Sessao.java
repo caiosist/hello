@@ -22,7 +22,7 @@ public class Sessao {
 	public static void redireciona(String pagina) {
 		try {
 			FacesContext.getCurrentInstance().getExternalContext()
-					.redirect("/helloword/" + pagina);
+					.redirect("/" + pagina);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

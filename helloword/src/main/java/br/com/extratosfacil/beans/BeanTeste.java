@@ -103,6 +103,7 @@ public class BeanTeste {
 			file.mkdirs();
 
 			byte[] arquivo = event.getFile().getContents();
+			boolean xlsx = event.getFile().getFileName().indexOf("xlsx") >= 0;
 			String caminho = realPath + "try\\" + event.getFile().getFileName();
 
 			System.out.println(caminho);
@@ -113,8 +114,9 @@ public class BeanTeste {
 			fos.close();
 
 			this.erros = 0;
-			if (this.session.validaPlanilha(caminho)) {
-				itens = this.session.carregaPlanilha(caminho, this.veiculo);
+			if (this.session.validaPlanilha(caminho, xlsx)) {
+				itens = this.session.carregaPlanilha(caminho, this.veiculo,
+						xlsx);
 				this.erros = session.getErros();
 			}
 
