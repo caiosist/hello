@@ -6,12 +6,12 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/template/template.xhtml">
-	<ui:define name="pageTitle">Home</ui:define>
+	<ui:define name="pageTitle">Meu Plano</ui:define>
 	<ui:define name="body">
 		<p:panel style="border: none;">
 			<h:outputLabel styleClass="subtitlePages">Meu Plano </h:outputLabel>
 
-			<p:commandButton value="Editar Plano" icon="ui-icon-pencil"
+			<p:commandButton value="Alterar Plano" icon="ui-icon-pencil"
 				onclick="PF('dEditarPlano').show()" update=":form:pnPlano" />
 
 			<p:separator />
@@ -54,9 +54,11 @@
 			</h:panelGrid>
 
 			<h:panelGrid id="botaoPagar">
-				<h:panelGrid
+				<h:panelGrid columns="2"
 					rendered="#{beanEmpresa.empresa.plano.status != 'Ativo'}">
-					<h:commandButton styleClass="bt-pagar" action="#{beanPlano.pagar}" />
+					<p:commandButton value="Pagar" icon="ui-icon-check"
+						action="#{beanPlano.pagar}" />
+					<img src="resource/images/pagsegurologo.jpg" height="50px" width="100px" />
 				</h:panelGrid>
 			</h:panelGrid>
 

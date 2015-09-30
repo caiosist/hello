@@ -384,6 +384,11 @@ public class BeanEmpresa {
 	}
 
 	public void enviarEmailRecuperarSenha() {
+		if (this.empresa.getEmail() == null
+				|| this.empresa.getEmail().equals("")) {
+			Mensagem.send(Mensagem.MSG_EMAIL_INVALIDO, Mensagem.ERROR);
+			return;
+		}
 		this.empresa = this.session.enviarEmailRecuperarSenha(this.empresa);
 		if (empresa.getId() != null) {
 			// Sessao.redireciona("login.html");
@@ -409,9 +414,15 @@ public class BeanEmpresa {
 	}
 
 	public void reenviarEmail() {
+		if (this.empresa.getEmail() == null
+				|| this.empresa.getEmail().equals("")) {
+			Mensagem.send(Mensagem.MSG_EMAIL_INVALIDO, Mensagem.ERROR);
+			return;
+		}
 		this.empresa = this.session.find(this.empresa);
 		if (empresa == null) {
 			Mensagem.send(Mensagem.MSG_EMAIL_INVALIDO, Mensagem.ERROR);
+			this.empresa = new Empresa();
 		} else {
 			this.session.sendEmailConfirmacao(this.empresa);
 			Mensagem.send(Mensagem.MSG_EMAIL_ENVIADO, Mensagem.INFO);
