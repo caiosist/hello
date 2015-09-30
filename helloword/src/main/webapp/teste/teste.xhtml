@@ -11,8 +11,10 @@
 
 	<link type="text/css" rel="stylesheet"
 		href="#{request.contextPath}/resource/css/bootstrap/theme.css" />
-
-	<style>
+		
+	<link rel="shortcut icon" href="#{request.contextPath}/resource/images/favicon.ico" type="image/x-icon" />
+	
+<style>
 .ui-widget, .ui-widget .ui-widget {
 	font-size: 13px !important;
 }
@@ -24,9 +26,8 @@
 </h:head>
 <h:body>
 	<h:form id="form">
-		<p:messages id="mensagens" showDetail="true" autoUpdate="true"
-			closable="true" />
-		<h1>Faça um teste gratuito!</h1>
+		<p:messages id="mensagens" showDetail="true" autoUpdate="true" closable="true" />
+		<p align="center" style="font-size: 26px; color: #669214; font-family: sans-serif; font-weight: bold">Faça um teste gratuito!</p>
 		<p:panel style="border: none">
 
 			<h:panelGrid columns="4">
@@ -54,11 +55,10 @@
 
 		</p:panel>
 
-
 		<p:panel style="border: none;">
 			<p:fileUpload fileUploadListener="#{beanTeste.fileUploadAction}"
 				mode="advanced" dragDropSupport="false" auto="true"
-				allowTypes="/(\.|\/)(xlsx)$/"
+				allowTypes="/(\.|\/)(xlsx|xls)$/"
 				invalidFileMessage="Tipo de arquivo inválido!" update=":form"
 				label="Selecionar" />
 		</p:panel>
@@ -66,7 +66,7 @@
 		<br />
 		<p:separator />
 
-		<h:outputText id="text"
+		<h:outputText id="text" style="font-family: sans-serif; color: #669214"
 			value="O veículo citado possui #{beanTeste.erros} passagens incorretas" />
 
 		<br />
