@@ -224,6 +224,7 @@ public class SessionTeste {
 		item.setData(itemPlanilhaUpload.getData());
 		item.setHora(itemPlanilhaUpload.getHora());
 		item.setPlaca(itemPlanilhaUpload.getPlaca());
+		item.setValor(itemPlanilhaUpload.getValor());
 		item.setPraca(itemPlanilhaUpload.getPraca());
 		return item;
 

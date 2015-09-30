@@ -11,10 +11,12 @@
 
 	<link type="text/css" rel="stylesheet"
 		href="#{request.contextPath}/resource/css/bootstrap/theme.css" />
-		
-	<link rel="shortcut icon" href="#{request.contextPath}/resource/images/favicon.ico" type="image/x-icon" />
-	
-<style>
+
+	<link rel="shortcut icon"
+		href="#{request.contextPath}/resource/images/favicon.ico"
+		type="image/x-icon" />
+
+	<style>
 .ui-widget, .ui-widget .ui-widget {
 	font-size: 13px !important;
 }
@@ -26,8 +28,11 @@
 </h:head>
 <h:body>
 	<h:form id="form">
-		<p:messages id="mensagens" showDetail="true" autoUpdate="true" closable="true" />
-		<p align="center" style="font-size: 26px; color: #669214; font-family: sans-serif; font-weight: bold">Faça um teste gratuito!</p>
+		<p:messages id="mensagens" showDetail="true" autoUpdate="true"
+			closable="true" />
+		<p align="center"
+			style="font-size: 26px; color: #669214; font-family: sans-serif; font-weight: bold">Faça
+			um teste gratuito!</p>
 		<p:panel style="border: none">
 
 			<h:panelGrid columns="4">
@@ -66,12 +71,14 @@
 		<br />
 		<p:separator />
 
-		<h:outputText id="text" style="font-family: sans-serif; color: #669214"
+		<h:outputText id="text"
+			style="font-family: sans-serif; color: #669214"
 			value="O veículo citado possui #{beanTeste.erros} passagens incorretas" />
 
 		<br />
 
 		<h:outputText value="Abaixo um exemplo"
+			style="font-family: sans-serif; color: #669214"
 			rendered="#{not empty beanTeste.itens}" />
 
 		<br />
@@ -105,8 +112,8 @@
 				<h:outputText value="#{planilha.praca}" />
 			</p:column>
 			<p:column headerText="Valor Cobrado">
-				<h:outputText value="R$ #{planilha.valor}">
-					<f:convertNumber pattern="#0.00" currencySymbol="R$" currencyCode="BRL" />
+				<h:outputText value="#{planilha.valor}">
+					<f:convertNumber pattern="#0.00" currencyCode="BRL" />
 				</h:outputText>
 			</p:column>
 			<p:column headerText="Categoria Cobrada">

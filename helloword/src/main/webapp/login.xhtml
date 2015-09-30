@@ -75,8 +75,7 @@
 
 				<p:selectOneMenu id="estado" converter="estadoConverter"
 					value="#{beanEmpresa.empresa.cidade.estado}"
-					style="margin-top: 10px" required="true"
-					converterMessage="Estado obrigatório!"
+					style="margin-top: 10px" converterMessage="Estado obrigatório!"
 					validatorMessage="Estado obrigatório!"
 					requiredMessage="Estado obrigatório!">
 					<f:selectItem itemLabel="Selecione Estado" itemValue="" />
@@ -133,7 +132,8 @@
 				<p:commandButton id="bt_empresa_cadastrar"
 					style="width: 150px; height: 25px; font-size: 16px; margin: 5px 0 0 100px"
 					value="Cadastrar" actionListener="#{beanEmpresa.save}"
-					update="panelCad, mensagens" />
+					onclick="PF('statusDialog').show()"
+					oncomplete="PF('statusDialog').hide()" update="panelCad, mensagens" />
 
 				<p class="textFonts" style="font-size: 12px !important">
 					Problemas para realizar o cadastro? Entre em contato com nossa
@@ -146,14 +146,16 @@
 			<h:outputLabel styleClass="fraseVideo" style="font-weight: bold"
 				value="Com o extratos fácil você ganha tempo e economia!" />
 
-			<br></br> <br></br> 
+			<br></br> <br></br>
 			<!--	<h:outputLabel styleClass="fraseVideo" value="Veja porque utilizar o Extratos Fácil:" /> -->
 
-			<div>
-				<img style="width: 800px; height: 550px" src="resource/images/banner.jpg" alt="Extratos Fácil" />
-				<a href="#{request.contextPath}/teste/teste.html" target="_blank"><img src="resource/images/button-test.png" alt="Teste Grátis" 
-					style="width: 245px; height: 55px; margin: -200px 0 0 -120px; position: absolute; cursor: pointer"/></a>
-			</div>
+
+			<a href="#{request.contextPath}/teste/teste.html"><img
+				style="width: 800px; height: 550px" src="resource/images/banner.jpg"
+				alt="Extratos Fácil" /></a>
+
+
+
 		</div>
 	</ui:define>
 </ui:composition>
