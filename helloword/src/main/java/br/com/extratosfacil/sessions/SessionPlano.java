@@ -210,7 +210,7 @@ public class SessionPlano {
 		plano.setStatus("Aguardando Pagamento");
 		this.save(plano);
 		this.setPlanoEmpresa(plano);
-		Sessao.redireciona("views/plano/meuPlano.html");
+		//Sessao.redireciona("views/plano/meuPlano.html");
 	}
 
 	public void pagar() {

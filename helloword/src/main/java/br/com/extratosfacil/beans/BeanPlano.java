@@ -227,11 +227,13 @@ public class BeanPlano {
 		return "views/plano/meuPlano";
 	}
 
-	public void assinar() {
+	public String assinar() {
 
 		if (this.validaPlano(this.plano)) {
 			this.session.assinar(this.plano, this.periodo);
+			return "views/plano/meuPlano";
 		}
+		return "";
 
 	}
 

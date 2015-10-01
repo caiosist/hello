@@ -108,13 +108,13 @@ public class SessionTeste {
 			if (workbook instanceof XSSFWorkbook) {
 				workbook = new XSSFWorkbook(fisPlanilha);
 				sheet = ((XSSFWorkbook) workbook)
-						.getSheet("Passagens de Pedágio");
+						.getSheet("PASSAGENS PEDÁGIO");
 				// retorna todas as linhas da planilha 0 (aba 1)
 				rowIterator = ((XSSFSheet) sheet).iterator();
 			} else {
 				workbook = new HSSFWorkbook(fisPlanilha);
 				sheet = ((HSSFWorkbook) workbook)
-						.getSheet("Passagens de Pedágio");
+						.getSheet("PASSAGENS PEDÁGIO");
 				// retorna todas as linhas da planilha 0 (aba 1)
 				rowIterator = ((HSSFSheet) sheet).iterator();
 			}
@@ -163,7 +163,11 @@ public class SessionTeste {
 						item.setPraca(cell.getStringCellValue());
 					}
 					if (cell.getColumnIndex() == 7) {
-						item.setValor(cell.getNumericCellValue());
+						if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+							item.setValor(cell.getNumericCellValue());	
+						}else{
+							item.setValor(0.0);
+						}
 						lista.add(item);
 						item = new ItemPlanilhaUpload();
 					}
@@ -203,7 +207,7 @@ public class SessionTeste {
 				if ((itensPlanilha.get(j).getCategoria() > veiculo
 						.getMaximoEixo())) {
 					erros++;
-					if (itensIncorretos.size() < 1) {
+					if (itensIncorretos.size() < 5) {
 						itensIncorretos.add(this.criaItemDownload(
 								itensPlanilha.get(j), veiculo));
 					}
@@ -226,6 +230,9 @@ public class SessionTeste {
 		item.setPlaca(itemPlanilhaUpload.getPlaca());
 		item.setValor(itemPlanilhaUpload.getValor());
 		item.setPraca(itemPlanilhaUpload.getPraca());
+		item.setValorCorreto(item.getValor() / item.getCategoria()
+				* item.getCategoriaCorreta());
+		item.setValorRestituicao(item.getValor() - item.getValorCorreto());
 		return item;
 
 	}
@@ -241,11 +248,11 @@ public class SessionTeste {
 			if (workbook instanceof XSSFWorkbook) {
 				workbook = new XSSFWorkbook(fisPlanilha);
 				sheet = ((XSSFWorkbook) workbook)
-						.getSheet("Passagens de Pedágio");
+						.getSheet("PASSAGENS PEDÁGIO");
 			} else {
 				workbook = new HSSFWorkbook(fisPlanilha);
 				sheet = ((HSSFWorkbook) workbook)
-						.getSheet("Passagens de Pedágio");
+						.getSheet("PASSAGENS PEDÁGIO");
 			}
 
 			if (sheet == null) {

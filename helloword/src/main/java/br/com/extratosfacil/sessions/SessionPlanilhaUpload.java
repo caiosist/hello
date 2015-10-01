@@ -2,7 +2,6 @@ package br.com.extratosfacil.sessions;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -172,7 +171,12 @@ public class SessionPlanilhaUpload {
 						item.setPraca(cell.getStringCellValue());
 					}
 					if (cell.getColumnIndex() == 7) {
-						item.setValor(cell.getNumericCellValue());
+						if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+							item.setValor(cell.getNumericCellValue());	
+						}else{
+							item.setValor(0.0);
+						}
+						
 						lista.add(item);
 						item = new ItemPlanilhaUpload();
 					}
@@ -241,7 +245,7 @@ public class SessionPlanilhaUpload {
 				// compara a cada veiculo se correponde ao mesmo vindo da
 				// planilha pela placa
 				if (temp.getPlacaVeiculo().equals(
-						itensPlanilha.get(i).getPlaca())) {
+						itensPlanilha.get(i).getPlaca()) && itensPlanilha.get(i).getValor() > 0) {
 					// se esta encontrado compara a categoria da planilha com o
 					// maximo de eixos, onde o max de eixos deve ser maior ou
 					// igual a categoria para estar correto
@@ -263,12 +267,13 @@ public class SessionPlanilhaUpload {
 			ItemPlanilhaUpload itemPlanilhaUpload, Veiculo temp) {
 
 		ItemPlanilhaDownload item = new ItemPlanilhaDownload();
-		item.setCategoria(itemPlanilhaUpload.getCategoria());
+		
 		// Caso a categoria seja com dois digitos tipo 61
-		if (item.getCategoria() > 10) {
-			item.setCategoria(this.sumInt(item.getCategoria()));
-		}
+//		if (item.getCategoria() > 10) {
+//			item.setCategoria(this.sumInt(item.getCategoria()));
+//		}
 
+		item.setCategoria(itemPlanilhaUpload.getCategoria());
 		item.setCategoriaCorreta(temp.getMaximoEixo());
 		item.setConcessionaria(itemPlanilhaUpload.getConcessionaria());
 		item.setData(itemPlanilhaUpload.getData());
@@ -343,11 +348,26 @@ public class SessionPlanilhaUpload {
 				Mensagem.send(Mensagem.MSG_PLANILHA_ERRADA, Mensagem.ERROR);
 				return false;
 			}
+			
+			if (workbook instanceof XSSFWorkbook) {
+				workbook = new XSSFWorkbook(fisPlanilha);
+				sheet = ((XSSFWorkbook) workbook)
+						.getSheet("Resumo da Fatura");
+			} else {
+				workbook = new HSSFWorkbook(fisPlanilha);
+				sheet = ((HSSFWorkbook) workbook)
+						.getSheet("Resumo da Fatura");
+			}
 
-			if (!this.validaEmpresaPlanilha(workbook)) {
-				Mensagem.send(Mensagem.MSG_EMPRESA_INVALIDA, Mensagem.ERROR);
+			if (sheet == null) {
+				Mensagem.send(Mensagem.MSG_PLANILHA_ERRADA, Mensagem.ERROR);
 				return false;
 			}
+//
+//			if (!this.validaEmpresaPlanilha(workbook)) {
+//				Mensagem.send(Mensagem.MSG_EMPRESA_INVALIDA, Mensagem.ERROR);
+//				return false;
+			// }
 		} catch (Exception e) {
 			// TODO: handle exception
 			return false;
