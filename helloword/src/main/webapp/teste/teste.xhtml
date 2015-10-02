@@ -44,52 +44,72 @@
 </h:head>
 <h:body>
 	<h:form id="form">
+		
+<!-- 		<img src="#{request.contextPath}/resource/images/logo.png" -->
+<!-- 				style="float: right; max-height: 80px; max-width: 300px; margin-top: -25px" /> -->
+	
 		<p:messages id="mensagens" showDetail="true" autoUpdate="true"
 			closable="true" />
+		
 		<p align="center"
-			style="font-size: 26px; color: #669214; font-family: sans-serif; font-weight: bold">Faça
-			um teste gratuito!</p>
+			style="font-size: 26px; color: #669214; font-family: sans-serif; font-weight: bold">
+			Faça um teste gratuito! =)</p>
+			
 		<p:panel style="border: none">
-
-			<h:panelGrid columns="4">
-				<h:outputText value="Modelo" />
-				<h:outputText value="Placa" />
-				<h:outputText value="Categoria " />
-				<h:outputText value="Maximo de Eixos" />
-
-				<p:inputText value="#{beanTeste.veiculo.modeloVeiculo}">
-					<p:ajax />
-				</p:inputText>
-				<p:inputText value="#{beanTeste.veiculo.placaVeiculo}">
-					<p:ajax />
-				</p:inputText>
-				<p:selectOneMenu value="#{beanTeste.veiculo.categoria}">
-					<f:selectItem itemLabel="Selecione" itemValue="" />
-					<f:selectItems value="#{beanVeiculo.categorias}" />
-					<p:ajax />
-				</p:selectOneMenu>
-				<p:inputText value="#{beanTeste.veiculo.maximoEixo}">
-					<p:ajax />
-				</p:inputText>
-
-			</h:panelGrid>
-
+			
+			<p align="left" style="font-size: 18px; color: red; font-family: sans-serif; margin-bottom: 10px">
+			Informe aqui um veículo cadastrado no sem parar</p>
+						
+			<div style="border: 2px solid #669214; width: 720px; height: 60px">
+				<h:panelGrid columns="4">
+					<h:outputText value="Modelo" />
+					<h:outputText value="Placa" />
+					<h:outputText value="Categoria " />
+					<h:outputText value="Máximo de Eixos" />
+					
+					<p:inputText value="#{beanTeste.veiculo.modeloVeiculo}">
+						<p:ajax />
+					</p:inputText>
+					<p:inputText value="#{beanTeste.veiculo.placaVeiculo}">
+						<p:ajax />
+					</p:inputText>
+					<p:selectOneMenu value="#{beanTeste.veiculo.categoria}">
+						<f:selectItem itemLabel="Selecione" itemValue="" />
+						<f:selectItems value="#{beanVeiculo.categorias}" />
+						<p:ajax />
+					</p:selectOneMenu>
+					<p:inputText value="#{beanTeste.veiculo.maximoEixo}">
+						<p:ajax />
+					</p:inputText>
+	
+				</h:panelGrid>
+			</div>		
 		</p:panel>
 
 		<p:panel style="border: none;">
-			<p:fileUpload fileUploadListener="#{beanTeste.fileUploadAction}"
+		
+			<p align="left" style="font-size: 18px; color: red; font-family: sans-serif; margin-bottom: 10px">
+			Selecione sua planilha de extratos gerada pelo sem parar </p>
+ 		
+			<div style="border: 2px solid #669214; width: 720px; height: 60px">
+				<p:fileUpload fileUploadListener="#{beanTeste.fileUploadAction}"
 				mode="advanced" dragDropSupport="false" auto="true"
 				allowTypes="/(\.|\/)(xlsx|xls)$/"
 				invalidFileMessage="Tipo de arquivo inválido!" update=":form"
 				label="Selecionar" />
+			</div>
 		</p:panel>
-
+		
 		<br />
+		
+		<p align="left" style="font-size: 18px; color: red; font-family: sans-serif; margin-bottom: 10px">
+			Visualize abaixo as diferenças encontradas para o veículo informado no extrato selecionado </p>
+		
 		<p:separator />
 
 		<h:outputText id="text"
 			style="font-family: sans-serif; color: #669214"
-			value="O veículo citado possui #{beanTeste.erros} passagens incorretas" />
+			value="O veículo informado possui #{beanTeste.erros} passagens incorretas." />
 
 		<br />
 
@@ -137,7 +157,7 @@
 					<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 				</h:outputText>
 			</p:column>
-			<p:column headerText="Valor a ser Restituido">
+			<p:column headerText="Valor de Restituição">
 				<h:outputText value="#{planilha.valorRestituicao}">
 					<f:convertNumber groupingUsed="true" minFractionDigits="2" />
 				</h:outputText>
