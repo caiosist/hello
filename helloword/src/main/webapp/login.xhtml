@@ -1,158 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui" template="main.xhtml">
-
-	<ui:define name="content">
-		<h:inputHidden value="#{beanEmpresa.usuarioLogin}" />
-
-		<div id="formCadastro">
-			<label
-				style="font-family: sans-serif; font-size: 36px; color: #669214">Cadastre-se</label>
-			<h:panelGrid columns="1" cellpadding="1" id="panelCad">
-
-				<h:panelGrid columns="2">
-					<p:selectBooleanCheckbox value="#{beanEmpresa.pessoaFisica}">
-						<p:ajax event="change" update="panelCad" process="@this" />
-					</p:selectBooleanCheckbox>
-					<h:outputText
-						style="font-size: 18px; font-family: sans-serif; color: #669214"
-						value="Pessoa Física" />
-				</h:panelGrid>
-
-				<p:inputText id="empresa_razaoSocial" onkeyup="up(this)"
-					rendered="#{!beanEmpresa.pessoaFisica}"
-					placeholder="Razão Social (conforme está no via fácil)"
-					required="true" requiredMessage="Razão Social obrigatória!"
-					value="#{beanEmpresa.empresa.razaoSocial}"
-					styleClass="inputsCadastro">
-					<p:ajax />
-				</p:inputText>
-
-				<p:inputText id="empresa_nomeFantasia" placeholder="Nome Fantasia"
-					onkeyup="up(this)" rendered="#{not beanEmpresa.pessoaFisica}"
-					required="true" requiredMessage="Nome Fantasia obrigatório!"
-					value="#{beanEmpresa.empresa.nomeFantasia}"
-					styleClass="inputsCadastro">
-					<p:ajax />
-				</p:inputText>
-
-				<p:inputText id="empresa_cnpj" placeholder="CNPJ (somente números)"
-					required="true" onkeypress="return onlyNumbers(event)"
-					rendered="#{not beanEmpresa.pessoaFisica}"
-					requiredMessage="CNPJ obrigatório!"
-					value="#{beanEmpresa.empresa.cnpj}" styleClass="inputsCadastro">
-					<p:ajax />
-				</p:inputText>
-
-				<p:inputText id="empresa_nome"
-					placeholder="Nome (conforme está no via fácil)" required="true"
-					onkeyup="up(this)" requiredMessage="Nome obrigatório!"
-					value="#{beanEmpresa.empresa.razaoSocial}"
-					rendered="#{beanEmpresa.pessoaFisica}" styleClass="inputsCadastro">
-					<p:ajax />
-				</p:inputText>
-
-				<p:inputText id="empresa_apelido" placeholder="Apelido"
-					onkeyup="up(this)" required="true"
-					requiredMessage="Apelido obrigatório!"
-					rendered="#{beanEmpresa.pessoaFisica}"
-					value="#{beanEmpresa.empresa.nomeFantasia}"
-					styleClass="inputsCadastro">
-					<p:ajax />
-				</p:inputText>
-
-				<p:inputText id="empresa_cpf" rendered="#{beanEmpresa.pessoaFisica}"
-					placeholder="CPF (somente números)" required="true"
-					onkeyup="return onlyNumbers(event)"
-					requiredMessage="CPF obrigatório!"
-					value="#{beanEmpresa.empresa.cnpj}" styleClass="inputsCadastro">
-					<p:ajax />
-				</p:inputText>
-
-				<p:selectOneMenu id="estado" converter="estadoConverter"
-					value="#{beanEmpresa.empresa.cidade.estado}"
-					style="margin-top: 10px" converterMessage="Estado obrigatório!"
-					validatorMessage="Estado obrigatório!"
-					requiredMessage="Estado obrigatório!">
-					<f:selectItem itemLabel="Selecione Estado" itemValue="" />
-					<f:selectItems value="#{beanEmpresa.estados}" />
-					<p:ajax listener="#{beanEmpresa.carregaCidades}" update="cidade"
-						event="change" />
-				</p:selectOneMenu>
-
-				<p:selectOneMenu id="cidade" converter="cidadeConverter"
-					validatorMessage="Cidade Obrigatória!"
-					converterMessage="Cidade Obrigatória!"
-					value="#{beanEmpresa.empresa.cidade}" style="margin-top: 10px"
-					required="true" requiredMessage="Cidade obrigatória!">
-					<f:selectItem itemLabel="Selecione Cidade" itemValue="" />
-					<f:selectItems value="#{beanEmpresa.cidades}" />
-				</p:selectOneMenu>
-
-				<p:inputText id="empresa_email" placeholder="E-mail"
-					styleClass="inputsCadastro" value="#{beanEmpresa.empresa.email}"
-					required="true" requiredMessage="E-mail obrigatório!">
-					<p:ajax />
-				</p:inputText>
-
-				<p:inputText id="empresa_login" placeholder="Login"
-					styleClass="inputsCadastro" value="#{beanEmpresa.empresa.login}"
-					required="true" requiredMessage="Login obrigatório!">
-					<p:ajax />
-				</p:inputText>
-
-				<p:password id="empresa_senha" placeholder="Senha"
-					styleClass="inputsCadastro" value="#{beanEmpresa.empresa.senha}"
-					required="true" requiredMessage="Senha obrigatória!">
-					<p:ajax />
-				</p:password>
-
-				<p:password id="empresa_confirmaSenha" placeholder="Confirmar Senha"
-					styleClass="inputsCadastro" value="#{beanEmpresa.confSenha}"
-					required="true" requiredMessage="Confirmação de Senha obrigatória!">
-					<p:ajax />
-				</p:password>
-
-				<h:panelGrid columns="2">
-					<p:selectBooleanCheckbox value="#{beanEmpresa.aceito}" />
-					<h:outputText styleClass="textFonts" style="font-weight: bold"
-						value="Li e aceito os termos de adesão" />
-				</h:panelGrid>
-
-				<h:outputLabel
-					style="margin-top: -25px; float: right; text-decoration: underline"
-					id="termosUtilizacao" value="Termos"
-					styleClass="footerInfos textFonts"
-					onclick="PF('dInfoTermos').show()" />
-
-				<p:commandButton id="bt_empresa_cadastrar"
-					style="width: 150px; height: 25px; font-size: 16px; margin: 5px 0 0 100px"
-					value="Cadastrar" actionListener="#{beanEmpresa.save}"
-					onclick="PF('statusDialog').show()"
-					oncomplete="PF('statusDialog').hide()" update="panelCad, mensagens" />
-
-				<p class="textFonts" style="font-size: 12px !important">
-					Problemas para realizar o cadastro? Entre em contato com nossa
-					equipe de suporte através do e-mail: suporte@extratosfacil.com.br</p>
-
-			</h:panelGrid>
-		</div>
-
-		<div id="formVideo" align="center">
-			<h:outputLabel styleClass="fraseVideo" style="font-weight: bold"
-				value="Com o extratos fácil você ganha tempo e economia!" />
-
-			<br></br> <br></br>
-			<!--	<h:outputLabel styleClass="fraseVideo" value="Veja porque utilizar o Extratos Fácil:" /> -->
-
-
-			<a href="#{request.contextPath}/teste/teste.html"><img
-				style="width: 700px; height: 550px" src="resource/images/banner.jpg"
-				alt="Extratos Fácil" /></a>
-		</div>
-	</ui:define>
-</ui:composition>
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><ui:composition xmlns="http://www.w3.org/1999/xhtml"	xmlns:f="http://java.sun.com/jsf/core"	xmlns:h="http://java.sun.com/jsf/html"	xmlns:ui="http://java.sun.com/jsf/facelets"	xmlns:p="http://primefaces.org/ui" template="main.xhtml">	<ui:define name="content">		<div id="formCadastro">			<label				style="font-family: sans-serif; font-size: 36px; color: #669214">Cadastre-se</label>			<h:panelGrid columns="1" cellpadding="1" id="panelCad">				<h:panelGrid columns="2">					<p:selectBooleanCheckbox value="#{beanEmpresa.pessoaFisica}">						<p:ajax event="change" update="panelCad" process="@this" />					</p:selectBooleanCheckbox>					<h:outputText						style="font-size: 18px; font-family: sans-serif; color: #669214"						value="Pessoa Física" />				</h:panelGrid>				<p:inputText id="empresa_razaoSocial" onkeyup="up(this)"					rendered="#{!beanEmpresa.pessoaFisica}"					placeholder="Razão Social (conforme está no via fácil)"					required="true" requiredMessage="Razão Social obrigatória!"					value="#{beanEmpresa.empresa.razaoSocial}"					styleClass="inputsCadastro">					<p:ajax />				</p:inputText>				<p:inputText id="empresa_nomeFantasia" placeholder="Nome Fantasia"					onkeyup="up(this)" rendered="#{not beanEmpresa.pessoaFisica}"					required="true" requiredMessage="Nome Fantasia obrigatório!"					value="#{beanEmpresa.empresa.nomeFantasia}"					styleClass="inputsCadastro">					<p:ajax />				</p:inputText>				<p:inputText id="empresa_cnpj" placeholder="CNPJ (somente números)"					required="true" onkeypress="return onlyNumbers(event)"					rendered="#{not beanEmpresa.pessoaFisica}"					requiredMessage="CNPJ obrigatório!"					value="#{beanEmpresa.empresa.cnpj}" styleClass="inputsCadastro">					<p:ajax />				</p:inputText>				<p:inputText id="empresa_nome"					placeholder="Nome (conforme está no via fácil)" required="true"					onkeyup="up(this)" requiredMessage="Nome obrigatório!"					value="#{beanEmpresa.empresa.razaoSocial}"					rendered="#{beanEmpresa.pessoaFisica}" styleClass="inputsCadastro">					<p:ajax />				</p:inputText>				<p:inputText id="empresa_apelido" placeholder="Apelido"					onkeyup="up(this)" required="true"					requiredMessage="Apelido obrigatório!"					rendered="#{beanEmpresa.pessoaFisica}"					value="#{beanEmpresa.empresa.nomeFantasia}"					styleClass="inputsCadastro">					<p:ajax />				</p:inputText>				<p:inputText id="empresa_cpf" rendered="#{beanEmpresa.pessoaFisica}"					placeholder="CPF (somente números)" required="true"					onkeyup="return onlyNumbers(event)"					requiredMessage="CPF obrigatório!"					value="#{beanEmpresa.empresa.cnpj}" styleClass="inputsCadastro">					<p:ajax />				</p:inputText>				<p:selectOneMenu id="estado" converter="#{estadoConverter}"					value="#{beanEmpresa.empresa.cidade.estado}" immediate="true"					style="margin-top: 10px">					<f:selectItem itemLabel="Selecione Estado" itemValue="" />					<f:selectItems value="#{beanEmpresa.estados}" />					<p:ajax listener="#{beanEmpresa.carregaCidades}" update="cidade"						event="change" />				</p:selectOneMenu>				<p:selectOneMenu id="cidade" converter="cidadeConverter"					validatorMessage="Cidade Obrigatória!"					converterMessage="Cidade Obrigatória!"					value="#{beanEmpresa.empresa.cidade}" style="margin-top: 10px"					required="true" requiredMessage="Cidade obrigatória!">					<f:selectItem itemLabel="Selecione Cidade" itemValue="" />					<f:selectItems value="#{beanEmpresa.cidades}" />				</p:selectOneMenu>				<p:inputText id="empresa_email" placeholder="E-mail"					styleClass="inputsCadastro" value="#{beanEmpresa.empresa.email}"					required="true" requiredMessage="E-mail obrigatório!">					<p:ajax />				</p:inputText>				<p:inputText id="empresa_login" placeholder="Login"					styleClass="inputsCadastro" value="#{beanEmpresa.empresa.login}"					required="true" requiredMessage="Login obrigatório!">					<p:ajax />				</p:inputText>				<p:password id="empresa_senha" placeholder="Senha"					styleClass="inputsCadastro" value="#{beanEmpresa.empresa.senha}"					required="true" requiredMessage="Senha obrigatória!">					<p:ajax />				</p:password>				<p:password id="empresa_confirmaSenha" placeholder="Confirmar Senha"					styleClass="inputsCadastro" value="#{beanEmpresa.confSenha}"					required="true" requiredMessage="Confirmação de Senha obrigatória!">					<p:ajax />				</p:password>				<h:panelGrid columns="2">					<p:selectBooleanCheckbox value="#{beanEmpresa.aceito}" />					<h:outputText styleClass="textFonts" style="font-weight: bold"						value="Li e aceito os termos de adesão" />				</h:panelGrid>				<h:outputLabel					style="margin-top: -25px; float: right; text-decoration: underline"					id="termosUtilizacao" value="Termos"					styleClass="footerInfos textFonts"					onclick="PF('dInfoTermos').show()" />				<p:commandButton id="bt_empresa_cadastrar"					style="width: 150px; height: 25px; font-size: 16px; margin: 5px 0 0 100px"					value="Cadastrar" actionListener="#{beanEmpresa.save}"					onclick="PF('statusDialog').show()"					oncomplete="PF('statusDialog').hide()" update="panelCad, mensagens" />				<p class="textFonts" style="font-size: 12px !important">					Problemas para realizar o cadastro? Entre em contato com nossa					equipe de suporte através do e-mail: suporte@extratosfacil.com.br</p>			</h:panelGrid>		</div>		<div id="formVideo" align="center">			<h:outputLabel styleClass="fraseVideo" style="font-weight: bold"				value="Com o extratos fácil você ganha tempo e economia!" />			<br></br> <br></br>			<!--	<h:outputLabel styleClass="fraseVideo" value="Veja porque utilizar o Extratos Fácil:" /> -->			<a href="#{request.contextPath}/teste/teste.html"><img				style="width: 700px; height: 550px" src="resource/images/banner.jpg"				alt="Extratos Fácil" /></a>		</div>	</ui:define></ui:composition>

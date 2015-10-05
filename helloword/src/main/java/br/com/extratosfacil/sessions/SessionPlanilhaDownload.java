@@ -57,8 +57,9 @@ public class SessionPlanilhaDownload {
 		// pega o nome da empresa e a data para criar a pasta da planilha
 		String nomeEmpresa = this.getNomeEmpresa();
 		String data = this.getData();
-		String diretorio = realPath + "Empresas\\" + nomeEmpresa
-				+ "\\Download\\" + data + "\\";
+		String diretorio = realPath + "Empresas" + File.separator + nomeEmpresa
+				+ File.separator + "Download" + File.separator + data
+				+ File.separator;
 		// Aqui cria o diretorio caso n�o exista
 		File file = new File(diretorio);
 		file.mkdirs();

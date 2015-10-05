@@ -1,5 +1,7 @@
 package br.com.extratosfacil.converter;
 
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -7,14 +9,19 @@ import javax.faces.convert.FacesConverter;
 
 import br.com.extratosfacil.entities.location.Estado;
 
-@FacesConverter("estadoConverter")
+@FacesConverter(value = "estadoConverter")
+@ManagedBean(eager = true)
+@ApplicationScoped
 public class EstadoConverter implements Converter {
+
+	public static Estado estado = null;
 
 	public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
 		if (value != null && !value.isEmpty()) {
-			return (Estado) uic.getAttributes().get(value);
+			estado = (Estado) uic.getAttributes().get(value);
+			return estado;
 		}
-		return null;
+		return estado;
 	}
 
 	@Override

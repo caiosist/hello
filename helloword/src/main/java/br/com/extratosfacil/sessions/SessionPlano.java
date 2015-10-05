@@ -210,7 +210,7 @@ public class SessionPlano {
 		plano.setStatus("Aguardando Pagamento");
 		this.save(plano);
 		this.setPlanoEmpresa(plano);
-		//Sessao.redireciona("views/plano/meuPlano.html");
+		// Sessao.redireciona("views/plano/meuPlano.html");
 	}
 
 	public void pagar() {
@@ -347,7 +347,7 @@ public class SessionPlano {
 
 		checkout.setCurrency(Currency.BRL);
 		checkout.setReference(String.valueOf(empresa.getId()));
-		checkout.setRedirectURL("http://extratosfacil.com/retorno_compra.html");
+		checkout.setRedirectURL("http://extratosfacil.com.br/compra/retorno_compra.html");
 
 		Compra compra = new Compra();
 		compra.setEmpresa(empresa);

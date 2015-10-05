@@ -114,8 +114,8 @@ public class BeanPlanilhaUpload {
 			String nomeEmpresa = this.getNomeEmpresa();
 			String data = this.getData();
 			// Aqui cria o diretorio caso n�o exista
-			String diretorio = realPath + "Empresas\\" + nomeEmpresa
-					+ "\\Upload\\" + data + "\\";
+			String diretorio = realPath + "Empresas" + File.separator + nomeEmpresa
+					+ File.separator + "Upload"+ File.separator + data + File.separator;
 			File file = new File(diretorio);
 			file.mkdirs();
 
@@ -139,6 +139,13 @@ public class BeanPlanilhaUpload {
 						xlsx);
 				this.calculaTotal(itens);
 				this.save();
+			}else {
+				if (this.session.validaXml(caminho)) {
+					itens = this.session.carregaXml(caminho);
+					this.calculaTotal(itens);
+					this.save();
+				}
+
 			}
 
 		} catch (Exception ex) {
@@ -227,6 +234,7 @@ public class BeanPlanilhaUpload {
 		sheet.setColumnWidth(7, width);
 		sheet.setColumnWidth(9, width);
 		sheet.setColumnWidth(8, width);
+		sheet.setColumnWidth(9, width);
 		Iterator<Row> rowIterator = sheet.iterator();
 		Row row = rowIterator.next();
 
@@ -258,8 +266,21 @@ public class BeanPlanilhaUpload {
 
 	public void calculaTotal(List<ItemPlanilhaDownload> itensDownload) {
 		total = 0.0;
+		Double valorCobrado = 0.0;
+		Double valorCorreto = 0.0;
+		
 		for (int i = 0; i < itensDownload.size(); i++) {
 			total = total + itensDownload.get(i).getValorRestituicao();
+			valorCobrado = valorCobrado + itensDownload.get(i).getValor();
+			valorCorreto = valorCorreto + itensDownload.get(i).getValorCorreto();
 		}
+		
+		ItemPlanilhaDownload i = new ItemPlanilhaDownload();
+		i.setPraca("Valor total - ");
+		i.setValorRestituicao(total);
+		i.setValor(valorCobrado);
+		i.setValorCorreto(valorCorreto);
+		
+		itensDownload.add(i);
 	}
 }

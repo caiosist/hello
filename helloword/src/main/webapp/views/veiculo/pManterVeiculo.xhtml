@@ -14,7 +14,8 @@
 			onkeyup="up(this)" maxlength="30" />
 
 		<h:outputText value="Placa " />
-		<p:inputMask mask="aaa9999" disabled="#{beanVeiculo.veiculo.id != null}"
+		<p:inputMask mask="aaa9999"
+			disabled="#{beanVeiculo.veiculo.id != null}"
 			value="#{beanVeiculo.veiculo.placaVeiculo}" maxlength="7" />
 
 		<h:outputText value="Categoria " />
@@ -24,7 +25,11 @@
 		</p:selectOneMenu>
 
 		<h:outputText value="Nº Máximo de Eixos " />
-		<p:inputText value="#{beanVeiculo.veiculo.maximoEixo}" maxlength="2" />
+		<p:selectOneMenu value="#{beanVeiculo.veiculo.maximoEixo}">
+			<f:selectItem itemLabel="Selecione" itemValue="" />
+			<f:selectItems value="#{beanVeiculo.eixos}" />
+			<p:ajax />
+		</p:selectOneMenu>
 
 	</h:panelGrid>
 

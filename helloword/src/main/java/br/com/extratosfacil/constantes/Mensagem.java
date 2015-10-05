@@ -20,7 +20,7 @@ public class Mensagem {
 
 	public static String MSG_UPDATE = "Os dados foram atualizados com sucesso!";
 
-	public static String MSG_UPLOAD = "Upload realizado com sucesso! Clique em \"Baixar Planilha\" para baixar a planilha com as Correções!";
+	public static String MSG_UPLOAD = "Upload realizado com sucesso! Clique em \"Download\" para baixar a planilha com as Correções!";
 
 	public static String MSG_INCOMPLETO = "Por favor, preencha todos os campos!";
 

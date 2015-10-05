@@ -20,28 +20,23 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.html</url-pattern>
 	</servlet-mapping>
-
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-
-	<listener>
-		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-	</listener>
-
+	
 	<error-page>
 		<error-code>500</error-code>
 		<location>/error/errorpage.html</location>
 	</error-page>
-	
+
 	<error-page>
 		<error-code>404</error-code>
 		<location>/error/errorpage.html</location>
 	</error-page>
-
-	<!-- SpringFramework -->
+	
 	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring-context.xml</param-value>
+		 <param-name>
+		 	javax.faces.STATE_SAVING_METHOD
+		 </param-name>
+		 <param-value>client</param-value>
 	</context-param>
+
+
 </web-app>

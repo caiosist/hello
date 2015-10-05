@@ -498,7 +498,7 @@ public class SessionEmpresa {
 		String link = "http://www.extratosfacil.com.br/confirmar.html?sb{bpTpdjbm="
 				+ this.crip(empresa.getRazaoSocial());
 		String mensagem = "<p>Cadastro realizado com sucesso. Clique no link para confirmar: </p>";
-		String assunto = "Cadastro Extratos FÃ¡cil";
+		String assunto = "Cadastro Extratos Fácil";
 		try {
 			Email.sendEmail(empresa.getEmail(), empresa.getNomeFantasia(),
 					assunto, mensagem, link);

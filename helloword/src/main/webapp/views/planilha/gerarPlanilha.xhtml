@@ -12,12 +12,14 @@
 			<h:outputLabel styleClass="subtitlePages">Gerar Planilha </h:outputLabel>
 
 			<p:panel style="border: none;">
-				<p:fileUpload
+				<p:fileUpload onstart="PF('statusDialog').show()"
+					oncomplete="PF('statusDialog').hide()"
 					fileUploadListener="#{beanPlanilhaUpload.fileUploadAction}"
 					mode="advanced" dragDropSupport="false" auto="true"
 					allowTypes="/(\.|\/)(xlsx|xls)$/"
 					invalidFileMessage="Tipo de arquivo inválido!"
-					update="mensagens, gridPlanilha, botaoDownload, valor" label="Selecionar" />
+					update="mensagens, gridPlanilha, botaoDownload, valor"
+					label="Selecionar" />
 			</p:panel>
 
 			<br />
@@ -52,18 +54,17 @@
 				</p:column>
 				<p:column headerText="Valor Cobrado">
 					<h:outputText value="#{planilha.valor}">
-						<f:convertNumber pattern="#0.00" currencySymbol="R$"
-							currencyCode="BRL" />
+						<f:convertNumber pattern="#0.00" currencyCode="BRL" />
 					</h:outputText>
 				</p:column>
 				<p:column headerText="Valor Correto">
 					<h:outputText value="#{planilha.valorCorreto}">
-						<f:convertNumber groupingUsed="true" minFractionDigits="2" />
+						<f:convertNumber pattern="#0.00" currencyCode="BRL" />
 					</h:outputText>
 				</p:column>
 				<p:column headerText="Valor a ser Restituido">
 					<h:outputText value="#{planilha.valorRestituicao}">
-						<f:convertNumber groupingUsed="true" minFractionDigits="2" />
+						<f:convertNumber pattern="#0.00" currencyCode="BRL" />
 					</h:outputText>
 				</p:column>
 				<p:column headerText="Categoria Cobrada">
@@ -72,10 +73,14 @@
 				<p:column headerText="Categoria Correta">
 					<h:outputText value="#{planilha.categoriaCorreta}" />
 				</p:column>
+				<p:column headerText="Observações">
+					<h:outputText value="#{planilha.obs}" />
+				</p:column>
 			</p:dataTable>
 			<h:panelGrid id="valor" style="float: right;">
 				<h:panelGrid columns="2">
-					<h:outputText value="Valor Total a ser Restituido" />
+					<h:outputText value="VALOR TOTAL A SER RESTITUIDO"
+						style="font-weight:bold;" />
 					<p:inputText disabled="true" value="#{beanPlanilhaUpload.total}">
 						<f:convertNumber pattern="#0.00" />
 					</p:inputText>
@@ -100,6 +105,14 @@
 			</div>
 		</p:panel>
 
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<div align="center">
+				<p:graphicImage value="./resource/images/ajaxloadingbar.gif" />
+				<p style="font-family: sans-serif; color: #669214">Enviando a
+					Planilha. Isso pode levar alguns minutos!</p>
+			</div>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 

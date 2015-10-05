@@ -51,6 +51,9 @@ public class BeanVeiculo {
 	@Autowired
 	private List<String> categorias = new ArrayList<String>();
 
+	@Autowired
+	private List<Integer> eixos = new ArrayList<Integer>();
+
 	private CommandButton botaoNovo;
 
 	/*-------------------------------------------------------------------
@@ -59,6 +62,7 @@ public class BeanVeiculo {
 
 	public BeanVeiculo() {
 		this.carragaCategoria();
+		this.carregaEixos();
 		this.carregaVeiculo();
 		this.verificaPlano();
 	}
@@ -77,6 +81,14 @@ public class BeanVeiculo {
 
 	public Veiculo getFiltro() {
 		return filtro;
+	}
+
+	public List<Integer> getEixos() {
+		return eixos;
+	}
+
+	public void setEixos(List<Integer> eixos) {
+		this.eixos = eixos;
 	}
 
 	public boolean isStatusBotaoNovo() {
@@ -228,6 +240,18 @@ public class BeanVeiculo {
 		this.categorias.add("Ônibus 4 eixos");
 	}
 
+	private void carregaEixos() {
+		this.eixos.add(2);
+		this.eixos.add(3);
+		this.eixos.add(4);
+		this.eixos.add(5);
+		this.eixos.add(6);
+		this.eixos.add(61);
+		this.eixos.add(62);
+		this.eixos.add(63);
+		this.eixos.add(64);
+	}
+
 	private boolean verificaPlano() {
 		Empresa empresaTemp = Sessao.getEmpresaSessao();
 
@@ -247,13 +271,13 @@ public class BeanVeiculo {
 
 	public String goToVeiculo() {
 		this.reinit();
-		
+
 		Empresa empresa = Sessao.getEmpresaSessao();
 		if (empresa.getStatus().equals("Ativo")) {
 			return "views/veiculo/consultaVeiculo";
 		}
 		return "index";
-		
+
 	}
 
 }

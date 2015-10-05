@@ -99,6 +99,12 @@ public class ItemPlanilhaDownload implements Serializable {
 	@Column(length = 20, nullable = false)
 	private Double valorRestituicao;
 
+	/**
+	 * 
+	 */
+	@Column(length = 100, nullable = false)
+	private String obs;
+
 	/*-------------------------------------------------------------------
 	 *				 		     CONSTRUCTORS
 	 *-------------------------------------------------------------------*/
@@ -116,6 +122,14 @@ public class ItemPlanilhaDownload implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getObs() {
+		return obs;
+	}
+
+	public void setObs(String obs) {
+		this.obs = obs;
 	}
 
 	public Double getValor() {
@@ -200,5 +214,17 @@ public class ItemPlanilhaDownload implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public Integer formataCategoria(Integer cat) {
+		if (cat > 6) {
+			int soma = 0;
+			while (cat != 0) {
+				soma += cat % 10;
+				cat = cat / 10;
+			}
+			cat = soma;
+		}
+		return cat;
 	}
 }
