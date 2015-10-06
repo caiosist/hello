@@ -10,7 +10,6 @@ import java.util.Map;
 import javax.faces.context.FacesContext;
 
 import org.apache.commons.mail.EmailException;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.extratosfacil.constantes.Mensagem;
 import br.com.extratosfacil.constantes.Sessao;
@@ -42,7 +41,6 @@ public class SessionPlano {
 	 * 		 					ATTRIBUTES
 	 *-------------------------------------------------------------------*/
 
-	@Autowired
 	private Controller<Plano> controller = new Controller<Plano>();
 	private Controller<Empresa> controllerEmpresa = new Controller<Empresa>();
 	private Controller<Compra> controllerCompra = new Controller<Compra>();

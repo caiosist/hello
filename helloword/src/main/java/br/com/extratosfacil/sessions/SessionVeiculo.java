@@ -2,14 +2,10 @@ package br.com.extratosfacil.sessions;
 
 import java.util.List;
 
-import javax.faces.context.FacesContext;
-
 import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.extratosfacil.constantes.Mensagem;
 import br.com.extratosfacil.constantes.Sessao;
-import br.com.extratosfacil.entities.Empresa;
 import br.com.extratosfacil.entities.Veiculo;
 import br.com.jbc.controller.Controller;
 
@@ -28,7 +24,6 @@ public class SessionVeiculo {
 	 * 		 					ATTRIBUTES
 	 *-------------------------------------------------------------------*/
 
-	@Autowired
 	private Controller<Veiculo> controller = new Controller<Veiculo>();
 
 	/*-------------------------------------------------------------------

@@ -8,7 +8,6 @@ import javax.faces.bean.SessionScoped;
 
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.context.RequestContext;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.extratosfacil.constantes.Mensagem;
 import br.com.extratosfacil.constantes.Sessao;
@@ -33,25 +32,18 @@ public class BeanVeiculo {
 	 * 		 					ATTRIBUTES
 	 *-------------------------------------------------------------------*/
 
-	@Autowired
 	private Veiculo veiculo = new Veiculo();
 
-	@Autowired
 	private Veiculo selected = new Veiculo();
 
-	@Autowired
 	private Veiculo filtro = new Veiculo();
 
-	@Autowired
 	private List<Veiculo> listaVeiculos = new ArrayList<Veiculo>();
 
-	@Autowired
 	private SessionVeiculo session = new SessionVeiculo();
 
-	@Autowired
 	private List<String> categorias = new ArrayList<String>();
 
-	@Autowired
 	private List<Integer> eixos = new ArrayList<Integer>();
 
 	private CommandButton botaoNovo;

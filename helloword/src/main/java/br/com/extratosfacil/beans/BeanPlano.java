@@ -7,7 +7,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import org.primefaces.context.RequestContext;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.extratosfacil.constantes.Mensagem;
 import br.com.extratosfacil.entities.Plano;
@@ -30,19 +29,14 @@ public class BeanPlano {
 	 * 		 					ATTRIBUTES
 	 *-------------------------------------------------------------------*/
 
-	@Autowired
 	private Plano plano = new Plano();
 
-	@Autowired
 	private Plano selected = new Plano();
 
-	@Autowired
 	private Plano filtro = new Plano();
 
-	@Autowired
 	private List<Plano> listaPlanos = new ArrayList<Plano>();
 
-	@Autowired
 	private SessionPlano session = new SessionPlano();
 
 	private Integer periodo = 1;
