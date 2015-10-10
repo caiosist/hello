@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import org.primefaces.context.RequestContext;
 
@@ -22,7 +22,7 @@ import br.com.extratosfacil.sessions.SessionPlano;
  */
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class BeanPlano {
 
 	/*-------------------------------------------------------------------

@@ -26,11 +26,9 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import br.com.extratosfacil.constantes.Mensagem;
 import br.com.extratosfacil.entities.Veiculo;
 import br.com.extratosfacil.entities.planilha.ItemPlanilhaDownload;
 import br.com.extratosfacil.entities.planilha.ItemPlanilhaUpload;
-import br.com.jbc.controller.Controller;
 
 /**
  * Session que representa as regras de negócios da entidade Empresa
@@ -47,7 +45,7 @@ public class SessionTeste {
 	 * 		 					ATTRIBUTES
 	 *-------------------------------------------------------------------*/
 
-	private Controller<Veiculo> controller = new Controller<Veiculo>();
+	// private Controller<Veiculo> controller = new Controller<Veiculo>();
 
 	private int erros;
 
@@ -55,13 +53,13 @@ public class SessionTeste {
 	 * 		 					GETTERS AND SETTERS
 	 *-------------------------------------------------------------------*/
 
-	public Controller<Veiculo> getController() {
-		return controller;
-	}
-
-	public void setController(Controller<Veiculo> controller) {
-		this.controller = controller;
-	}
+	// public Controller<Veiculo> getController() {
+	// return controller;
+	// }
+	//
+	// public void setController(Controller<Veiculo> controller) {
+	// this.controller = controller;
+	// }
 
 	public int getErros() {
 		return erros;

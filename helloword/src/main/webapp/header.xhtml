@@ -17,19 +17,19 @@
 			<div style="float: right; margin: 20px 115px 0 0">
 
 				<p:inputText placeholder="Login" id="autenticacao_login"
-					value="#{beanEmpresa.usuario.login}"
+					value="#{beanLogin.usuario.login}"
 					style="width: 150px; margin-right: 10px; height: 16px; font-size: 16px">
 					<p:ajax />
 				</p:inputText>
 
 				<p:password placeholder="Senha" id="autenticacao_senha"
-					value="#{beanEmpresa.usuario.senha}"
+					value="#{beanLogin.usuario.senha}"
 					style="width: 150px; margin-right: 10px; height: 16px; font-size: 16px">
 					<p:ajax />
 				</p:password>
 
 				<p:commandButton id="submit_empresa" value="Entrar" immediate="true"
-					actionListener="#{beanEmpresa.fazerLogin}"
+					action="#{beanLogin.fazerLogin}"
 					style="width: 90px; height: 25px; font-size: 13px" />
 
 				<p:commandLink id="reenviarEmail" value="Reenviar e-mail"

@@ -48,7 +48,7 @@ public class Veiculo implements Serializable {
 	/**
 	 * 
 	 */
-	@Column(length = 8, nullable = false, unique = true)
+	@Column(length = 8, nullable = false)
 	private String placaVeiculo;
 
 	/**

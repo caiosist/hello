@@ -1,23 +1,26 @@
 package br.com.extratosfacil.converter;
 
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
+import br.com.extratosfacil.beans.BeanEmpresa;
 import br.com.extratosfacil.entities.location.Estado;
 
-@FacesConverter(value = "estadoConverter")
-@ManagedBean(eager = true)
-@ApplicationScoped
+@FacesConverter(value = "estadoConverter", forClass = Estado.class)
 public class EstadoConverter implements Converter {
 
 	public static Estado estado = null;
 
 	public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
 		if (value != null && !value.isEmpty()) {
+			BeanEmpresa bean = (BeanEmpresa) fc.getExternalContext()
+					.getApplicationMap().get("beanEmpresa");
+			if (bean != null) {
+				estado = bean.getEstados().get(Integer.parseInt(value) - 1);
+				return estado;
+			}
 			estado = (Estado) uic.getAttributes().get(value);
 			return estado;
 		}

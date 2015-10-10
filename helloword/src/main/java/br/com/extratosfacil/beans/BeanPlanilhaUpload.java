@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
@@ -38,7 +38,7 @@ import br.com.extratosfacil.sessions.SessionPlanilhaUpload;
  */
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class BeanPlanilhaUpload {
 
 	/*-------------------------------------------------------------------
@@ -47,7 +47,7 @@ public class BeanPlanilhaUpload {
 
 	private PlanilhaUpload planilhaUpload = new PlanilhaUpload();
 
-	private SessionPlanilhaUpload session = new SessionPlanilhaUpload();
+	private SessionPlanilhaUpload session;
 
 	private List<ItemPlanilhaDownload> itens = new ArrayList<ItemPlanilhaDownload>();
 
@@ -114,8 +114,9 @@ public class BeanPlanilhaUpload {
 			String nomeEmpresa = this.getNomeEmpresa();
 			String data = this.getData();
 			// Aqui cria o diretorio caso n�o exista
-			String diretorio = realPath + "Empresas" + File.separator + nomeEmpresa
-					+ File.separator + "Upload"+ File.separator + data + File.separator;
+			String diretorio = realPath + "Empresas" + File.separator
+					+ nomeEmpresa + File.separator + "Upload" + File.separator
+					+ data + File.separator;
 			File file = new File(diretorio);
 			file.mkdirs();
 
@@ -134,12 +135,14 @@ public class BeanPlanilhaUpload {
 			this.planilhaUpload.setPath(caminho);
 			this.planilhaUpload.setData(new Date());
 
+			this.session = new SessionPlanilhaUpload();
+
 			if (this.session.validaPlanilha(planilhaUpload.getPath(), xlsx)) {
 				itens = this.session.carregaPlanilha(planilhaUpload.getPath(),
 						xlsx);
 				this.calculaTotal(itens);
 				this.save();
-			}else {
+			} else {
 				if (this.session.validaXml(caminho)) {
 					itens = this.session.carregaXml(caminho);
 					this.calculaTotal(itens);
@@ -148,7 +151,11 @@ public class BeanPlanilhaUpload {
 
 			}
 
+			this.session = null;
+			System.gc();
+
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			Mensagem.send(Mensagem.MSG_PLANILHA_ERRADA, Mensagem.ERROR);
 			System.out.println("Erro no upload da Planilha" + ex);
 		}
@@ -204,12 +211,15 @@ public class BeanPlanilhaUpload {
 		RequestContext context = RequestContext.getCurrentInstance();
 		boolean sucesso = false;
 
+		this.session = new SessionPlanilhaUpload();
+
 		if (this.session.validaPlanilha(this.planilhaUpload)) {
 			if (this.session.update(this.planilhaUpload)) {
 				this.planilhaUpload = new PlanilhaUpload();
 				sucesso = true;
 				context.addCallbackParam("sucesso", sucesso);
 				Mensagem.send(Mensagem.MSG_UPDATE, Mensagem.INFO);
+				this.session = null;
 			}
 		}
 		context.addCallbackParam("sucesso", sucesso);
@@ -252,6 +262,7 @@ public class BeanPlanilhaUpload {
 
 		SessionPlanilhaDownload sessionPD = new SessionPlanilhaDownload();
 		sessionPD.criaPlanilhaDownload(wb);
+		sessionPD = null;
 
 	}
 
@@ -268,19 +279,20 @@ public class BeanPlanilhaUpload {
 		total = 0.0;
 		Double valorCobrado = 0.0;
 		Double valorCorreto = 0.0;
-		
+
 		for (int i = 0; i < itensDownload.size(); i++) {
 			total = total + itensDownload.get(i).getValorRestituicao();
 			valorCobrado = valorCobrado + itensDownload.get(i).getValor();
-			valorCorreto = valorCorreto + itensDownload.get(i).getValorCorreto();
+			valorCorreto = valorCorreto
+					+ itensDownload.get(i).getValorCorreto();
 		}
-		
+
 		ItemPlanilhaDownload i = new ItemPlanilhaDownload();
 		i.setPraca("Valor total - ");
 		i.setValorRestituicao(total);
 		i.setValor(valorCobrado);
 		i.setValorCorreto(valorCorreto);
-		
+
 		itensDownload.add(i);
 	}
 }

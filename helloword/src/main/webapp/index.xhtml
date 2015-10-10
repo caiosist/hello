@@ -27,7 +27,7 @@
 </h:head>
 
 <h:body>
-	<h:inputHidden value="#{beanEmpresa.usuarioLogado}" />
+	<h:inputHidden value="#{beanLogin.usuarioLogado}" />
 	<h:form prependId="false">
 		<div class="container-fluid">
 			<div class="row-fluid">
@@ -47,29 +47,29 @@
 									<ul class="nav">
 
 										<li><h:commandLink value="Gerar Planilha"
-												rendered="#{beanEmpresa.empresa.status == 'Ativo'}"
-												action="#{beanPlanilhaUpload.goToGerarPlanilha}"
-												target="frameCenter" styleClass="menuItem" /></li>
+												rendered="#{beanLogin.usuario.status == 'Ativo'}"
+												action="views/planilha/gerarPlanilha" target="frameCenter"
+												styleClass="menuItem" /></li>
 
 										<li><h:commandLink value="Meu Plano"
-												rendered="#{beanEmpresa.empresa.plano != null}"
-												action="#{beanPlano.goToMeuPlano}" target="frameCenter"
+												rendered="#{beanLogin.usuario.plano != null}"
+												action="views/plano/meuPlano" target="frameCenter"
 												styleClass="menuItem" /></li>
 
 										<li><h:commandLink value="Veículos"
-												rendered="#{beanEmpresa.empresa.status == 'Ativo'}"
-												action="#{beanVeiculo.goToVeiculo}" target="frameCenter"
+												rendered="#{beanLogin.usuario.status == 'Ativo'}"
+												action="views/veiculo/consultaVeiculo" target="frameCenter"
 												styleClass="menuItem" /></li>
 
 										<li><h:commandLink value="Histórico"
-												rendered="#{beanEmpresa.empresa.status == 'Ativo'}"
-												action="#{beanPlanilhaDownload.goToHistorico}"
+												rendered="#{beanLogin.usuario.status == 'Ativo'}"
+												action="views/historico/historico"
 												target="frameCenter" styleClass="menuItem" /></li>
 									</ul>
 
 									<ul class="nav pull-right">
 										<li><h:commandLink value="Sair"
-												action="#{beanEmpresa.logout}" styleClass="menuItem"
+												action="#{beanLogin.logout}" styleClass="menuItem"
 												style="margin-right: -40px" /></li>
 									</ul>
 								</div>

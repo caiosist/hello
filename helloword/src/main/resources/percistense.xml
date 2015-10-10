@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+	<persistence-unit name="br.com.eris.portal"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<properties>
+			<!-- Cache -->
+			<property name="hibernate.cache.region.factory_class"
+				value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory" />
+			<property name="hibernate.cache.provider_configuration"
+				value="ehcache.xml" />
+			<property name="hibernate.cache.use_second_level_cache"
+				value="true" />
+			<property name="hibernate.cache.use_query_cache" value="true" />
+
+			<!-- Pool -->
+			<property name="hibernate.c3p0.minPoolSize" value="5" />
+			<property name="hibernate.c3p0.maxPoolSize" value="20" />
+			<property name="hibernate.c3p0.timeout" value="1800" />
+			<property name="hibernate.c3p0.max_statement" value="50" />
+			<property name="hibernate.c3p0.testConnectionOnCheckout"
+				value="true" />
+
+			<!-- Character Encoding -->
+			<property name="hibernate.connection.useUnicode" value="true" />
+			<property name="hibernate.connection.characterEncoding"
+				value="UTF-8" />
+			<property name="hibernate.connection.lc_ctype" value="NONE" />
+		</properties>
+	</persistence-unit>
+</persistence>

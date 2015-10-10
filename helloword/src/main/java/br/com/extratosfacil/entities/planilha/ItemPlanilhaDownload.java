@@ -19,7 +19,8 @@ import javax.persistence.TemporalType;
  * @category Entity
  */
 
-public class ItemPlanilhaDownload implements Serializable {
+public class ItemPlanilhaDownload implements Serializable,
+		Comparable<ItemPlanilhaDownload> {
 
 	/**
 	 * 
@@ -226,5 +227,11 @@ public class ItemPlanilhaDownload implements Serializable {
 			cat = soma;
 		}
 		return cat;
+	}
+
+	@Override
+	public int compareTo(ItemPlanilhaDownload o) {
+		// TODO Auto-generated method stub
+		return this.getPlaca().compareTo(o.getPlaca());
 	}
 }

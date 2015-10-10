@@ -1,7 +1,5 @@
 package br.com.extratosfacil.converter;
 
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -10,15 +8,16 @@ import javax.faces.convert.FacesConverter;
 import br.com.extratosfacil.entities.location.Cidade;
 
 @FacesConverter(value = "cidadeConverter")
-@ManagedBean(eager = true)
-@ApplicationScoped
 public class CidadeConverter implements Converter {
+
+	public static Cidade cidade = null;
 
 	public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
 		if (value != null && !value.isEmpty()) {
-			return (Cidade) uic.getAttributes().get(value);
+			cidade = (Cidade) uic.getAttributes().get(value);
+			return cidade;
 		}
-		return null;
+		return cidade;
 	}
 
 	@Override

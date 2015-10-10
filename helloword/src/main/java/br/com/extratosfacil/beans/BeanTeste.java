@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
@@ -36,7 +37,7 @@ public class BeanTeste {
 
 	private Veiculo veiculo = new Veiculo();
 
-	private SessionTeste session = new SessionTeste();
+	private SessionTeste session;
 
 	private List<ItemPlanilhaDownload> itens = new ArrayList<ItemPlanilhaDownload>();
 
@@ -102,38 +103,43 @@ public class BeanTeste {
 			// Aqui cria o diretorio caso n�o exista
 			File file = new File(realPath + "try" + File.separator);
 			file.mkdirs();
-			Mensagem.send("Criou Diretorio", Mensagem.ERROR);
+			// Mensagem.send("Criou Diretorio", Mensagem.ERROR);
 			byte[] arquivo = event.getFile().getContents();
 			boolean xlsx = event.getFile().getFileName().indexOf("xlsx") >= 0;
 			String caminho = realPath + "try" + File.separator
 					+ event.getFile().getFileName();
 
 			System.out.println(caminho);
-			
+
 			// esse trecho grava o arquivo no diret�rio
 			FileOutputStream fos = new FileOutputStream(caminho);
 			fos.write(arquivo);
 			fos.close();
-			Mensagem.send("Gravou o arquivo", Mensagem.ERROR);
+			// Mensagem.send("Gravou o arquivo", Mensagem.ERROR);
 			this.erros = 0;
+
+			this.session = new SessionTeste();
 			try {
-				Mensagem.send("Tentou rodar 1", Mensagem.ERROR);
+				// Mensagem.send("Tentou rodar 1", Mensagem.ERROR);
 				if (this.session.validaPlanilha(caminho, xlsx)) {
 					itens = this.session.carregaPlanilha(caminho, this.veiculo,
 							xlsx);
 					this.erros = session.getErros();
 				}
 			} catch (Exception e) {
-				Mensagem.send("Tentou rodar 2", Mensagem.ERROR);
+				// Mensagem.send("Tentou rodar 2", Mensagem.ERROR);
 				if (this.session.validaXml(caminho)) {
 					itens = this.session.carregaXml(caminho, this.veiculo);
 					this.erros = session.getErros();
 				}
 
 			}
-			Mensagem.send("Finalizou", Mensagem.ERROR);
+			// Mensagem.send("Finalizou", Mensagem.ERROR);
 			File f = new File(caminho);
 			f.delete();
+
+			this.session = null;
+			System.gc();
 
 		} catch (Exception ex) {
 			ex.printStackTrace();

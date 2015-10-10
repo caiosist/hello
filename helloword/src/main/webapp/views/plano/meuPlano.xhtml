@@ -19,35 +19,35 @@
 			<h:panelGrid columns="2" id="gridPlano">
 
 				<h:outputText value="Plano Atual: " />
-				<h:outputText value="#{beanEmpresa.empresa.plano.nomePlano}" />
+				<h:outputText value="#{beanLogin.usuario.plano.nomePlano}" />
 
 				<h:outputText value="Numero de Veiculos: " />
 				<h:outputText
-					value="#{beanEmpresa.empresa.plano.quantidadeVeiculos}" />
+					value="#{beanLogin.usuario.plano.quantidadeVeiculos}" />
 
 				<h:outputText value="Crédito utilizado R$: "
-					rendered="#{beanEmpresa.empresa.plano.credito > 0}" />
-				<h:outputText value="#{beanEmpresa.empresa.plano.credito}"
-					rendered="#{beanEmpresa.empresa.plano.credito > 0}">
+					rendered="#{beanLogin.usuario.plano.credito > 0}" />
+				<h:outputText value="#{beanLogin.usuario.plano.credito}"
+					rendered="#{beanLogin.usuario.plano.credito > 0}">
 					<f:convertNumber pattern="#0.00" currencySymbol="R$"
 						currencyCode="BRL" />
 				</h:outputText>
 
 				<h:outputText value="Valor do Plano R$: " />
-				<h:outputText value="#{beanEmpresa.empresa.plano.valorPlano}">
+				<h:outputText value="#{beanLogin.usuario.plano.valorPlano}">
 					<f:convertNumber pattern="#0.00" currencySymbol="R$"
 						currencyCode="BRL" />
 				</h:outputText>
 
 				<h:outputText value="Status do Plano: " />
-				<h:outputText value="#{beanEmpresa.empresa.plano.status}"
-					styleClass="#{beanEmpresa.empresa.status == 'Pendente' ? vencido : null}" />
+				<h:outputText value="#{beanLogin.usuario.plano.status}"
+					styleClass="#{beanLogin.usuario.status == 'Pendente' ? vencido : null}" />
 
 				<h:outputText value="Vencimento: "
-					rendered="#{beanEmpresa.empresa.plano.status != 'Aguardando Pagamento'}" />
-				<h:outputText value="#{beanEmpresa.empresa.plano.vencimento}"
-					styleClass="#{beanEmpresa.empresa.status == 'Pendente' ? vencido : null}"
-					rendered="#{beanEmpresa.empresa.plano.status != 'Aguardando Pagamento'}">
+					rendered="#{beanLogin.usuario.plano.status != 'Aguardando Pagamento'}" />
+				<h:outputText value="#{beanLogin.usuario.plano.vencimento}"
+					styleClass="#{beanLogin.usuario.status == 'Pendente' ? vencido : null}"
+					rendered="#{beanLogin.usuario.plano.status != 'Aguardando Pagamento'}">
 					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00" />
 				</h:outputText>
 
@@ -55,10 +55,11 @@
 
 			<h:panelGrid id="botaoPagar">
 				<h:panelGrid columns="2"
-					rendered="#{beanEmpresa.empresa.plano.status != 'Ativo'}">
+					rendered="#{beanLogin.usuario.plano.status != 'Ativo'}">
 					<p:commandButton value="Pagar" icon="ui-icon-check"
 						action="#{beanPlano.pagar}" />
-					<img src="resource/images/pagsegurologo.jpg" height="50px" width="100px" />
+					<img src="resource/images/pagsegurologo.jpg" height="50px"
+						width="100px" />
 				</h:panelGrid>
 			</h:panelGrid>
 

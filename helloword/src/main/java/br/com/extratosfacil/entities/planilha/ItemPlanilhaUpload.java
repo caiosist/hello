@@ -19,7 +19,8 @@ import javax.persistence.TemporalType;
  * @category Entity
  */
 
-public class ItemPlanilhaUpload implements Serializable {
+public class ItemPlanilhaUpload implements Serializable,
+		Comparable<ItemPlanilhaUpload> {
 
 	/**
 	 * 
@@ -154,6 +155,11 @@ public class ItemPlanilhaUpload implements Serializable {
 
 	public void setPraca(String praca) {
 		this.praca = praca;
+	}
+
+	@Override
+	public int compareTo(ItemPlanilhaUpload o) {
+		return this.getPlaca().compareTo(o.getPlaca());
 	}
 
 }

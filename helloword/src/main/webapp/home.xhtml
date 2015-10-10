@@ -4,29 +4,32 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-	
+
 <ui:composition template="/template/template.xhtml">
 	<ui:define name="body">
 		<p:panel id="panel" style="border: none">
 
 			<div align="center" class="page-header">
-				<p class="title" style="font-size: 34px !important; font-weight: bold">Bem-vindo
-					<h:outputText value="#{beanEmpresa.empresa.nomeFantasia}" />!
+				<p class="title"
+					style="font-size: 34px !important; font-weight: bold">
+					Bem-vindo
+					<h:outputText value="#{beanEmpresa.empresa.nomeFantasia}" />
+					!
 				</p>
 
 				<h:panelGrid
-					rendered="#{beanEmpresa.empresa.status == 'Pendente' and beanEmpresa.empresa.plano != null}">
+					rendered="#{beanLogin.usuario.status == 'Pendente' and beanLogin.usuario.plano != null}">
 					<h:outputText style="color: red; font-size: 28px;"
 						value="*Seu plano está vencido ou aguardando pagamento. Por favor, verifique a guia Meu Plano!" />
 				</h:panelGrid>
 				<p:separator />
-				
-				<h:panelGrid rendered="#{beanEmpresa.empresa.plano != null}">
+
+				<h:panelGrid rendered="#{beanLogin.usuario.plano != null}">
 					<p:dataTable id="gridPlanilha" dir="center"
 						value="#{beanPlanilhaDownload.lastPlanilhas}" scrollable="true"
 						var="planilha" emptyMessage="Nenhum registro encontrado!">
 
-				<f:facet name="header">
+						<f:facet name="header">
            			Últimas planilhas geradas
        		 	</f:facet>
 
@@ -48,26 +51,18 @@
 							</center>
 						</p:column>
 					</p:dataTable>
-					<h:outputText value="*Para pesquisar planilhas geradas por data verifique a guia Histórico!" />
+					<h:outputText
+						value="*Para pesquisar planilhas geradas por data verifique a guia Histórico!" />
 				</h:panelGrid>
 
-				<!-- Selecao de planos caso nao exista -->
-				
-<!-- 				<div align="center"> -->
-<!-- 					<p class="title" style="font-size: 26px !important; font-weight: bold">Veja abaixo nossos planos de assinatura</p> -->
-<!-- 					<br /> -->
-					
-<!-- 					<div align="center"> -->
-<!-- 						<img style="width: 800px; height: 550px" src="./resource/images/banner.jpg"/> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-				
-				<h:panelGrid rendered="#{beanEmpresa.empresa.plano == null}">
-					<h:outputText styleClass="title" value="Dados e valores para a assinatura" />
+
+				<h:panelGrid rendered="#{beanLogin.usuario.plano == null}">
+					<h:outputText styleClass="title"
+						value="Dados e valores para a assinatura" />
 				</h:panelGrid>
 
 				<h:panelGrid columns="3" id="gridPlano"
-					rendered="#{beanEmpresa.empresa.plano == null}">
+					rendered="#{beanLogin.usuario.plano == null}">
 
 					<h:outputText value="Nº de Veículos" />
 					<h:outputText value="Desconto R$" />
@@ -89,27 +84,30 @@
 							currencyCode="BRL" />
 					</p:inputText>
 				</h:panelGrid>
-				
+
 				<br></br>
-				
-				<h:panelGrid columns="2" rendered="#{beanEmpresa.empresa.plano == null}">
-					
+
+				<h:panelGrid columns="2"
+					rendered="#{beanLogin.usuario.plano == null}">
+
 					<div align="center">
-						<h:outputText value="Planos" styleClass="title" style="margin-left: 160px"/>
+						<h:outputText value="Planos" styleClass="title"
+							style="margin-left: 160px" />
 					</div>
-					
+
 					<p:selectOneRadio id="periodo" value="#{beanPlano.periodo}">
-						
+
 						<f:selectItem itemLabel="Mensal" itemValue="1" />
 						<f:selectItem itemLabel="Trimestral (-6%)" itemValue="3" />
 						<f:selectItem itemLabel="Semestral (-10%)" itemValue="6" />
 						<f:selectItem itemLabel="Anual (-13%)" itemValue="12" />
-						<p:ajax event="change" listener="#{beanPlano.aplicaDesconto}" update="gridPlano" process="@this" />
-					
+						<p:ajax event="change" listener="#{beanPlano.aplicaDesconto}"
+							update="gridPlano" process="@this" />
+
 					</p:selectOneRadio>
 				</h:panelGrid>
 
-				<h:panelGrid rendered="#{beanEmpresa.empresa.plano == null}">
+				<h:panelGrid rendered="#{beanLogin.usuario.plano == null}">
 					<div align="center">
 						<p:commandButton value="Assinar" action="#{beanPlano.assinar}" />
 					</div>

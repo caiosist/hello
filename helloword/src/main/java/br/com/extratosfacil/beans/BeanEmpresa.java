@@ -4,15 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
+import javax.faces.bean.ViewScoped;
 
 import org.primefaces.context.RequestContext;
 
 import br.com.extratosfacil.constantes.Mensagem;
 import br.com.extratosfacil.constantes.Sessao;
 import br.com.extratosfacil.entities.Empresa;
-import br.com.extratosfacil.entities.Plano;
 import br.com.extratosfacil.entities.location.Cidade;
 import br.com.extratosfacil.entities.location.Estado;
 import br.com.extratosfacil.sessions.SessionEmpresa;
@@ -27,7 +25,7 @@ import br.com.extratosfacil.sessions.SessionEmpresa;
  */
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class BeanEmpresa {
 
 	/*-------------------------------------------------------------------
@@ -36,11 +34,11 @@ public class BeanEmpresa {
 
 	private Empresa empresa = new Empresa();
 
-	private Empresa usuario = new Empresa();
+	// private Empresa usuario = new Empresa();
 
-	private Empresa selected = new Empresa();
+	// private Empresa selected = new Empresa();
 
-	private Empresa filtro = new Empresa();
+	// private Empresa filtro = new Empresa();
 
 	private List<Empresa> empresas = new ArrayList<Empresa>();
 
@@ -48,13 +46,11 @@ public class BeanEmpresa {
 
 	private List<Cidade> cidades = new ArrayList<Cidade>();
 
-	private List<Plano> planos = new ArrayList<Plano>();
-
 	private SessionEmpresa session = new SessionEmpresa();
 
-	private Boolean usuarioLogado = false;
-
-	private Boolean usuarioLogin = false;
+	// private Boolean usuarioLogado = false;
+	//
+	// private Boolean usuarioLogin = false;
 
 	private boolean recuperar = false;
 
@@ -74,7 +70,6 @@ public class BeanEmpresa {
 
 	public BeanEmpresa() {
 		this.carregaEstados();
-		this.carregaPlanos();
 
 	}
 
@@ -90,31 +85,8 @@ public class BeanEmpresa {
 		this.session = session;
 	}
 
-	public Empresa getFiltro() {
-		return filtro;
-	}
-
 	public String getSenha() {
 		return senha;
-	}
-
-	public Empresa getUsuario() {
-		return usuario;
-	}
-
-	public Boolean getUsuarioLogin() {
-		if (usuarioLogado) {
-			Sessao.redireciona("index.html");
-		}
-		return usuarioLogin;
-	}
-
-	public void setUsuarioLogin(Boolean usuarioLogin) {
-		this.usuarioLogin = usuarioLogin;
-	}
-
-	public void setUsuario(Empresa usuario) {
-		this.usuario = usuario;
 	}
 
 	public void setSenha(String senha) {
@@ -147,31 +119,12 @@ public class BeanEmpresa {
 		this.recuperar = recuperar;
 	}
 
-	public void setFiltro(Empresa filtro) {
-		this.filtro = filtro;
-	}
-
-	public Empresa getSelected() {
-		return selected;
-	}
-
 	public String getConfSenha() {
 		return confSenha;
 	}
 
 	public void setConfSenha(String confSenha) {
 		this.confSenha = confSenha;
-	}
-
-	public Boolean getUsuarioLogado() {
-		if (!usuarioLogado) {
-			Sessao.redireciona("login.html");
-		}
-		return usuarioLogado;
-	}
-
-	public void setUsuarioLogado(Boolean usuarioLogado) {
-		this.usuarioLogado = usuarioLogado;
 	}
 
 	public List<Estado> getEstados() {
@@ -190,20 +143,8 @@ public class BeanEmpresa {
 		this.cidades = cidades;
 	}
 
-	public void setSelected(Empresa selected) {
-		this.selected = selected;
-	}
-
 	public List<Empresa> getEmpresas() {
 		return empresas;
-	}
-
-	public List<Plano> getPlanos() {
-		return planos;
-	}
-
-	public void setPlanos(List<Plano> planos) {
-		this.planos = planos;
 	}
 
 	public boolean isAceito() {
@@ -234,8 +175,6 @@ public class BeanEmpresa {
 		this.aceito = false;
 		this.pessoaFisica = false;
 		this.empresa = new Empresa();
-		this.filtro = new Empresa();
-		this.selected = new Empresa();
 		this.empresas = new ArrayList<Empresa>();
 	}
 
@@ -290,19 +229,6 @@ public class BeanEmpresa {
 
 	}
 
-	public String remove() {
-		try {
-			this.session.remove(this.empresa);
-			this.reinit();
-			this.carregaEmpresa();
-			Mensagem.send(Mensagem.MSG_REMOVE, Mensagem.INFO);
-			return "";
-		} catch (Exception e) {
-			Mensagem.send(Mensagem.MSG_NOT_REMOVE, Mensagem.ERROR);
-			return "";
-		}
-	}
-
 	public void carregaEstados() {
 		this.estados = this.session.findEstados(new Estado());
 	}
@@ -313,56 +239,48 @@ public class BeanEmpresa {
 				.getEstado());
 	}
 
-	public void carregaPlanos() {
-		this.planos = this.session.findPlanos(new Plano());
-	}
-
 	public void carregaEmpresa() {
 		this.empresas = this.session.findList(new Empresa());
-	}
-
-	public void find() throws Exception {
-		this.empresas = this.session.findList(this.filtro);
 	}
 
 	public void novo() {
 		this.setEmpresa(new Empresa());
 	}
 
-	public void fazerLogin() {
-
-		try {
-			Empresa u = this.session.efetuarLogin(usuario);
-
-			if (u == null) {
-				Mensagem.send(Mensagem.MSG_USER_NAO_ENCONTRADO, Mensagem.ERROR);
-			} else {
-				if (u.getStatus().equals("New")) {
-					Mensagem.send(Mensagem.MSG_USER_NAO_CONFIRMADO,
-							Mensagem.ERROR);
-					return;
-				}
-				usuarioLogado = true;
-				this.empresa = u;
-				Sessao.setEmpresaSessao(this.empresa);
-				this.session.validaVencimento(this.empresa);
-				Sessao.redireciona("");
-			}
-
-		} catch (Exception e) {
-			Mensagem.send(Mensagem.MSG_USER_NAO_ENCONTRADO, Mensagem.ERROR);
-		}
-	}
-
-	public void logout() {
-		this.usuario = new Empresa();
-		Sessao.setEmpresaSessao(null);
-
-		Sessao.redireciona("login.html");
-
-		FacesContext.getCurrentInstance().getExternalContext()
-				.invalidateSession();
-	}
+	// public void fazerLogin() {
+	//
+	// try {
+	// Empresa u = this.session.efetuarLogin(usuario);
+	//
+	// if (u == null) {
+	// Mensagem.send(Mensagem.MSG_USER_NAO_ENCONTRADO, Mensagem.ERROR);
+	// } else {
+	// if (u.getStatus().equals("New")) {
+	// Mensagem.send(Mensagem.MSG_USER_NAO_CONFIRMADO,
+	// Mensagem.ERROR);
+	// return;
+	// }
+	// usuarioLogado = true;
+	// this.empresa = u;
+	// Sessao.setEmpresaSessao(this.empresa);
+	// this.session.validaVencimento(this.empresa);
+	// Sessao.redireciona("");
+	// }
+	//
+	// } catch (Exception e) {
+	// Mensagem.send(Mensagem.MSG_USER_NAO_ENCONTRADO, Mensagem.ERROR);
+	// }
+	// }
+	//
+	// public void logout() {
+	// this.usuario = new Empresa();
+	// Sessao.setEmpresaSessao(null);
+	//
+	// Sessao.redireciona("login.html");
+	//
+	// FacesContext.getCurrentInstance().getExternalContext()
+	// .invalidateSession();
+	// }
 
 	private boolean validaRecovery() {
 		this.empresa = this.session.validaRecovery();
@@ -391,7 +309,6 @@ public class BeanEmpresa {
 		}
 		this.empresa = this.session.enviarEmailRecuperarSenha(this.empresa);
 		if (empresa.getId() != null) {
-			// Sessao.redireciona("login.html");
 			Mensagem.send(Mensagem.EMAIL_ENVIADO, Mensagem.INFO);
 			this.empresa = new Empresa();
 		}

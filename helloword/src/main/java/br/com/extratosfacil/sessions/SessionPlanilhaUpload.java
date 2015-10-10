@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -239,6 +241,8 @@ public class SessionPlanilhaUpload {
 		temp.setEmpresa(Sessao.getEmpresaSessao());
 		// Buscar todos os veiculos da empresa
 		List<Veiculo> veiculos = new ArrayList<Veiculo>();
+		HashMap<String, Veiculo> mapaVeiculos = new HashMap<String, Veiculo>();
+
 		try {
 			veiculos = this.controllerVeiculo
 					.getListByHQLCondition("from Veiculo where empresa_id = "
@@ -247,47 +251,109 @@ public class SessionPlanilhaUpload {
 			e1.printStackTrace();
 		}
 
-		for (int j = 0; j < veiculos.size(); j++) {
-			vezes += 1;
-			temp = new Veiculo();
+		for (Veiculo veiculo : veiculos) {
+			mapaVeiculos.put(veiculo.getPlacaVeiculo(), veiculo);
+		}
 
-			for (int i = 0; i < itensPlanilha.size(); i++) {
-				vezes += 1;
-				temp = veiculos.get(j);
-				if (temp.getPlacaVeiculo().equalsIgnoreCase(
-						itensPlanilha.get(i).getPlaca())) {
+		Collections.sort(itensPlanilha);
 
-					if (isDuplicado(itensPlanilha, i)) {
-						itensIncorretos.add(this.criaItemDownload(
-								itensPlanilha.get(i), temp, true));
-						remover.add(i);
-					} else {
-						if ((itensPlanilha.get(i).getCategoria() > temp
-								.getMaximoEixo())) {
+//		for (ItemPlanilhaUpload itemPlanilha : itensPlanilha) {
+//			if (temp.getPlacaVeiculo() == null) {
+//				temp = mapaVeiculos.get(itemPlanilha.getPlaca());
+//			}
+//			if (temp != null && temp.getPlacaVeiculo() != null) {
+//				temp = temp.getPlacaVeiculo().equals(itemPlanilha.getPlaca()) ? temp
+//						: mapaVeiculos.get(itemPlanilha.getPlaca());
+//			}
+//			if (temp == null) {
+//				temp = new Veiculo();
+//			}
+//			if (isDuplicado(itensPlanilha, itemPlanilha)) {
+//				itensIncorretos.add(this.criaItemDownload(itemPlanilha, temp,
+//						true));
+//			} else {
+//				if ((temp.getMaximoEixo() != null)
+//						&& (itemPlanilha.getCategoria() > temp.getMaximoEixo())) {
+//					itensIncorretos.add(this.criaItemDownload(itemPlanilha,
+//							temp, false));
+//				}
+//
+//			}
+//		}
 
-							itensIncorretos.add(this.criaItemDownload(
-									itensPlanilha.get(i), temp, false));
-							remover.add(i);
-						} else {
-							remover.add(i);
-						}
-					}
+		for (ItemPlanilhaUpload itemPlanilha : itensPlanilha) {
+			if (temp.getPlacaVeiculo() == null) {
+				temp = mapaVeiculos.get(itemPlanilha.getPlaca());
+				if (temp == null) {
+					temp = new Veiculo();
+					continue;
 				}
 			}
 
-			int x = 0;
-			for (int i = 0; i < remover.size(); i++) {
-				x = remover.get(i);
-				itensPlanilha.remove(x);
+			temp = temp.getPlacaVeiculo().equals(itemPlanilha.getPlaca()) ? temp
+					: mapaVeiculos.get(itemPlanilha.getPlaca());
+
+			if (temp == null) {
+				temp = new Veiculo();
+				continue;
 			}
 
+			if (isDuplicado(itensPlanilha, itemPlanilha)) {
+				itensIncorretos.add(this.criaItemDownload(itemPlanilha, temp,
+						true));
+			} else {
+				if (itemPlanilha.getCategoria() > temp.getMaximoEixo()) {
+					itensIncorretos.add(this.criaItemDownload(itemPlanilha,
+							temp, false));
+				}
+
+			}
 		}
-		System.out.println(vezes);
-		vezes = 0;
+
+		// for (int j = 0; j < veiculos.size(); j++) {
+		// vezes += 1;
+		// temp = new Veiculo();
+		//
+		// for (int i = 0; i < itensPlanilha.size(); i++) {
+		// vezes += 1;
+		// temp = veiculos.get(j);
+		// if (temp.getPlacaVeiculo().equalsIgnoreCase(
+		// itensPlanilha.get(i).getPlaca())) {
+		//
+		// if (isDuplicado(itensPlanilha, i)) {
+		// itensIncorretos.add(this.criaItemDownload(
+		// itensPlanilha.get(i), temp, true));
+		// // remover.add(i);
+		// } else {
+		// if ((itensPlanilha.get(i).getCategoria() > temp
+		// .getMaximoEixo())) {
+		//
+		// itensIncorretos.add(this.criaItemDownload(
+		// itensPlanilha.get(i), temp, false));
+		// // remover.add(i);
+		// } else {
+		// // remover.add(i);
+		// }
+		// }
+		// }
+		// }
+		//
+		// int x = 0;
+		// // for (int i = 0; i < remover.size(); i++) {
+		// // x = remover.get(i);
+		// // itensPlanilha.remove(x);
+		// // }
+
+		// }
 		return itensIncorretos;
+
 	}
 
-	private boolean isDuplicado(List<ItemPlanilhaUpload> itensPlanilha, int i) {
+	private boolean isDuplicado(List<ItemPlanilhaUpload> itensPlanilha,
+			ItemPlanilhaUpload itemPlanilha) {
+
+		int i = itensPlanilha.indexOf(itemPlanilha);
+
 		if (i > 0) {
 			int j = i - 1;
 			if (itensPlanilha.get(i).getPlaca()
@@ -305,6 +371,7 @@ public class SessionPlanilhaUpload {
 
 			}
 		}
+
 		return false;
 	}
 
@@ -332,6 +399,7 @@ public class SessionPlanilhaUpload {
 				* item.formataCategoria(item.getCategoriaCorreta()));
 		if (duplicado) {
 			item.setValorRestituicao(item.getValor());
+			item.setValorCorreto(0.0);
 		} else {
 			item.setValorRestituicao(item.getValor() - item.getValorCorreto());
 		}
