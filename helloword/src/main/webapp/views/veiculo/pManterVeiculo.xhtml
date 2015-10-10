@@ -14,7 +14,7 @@
 			onkeyup="up(this)" maxlength="30" />
 
 		<h:outputText value="Placa " />
-		<p:inputMask mask="aaa9999"
+		<p:inputText
 			disabled="#{beanVeiculo.veiculo.id != null}"
 			value="#{beanVeiculo.veiculo.placaVeiculo}" maxlength="7" />
 

@@ -62,7 +62,7 @@
 						<f:convertNumber pattern="#0.00" currencyCode="BRL" />
 					</h:outputText>
 				</p:column>
-				<p:column headerText="Valor a ser Restituido">
+				<p:column headerText="Valor de Restituição">
 					<h:outputText value="#{planilha.valorRestituicao}">
 						<f:convertNumber pattern="#0.00" currencyCode="BRL" />
 					</h:outputText>
@@ -79,7 +79,7 @@
 			</p:dataTable>
 			<h:panelGrid id="valor" style="float: right;">
 				<h:panelGrid columns="2">
-					<h:outputText value="VALOR TOTAL A SER RESTITUIDO"
+					<h:outputText value="VALOR TOTAL DE RESTITUIÇÃO"
 						style="font-weight:bold;" />
 					<p:inputText disabled="true" value="#{beanPlanilhaUpload.total}">
 						<f:convertNumber pattern="#0.00" />

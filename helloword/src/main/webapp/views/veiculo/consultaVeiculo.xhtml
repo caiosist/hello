@@ -21,25 +21,12 @@
 					onclick="PF('dManterVeiculo').show()" />
 			</h:panelGrid>
 
-			<h:panelGrid columns="7" cellpadding="2" style="border: 2px;">
-				<h:outputText value="Código" />
-				<h:outputText value="Modelo" />
+			<h:panelGrid columns="5" cellpadding="2" style="border: 2px;">
 				<h:outputText value="Placa" />
 				<h:outputText value="Categoria" />
 				<h:outputText value="Máximo de Eixos" />
 				<h:outputText value="" />
 				<h:outputText value="" />
-
-				<p:inputText id="cVeiculoCodigo" value="#{beanVeiculo.filtro.id}"
-					maxlength="4" onkeypress="return onlyNumbers(event)" size="7">
-					<p:ajax />
-				</p:inputText>
-
-				<p:inputText maxlength="30" style="width: 450px"
-					value="#{beanVeiculo.filtro.modeloVeiculo}" onkeyup="up(this)"
-					size="78">
-					<p:ajax />
-				</p:inputText>
 
 				<p:inputMask onkeyup="up(this)"
 					value="#{beanVeiculo.filtro.placaVeiculo}" maxlength="7">
