@@ -148,6 +148,7 @@ public class BeanVeiculo {
 	}
 
 	public String save() throws Exception {
+		
 		RequestContext context = RequestContext.getCurrentInstance();
 		boolean sucesso = false;
 
@@ -170,6 +171,7 @@ public class BeanVeiculo {
 	}
 
 	public String update() {
+		
 		RequestContext context = RequestContext.getCurrentInstance();
 		boolean sucesso = false;
 

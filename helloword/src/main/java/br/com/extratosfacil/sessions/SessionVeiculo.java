@@ -6,6 +6,7 @@ import org.hibernate.exception.ConstraintViolationException;
 
 import br.com.extratosfacil.constantes.Mensagem;
 import br.com.extratosfacil.constantes.Sessao;
+import br.com.extratosfacil.entities.Empresa;
 import br.com.extratosfacil.entities.Veiculo;
 import br.com.jbc.controller.Controller;
 
@@ -25,7 +26,7 @@ public class SessionVeiculo {
 	 *-------------------------------------------------------------------*/
 
 	private Controller<Veiculo> controller = new Controller<Veiculo>();
-
+	
 	/*-------------------------------------------------------------------
 	 * 		 					GETTERS AND SETTERS
 	 *-------------------------------------------------------------------*/
@@ -37,7 +38,7 @@ public class SessionVeiculo {
 	public void setController(Controller<Veiculo> controller) {
 		this.controller = controller;
 	}
-
+	
 	/*-------------------------------------------------------------------
 	 * 		 					METHODS
 	 *-------------------------------------------------------------------*/
@@ -77,8 +78,20 @@ public class SessionVeiculo {
 		this.controller.delete(veiculo);
 		return true;
 	}
-
+	
 	public boolean validaVeiculo(Veiculo veiculo) {
+		
+		Empresa empresa = Sessao.getEmpresaSessao();
+		Veiculo tempVeiculo = new Veiculo();
+		
+		try {
+			tempVeiculo = this.controller.getObjectByHQLCondition("from Veiculo WHERE placaVeiculo = '" 
+								+ veiculo.getPlacaVeiculo().toUpperCase() + "' AND empresa.id = '" + empresa.getId() + "'");   
+		} catch(Exception e){
+			tempVeiculo = null;
+			e.printStackTrace();
+		}
+		
 		if (veiculo.getCategoria() == null) {
 			Mensagem.send(Mensagem.MSG_INCOMPLETO, Mensagem.ERROR);
 			return false;
@@ -93,11 +106,14 @@ public class SessionVeiculo {
 				|| (veiculo.getPlacaVeiculo().trim().equals(""))) {
 			Mensagem.send(Mensagem.MSG_INCOMPLETO, Mensagem.ERROR);
 			return false;
-		} else {
+		} else if (tempVeiculo != null) {
+			Mensagem.send(Mensagem.MSG_PLACA, Mensagem.ERROR);
+			return false;
+		} else { 	
 			// deixa as placas em maiusculo
 			veiculo.setPlacaVeiculo(veiculo.getPlacaVeiculo().toUpperCase());
 			// capturar a empresa da sessao e setar no veiculo...
-			veiculo.setEmpresa(Sessao.getEmpresaSessao());
+			veiculo.setEmpresa(empresa);
 			// veiculo.setEmpresa(null);
 		}
 
